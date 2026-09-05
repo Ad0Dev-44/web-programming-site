@@ -18,6 +18,24 @@
         <section>
             <h2>Weekly Work</h2>
             <!-- Each week you add a link here to that week's page or feature. -->
+             <h3>Week 1 — Portfolio Launch</h3>
+
+        <p>
+            This week, I created and deployed my first web programming portfolio
+            using Flask and Jinja templates. The project is hosted on Render,
+            while the source code is available on GitHub. This portfolio will
+            grow each week as I implement new concepts and features.
+        </p>
+
+        <p>
+            <strong>Live Website:</strong>
+            <a href="https://web-programming-site-90iq.onrender.com/" target="_blank">View Live Site</a>
+        </p>
+
+        <p>
+            <strong>GitHub:</strong>
+            <a href="https://github.com/Ad0Dev-44/web-programming-site" target="_blank">View Repository</a>
+        </p>
             <ul>
                 {% for item in weekly_work %}
                     <li><a href="{{ item.url }}">Week {{ item.week }} — {{ item.title }}</a></li>

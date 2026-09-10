@@ -8,6 +8,8 @@
 <body>
     <header>
         <h1>History of the Internet</h1>
+        <img src="{{ url_for('static', filename='images/Arpanet1969.jpeg') }}" 
+         alt="Illustration of the ARPANET node map in 1969" width="200" height="100">
     </header>
     <nav>
         <ul>
@@ -16,78 +18,81 @@
         </ul>
     </nav>
     <main>
+        <!-- Timeline of the Internet's Development -->
         <section id="timeline">
-        <h2>Timeline</h2>
+            <h2>Timeline</h2>
 
-        <article>
-            <h3>October 29, 1969 — First ARPANET Message</h3>
-            <p>
-                UCLA student programmer Charley Kline sent the first host-to-host message over ARPANET to Bill Duvall at the Stanford Research Institute (SRI). This demonstrated that geographically separated computers could exchange data reliably.
-            </p>
-            <p>
-                Source:
-                <a href="https://computerhistory.org/blog/history-of-the-future-october-29-1969-fifty-years-of-a-connected-world/" target="_blank" rel="noopener">
-                    Computer History Museum
-                </a>
-            </p>
-        </article>
+            <article>
+                <h3>October 29, 1969 — First ARPANET Message</h3>
+                <p>
+                    UCLA student programmer Charley Kline sent the first host-to-host message over ARPANET to Bill Duvall at the Stanford Research Institute (SRI). This demonstrated that geographically separated computers could exchange data reliably.
+                </p>
+                <p>
+                    Source:
+                    <a href="https://computerhistory.org/blog/history-of-the-future-october-29-1969-fifty-years-of-a-connected-world/" target="_blank">
+                        Computer History Museum
+                    </a>
+                </p>
+            </article>
 
-        <article>
-            <h3>January 1, 1983 — ARPANET Adopts TCP/IP</h3>
-            <p>
-                ARPANET completed its transition from NCP to TCP/IP,
-                allowing independent networks to communicate through a
-                common protocol — a key step toward the modern Internet.
-            </p>
-            <p>
-                Source:
-                <a href="https://www.internetsociety.org/internet/history-internet/brief-history-internet/" target="_blank" rel="noopener">
-                    Internet Society
-                </a>
-            </p>
-        </article>
+            <article>
+                <h3>January 1, 1983 — ARPANET Adopts TCP/IP</h3>
+                <p>
+                    ARPANET completed its transition from NCP to TCP/IP,
+                    allowing independent networks to communicate through a
+                    common protocol — a key step toward the modern Internet.
+                </p>
+                <p>
+                    Source:
+                    <a href="https://www.internetsociety.org/internet/history-internet/brief-history-internet/" target="_blank">
+                        Internet Society
+                    </a>
+                </p>
+            </article>
 
-        <article>
-            <h3>November 1983 — Domain Name System (DNS) Invented</h3>
-            <p>
-                RFC 882 defined DNS: a scalable, hierarchical naming system,
-                replacing a single manually maintained list of host names. 
-            </p>
-            <p>
-                Source:
-                <a href="https://datatracker.ietf.org/doc/html/rfc882" target="_blank" rel="noopener">
-                    IETF (RFC 882)
-                </a>
-            </p>
-        </article>
+            <article>
+                <h3>November 1983 — Domain Name System (DNS) Invented</h3>
+                <p>
+                    RFC 882 defined DNS;s a scalable, hierarchical naming system,
+                    replacing a single manually maintained list of host names. 
+                </p>
+                <p>
+                    Source:
+                    <a href="https://datatracker.ietf.org/doc/html/rfc882" target="_blank">
+                        IETF (RFC 882)
+                    </a>
+                </p>
+            </article>
 
-        <article>
-            <h3>1986 — NSFNET Backbone Launched</h3>
-            <p>
-                The U.S. National Science Foundation (NSF) funded NSFNET, a 56 Kbps backbone connecting supercomputing centers and regional research networks.This scaled the network from thousands to millions of connected hosts.
-            </p>
-            <p>
-                Source:
-                <a href="https://www.nsf.gov/impacts/internet" target="_blank" rel="noopener">
-                    U.S. National Science Foundation
-                </a>
-            </p>
-        </article>
+            <article>
+                <h3>1986 — NSFNET Backbone Launched</h3>
+                <p>
+                    The U.S. National Science Foundation (NSF) funded NSFNET, a 56 Kbps backbone connecting supercomputing centers and regional research networks.This scaled the network from thousands to millions of connected hosts.
+                </p>
+                <p>
+                    Source:
+                    <a href="https://www.nsf.gov/impacts/internet" target="_blank">
+                        U.S. National Science Foundation
+                    </a>
+                </p>
+            </article>
 
-        <article>
-            <h3>April 30, 1995 — NSFNET Backbone Decommissioned</h3>
-            <p>
-                As commercial Internet Service Providers (ISPs) expanded, NSF
-                funding ended, marking the shift toward a commercial,
-                publicly accessible Internet.
-            </p>
-            <p>
-                Source:
-                <a href="https://www.internetsociety.org/internet/history-internet/brief-history-internet/" target="_blank" rel="noopener">
-                    Internet Society
-                </a>
-            </p>
-        </article>
+            <article>
+                <h3>April 30, 1995 — NSFNET Backbone Decommissioned</h3>
+                <p>
+                    As commercial Internet Service Providers (ISPs) expanded, NSF
+                    funding ended, marking the shift toward a commercial,
+                    publicly accessible Internet.
+                </p>
+                <p>
+                    Source:
+                    <a href="https://www.internetsociety.org/internet/history-internet/brief-history-internet/" target="_blank">
+                        Internet Society
+                    </a>
+                </p>
+            </article>
+            
+        </section>
     </main>
     <footer>
         <p>This page was created for educational purposes only.</p>

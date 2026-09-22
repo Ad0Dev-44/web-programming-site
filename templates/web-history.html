@@ -1,130 +1,439 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>History of the Web</title>
-</head>
-<body>
-    <header>
-        <h1>History of the Web</h1>
-        <img src="{{ url_for('static', filename='images/WebWithTim.jpeg') }}" 
-         alt="Illustration of Tim Berners-Lee with the first Web browser" width="200" height="100">
-    </header>
-    <nav>
-        <ul>
-            <li><a href="{{ url_for('home') }}">Home</a></li>
-            <li><a href="{{ url_for('internet_history') }}">History of the Internet</a></li>
-        </ul>
-    </nav>
-    <main>
-        <!-- Timeline of the Web's Development -->
-        <section id="timeline">
-            <h2>Timeline</h2>
+{% extends "base.html" %}
+{% block title %}History of the Web{% endblock %}
 
-            <article>
-                <h3>1989 — World Wide Web Proposed</h3>
-                <p>
-                    Tim Berners-Lee proposed a system for sharing information
-                    through hypertext while working at CERN. His proposal
-                    became the foundation of what would later become the
-                    World Wide Web.
-                </p>
-                <p>
-                    Source:
-                    <a href="https://web30.web.cern.ch/web-history.html"
-                    target="_blank">
-                        CERN
-                    </a>
-                </p>
-            </article>
+{% block content %}
 
-            <article>
-                <h3>December 20, 1990 — First Website and Web Server Live</h3>
-                <p>
-                    By the end of 1990, Tim Berners-Lee had created the first
-                    Web server and Web browser at CERN. The first Web server
-                    ran on a NeXT computer in his office.
-                </p>
-                <p>
-                    Source:
-                    <a href="https://web30.web.cern.ch/web-history.html"
-                    target="_blank">
-                        CERN
-                    </a>
-                </p>
-            </article>
+    <section>
+        <h2>History of the Web</h2>
 
-            <article>
-                <h3>August 6, 1991 — Web Opened to the Public</h3>
-                <p>
-                    The World Wide Web software was released to the wider
-                    Internet community. The project was also announced on
-                    Internet newsgroups, allowing researchers outside CERN
-                    to begin using and developing the Web.
-                </p>
-                <p>
-                    Source:
-                    <a href="https://www.w3.org/History.html"
-                    target="_blank">
-                        W3C
-                    </a>
-                </p>
-            </article>
+        <img src="{{ url_for('static', filename='images/WebWithTim.jpeg') }}"
+             alt="Illustration of Tim Berners-Lee with the first Web browser" width="200" height="100">
 
-            <article>
-                <h3>April 30, 1993 — CERN Releases Web Software Publicly</h3>
-                <p>
-                    On April 30, CERN released the World Wide Web software
-                    into the public domain. This allowed anyone to use and
-                    develop the technology freely, helping accelerate the
-                    growth of the Web.
-                </p>
-                <p>
-                    Source:
-                    <a href="https://www.w3.org/webat25/about/history"
-                    target="_blank">
-                        W3C
-                    </a>
-                </p>
-            </article>
+        <p>
+            From a proposal at CERN in 1989 to the interactive platform we use
+            today, the World Wide Web has transformed how information is created,
+            shared, and accessed.
+        </p>
+    </section>
 
-            <article>
-                <h3>October 1st, 1994 — World Wide Web Consortium (W3C) Founded</h3>
-                <p>
-                    Tim Berners-Lee founded the World Wide Web Consortium (W3C) to coordinate the development of Web standards and keep the Web open and interoperable.
-                </p>
-                <p>
-                    Source:
-                    <a href="https://www.w3.org/about/history/"
-                    target="_blank">
-                        W3C
-                    </a>
-                </p>
-            </article>
-                
-            <article>
-                <h3>Jan 9, 2007 — iPhone Unveiled</h3>
-                <p>
-                    Apple introduced the first iPhone, combining a mobile
-                    phone with Internet access, a Web browser, and other
-                    computing capabilities. The device helped accelerate
-                    the shift toward accessing the Web through mobile
-                    devices.
-                </p>
-                <p>
-                    Source:
-                    <a href="https://www.apple.com/newsroom/2007/01/09Apple-Reinvents-the-Phone-with-iPhone/"
-                    target="_blank">
-                        Apple
-                    </a>
-                </p>
-            </article>
-            
-        </section>
-    </main>
-    <footer>
-        <p>This page was created for educational purposes only.</p>
-        <p>&copy; 2026 Adrian El-Rahi. All rights reserved.</p>
-    </footer>
-</body>
+    <section>
+        <h3>A Brief History of the World Wide Web</h3>
+
+        <p>
+            Watch this short overview from CERN explaining the origins and early
+            development of the World Wide Web.
+        </p>
+
+        <iframe
+            src="https://www.youtube.com/embed/k0gvAyCubGQ"
+            title="A brief history of the World Wide Web — CERN"
+            loading="lazy"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen>
+        </iframe>
+    </section>
+
+    <!-- Timeline of the Web's Development -->
+    <section id="timeline">
+        <h3>Timeline</h3>
+
+        <article>
+            <h4>1989 — World Wide Web Proposed</h4>
+            <p>
+                Tim Berners-Lee proposed a system for sharing information
+                through hypertext while working at CERN. His proposal
+                became the foundation of what would later become the
+                World Wide Web.
+            </p>
+            <p>
+                Source:
+                <a href="https://web30.web.cern.ch/web-history.html"
+                target="_blank">
+                    CERN
+                </a>
+            </p>
+        </article>
+
+        <article>
+            <h4>December 20, 1990 — First Website and Web Server Live</h4>
+            <p>
+                By the end of 1990, Tim Berners-Lee had created the first
+                Web server and Web browser at CERN. The first Web server
+                ran on a NeXT computer in his office.
+            </p>
+            <p>
+                Source:
+                <a href="https://web30.web.cern.ch/web-history.html"
+                target="_blank">
+                    CERN
+                </a>
+            </p>
+        </article>
+
+        <article>
+            <h4>August 6, 1991 — Web Opened to the Public</h4>
+            <p>
+                The World Wide Web software was released to the wider
+                Internet community. The project was also announced on
+                Internet newsgroups, allowing researchers outside CERN
+                to begin using and developing the Web.
+            </p>
+            <p>
+                Source:
+                <a href="https://www.w3.org/History.html"
+                target="_blank">
+                    W3C
+                </a>
+            </p>
+        </article>
+
+        <article>
+            <h4>April 30, 1993 — CERN Releases Web Software Publicly</h4>
+            <p>
+                On April 30, CERN released the World Wide Web software
+                into the public domain. This allowed anyone to use and
+                develop the technology freely, helping accelerate the
+                growth of the Web.
+            </p>
+            <p>
+                Source:
+                <a href="https://www.w3.org/webat25/about/history"
+                target="_blank">
+                    W3C
+                </a>
+            </p>
+        </article>
+
+        <article>
+            <h4>1993 — Mosaic Brings Images to the Browser</h4>
+            <p>
+                NCSA's Mosaic browser was among the first to display
+                images inline with text rather than in separate windows,
+                giving the Web a magazine-like look that helped it reach
+                a mainstream, non-technical audience.
+            </p>
+            <p>
+                Source:
+                <a href="https://www.livinginternet.com/w/wi_mosaic.htm"
+                target="_blank">
+                    Living Internet
+                </a>
+            </p>
+        </article>
+
+        <article>
+            <h4>October 1994 — Netscape Navigator Released</h4>
+            <p>
+                Netscape Communications released Navigator, which quickly
+                became the dominant browser of the mid-1990s and helped
+                ignite the "browser wars" that shaped early Web standards.
+            </p>
+            <p>
+                Source:
+                <a href="https://www.britannica.com/technology/Netscape"
+                target="_blank">
+                    Encyclopaedia Britannica
+                </a>
+            </p>
+        </article>
+
+        <article>
+            <h4>October 1, 1994 — World Wide Web Consortium (W3C) Founded</h4>
+            <p>
+                Tim Berners-Lee founded the World Wide Web Consortium (W3C) to coordinate the development of Web standards and keep the Web open and interoperable.
+            </p>
+            <p>
+                Source:
+                <a href="https://www.w3.org/about/history/"
+                target="_blank">
+                    W3C
+                </a>
+            </p>
+        </article>
+
+        <article>
+            <h4>1995 — JavaScript Introduced</h4>
+            <p>
+                Netscape engineer Brendan Eich created JavaScript, adding
+                interactivity to otherwise static web pages and laying the
+                groundwork for the dynamic, application-like websites of
+                later decades.
+            </p>
+            <p>
+                Source:
+                <a href="https://www.w3.org/community/webed/wiki/A_Short_History_of_JavaScript"
+                target="_blank">
+                    W3C
+                </a>
+            </p>
+        </article>
+
+        <article>
+            <h4>December 1996 — CSS Published</h4>
+            <p>
+                The W3C published the first Cascading Style Sheets (CSS)
+                recommendation, separating a page's visual presentation
+                from its underlying HTML structure and making consistent,
+                reusable web design possible.
+            </p>
+            <p>
+                Source:
+                <a href="https://www.w3.org/Style/CSS/history.html"
+                target="_blank">
+                    W3C
+                </a>
+            </p>
+        </article>
+
+        <article>
+            <h4>1998 — Google Search Launches</h4>
+            <p>
+                Google's PageRank-based search engine made the rapidly
+                growing Web far easier to navigate, quickly becoming most
+                people's primary entry point to online information.
+            </p>
+            <p>
+                Source:
+                <a href="https://about.google/our-story/"
+                target="_blank">
+                    Google
+                </a>
+            </p>
+        </article>
+
+        <article>
+            <h4>2004 — "Web 2.0" and Social Platforms Emerge</h4>
+            <p>
+                The term "Web 2.0" spread to describe a more interactive,
+                user-generated Web, exemplified by the founding of
+                Facebook (2004) and the launch of YouTube (2005), which
+                turned users from readers into publishers.
+            </p>
+            <p>
+                Source:
+                <a href="https://www.britannica.com/topic/Web-2-0"
+                target="_blank">
+                    Encyclopaedia Britannica
+                </a>
+            </p>
+        </article>
+
+        <article>
+            <h4>Jan 9, 2007 — iPhone Unveiled</h4>
+            <p>
+                Apple introduced the first iPhone, combining a mobile
+                phone with Internet access, a Web browser, and other
+                computing capabilities. The device helped accelerate
+                the shift toward accessing the Web through mobile
+                devices.
+            </p>
+            <p>
+                Source:
+                <a href="https://www.apple.com/newsroom/2007/01/09Apple-Reinvents-the-Phone-with-iPhone/"
+                target="_blank">
+                    Apple
+                </a>
+            </p>
+        </article>
+
+        <article>
+            <h4>2008 — Google Chrome Released</h4>
+            <p>
+                Google launched the Chrome browser, whose fast JavaScript
+                engine and rapid update cycle pushed the whole industry
+                toward faster, more standards-compliant browsers and
+                richer in-browser applications.
+            </p>
+            <p>
+                Source:
+                <a href="https://www.google.com/chrome/"
+                target="_blank">
+                    Google
+                </a>
+            </p>
+        </article>
+
+        <article>
+            <h4>2014 — HTML5 Finalized</h4>
+            <p>
+                The W3C finalized the HTML5 standard, adding native
+                support for audio, video, graphics, and offline storage
+                without third-party plugins, and enabling the responsive,
+                app-like websites common today.
+            </p>
+            <p>
+                Source:
+                <a href="https://www.w3.org/TR/html5/"
+                target="_blank">
+                    W3C
+                </a>
+            </p>
+        </article>
+
+        <article>
+            <h4>2015 — HTTP/2 and the Mobile-First Web</h4>
+            <p>
+                HTTP/2 was standardized to speed up page loading, while
+                mobile traffic overtook desktop traffic worldwide,
+                pushing designers toward mobile-first and responsive
+                Web design as the default approach.
+            </p>
+            <p>
+                Source:
+                <a href="https://www.w3.org/2015/03/hp2-pressrelease.html"
+                target="_blank">
+                    W3C
+                </a>
+            </p>
+        </article>
+
+        <article>
+            <h4>2015–2017 — Progressive Web Apps and WebAssembly</h4>
+            <p>
+                Google introduced Progressive Web Apps, letting websites
+                behave like installable native apps, while WebAssembly
+                (2017) let browsers run near-native-speed code, expanding
+                what could be built directly on the Web platform.
+            </p>
+            <p>
+                Source:
+                <a href="https://webassembly.org/"
+                target="_blank">
+                    WebAssembly.org
+                </a>
+            </p>
+        </article>
+
+        <article>
+            <h4>2018 — GDPR and a Renewed Focus on Web Privacy</h4>
+            <p>
+                The European Union's General Data Protection Regulation
+                took effect, forcing websites worldwide to rethink how
+                they collect, store, and disclose the use of personal
+                data, reshaping cookie consent and privacy design across
+                the Web.
+            </p>
+            <p>
+                Source:
+                <a href="https://gdpr.eu/what-is-gdpr/"
+                target="_blank">
+                    GDPR.eu
+                </a>
+            </p>
+        </article>
+
+        <article>
+            <h4>2020 — The Web Becomes Essential Infrastructure</h4>
+            <p>
+                The COVID-19 pandemic pushed schooling, work, healthcare,
+                and social life onto the Web almost overnight, driving a
+                surge in video conferencing, e-commerce, and cloud-based
+                collaboration tools.
+            </p>
+            <p>
+                Source:
+                <a href="https://www.itu.int/en/mediacentre/Pages/PR-2020-COVID19.aspx"
+                target="_blank">
+                    International Telecommunication Union (ITU)
+                </a>
+            </p>
+        </article>
+
+        <article>
+            <h4>November 30, 2022 — Generative AI Enters the Browser</h4>
+            <p>
+                The public launch of OpenAI's ChatGPT popularized
+                generative AI, which browsers, search engines, and
+                websites quickly began embedding directly into the
+                everyday Web experience.
+            </p>
+            <p>
+                Source:
+                <a href="https://openai.com/index/chatgpt/"
+                target="_blank">
+                    OpenAI
+                </a>
+            </p>
+        </article>
+
+        <article>
+            <h4>2023–2026 — AI Agents and the Next Web</h4>
+            <p>
+                AI assistants gained the ability to browse, click, and
+                fill out forms on a person's behalf, while questions
+                around AI-generated content, digital identity, and
+                platform regulation continue to shape how the Web is
+                built and governed today.
+            </p>
+            <p>
+                Source:
+                <a href="https://www.w3.org/"
+                target="_blank">
+                    W3C
+                </a>
+            </p>
+        </article>
+
+    </section>
+
+    <!-- Summary table of Web technologies and standards -->
+    <section id="standards">
+        <h3>Key Web Technologies and Standards</h3>
+        <table border="1" cellpadding="6" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>Technology / Standard</th>
+                    <th>Introduced</th>
+                    <th>Purpose</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>HTML</td>
+                    <td>1990–1991</td>
+                    <td>Markup language used to structure web page content</td>
+                </tr>
+                <tr>
+                    <td>HTTP</td>
+                    <td>1990–1991</td>
+                    <td>Protocol used to request and transfer web pages</td>
+                </tr>
+                <tr>
+                    <td>JavaScript</td>
+                    <td>1995</td>
+                    <td>Scripting language that adds interactivity to web pages</td>
+                </tr>
+                <tr>
+                    <td>CSS</td>
+                    <td>1996</td>
+                    <td>Language for styling and laying out web pages</td>
+                </tr>
+                <tr>
+                    <td>XMLHttpRequest / AJAX</td>
+                    <td>1999–2005</td>
+                    <td>Enabled pages to update content without a full reload</td>
+                </tr>
+                <tr>
+                    <td>HTML5</td>
+                    <td>2014</td>
+                    <td>Added native audio, video, graphics, and offline support</td>
+                </tr>
+                <tr>
+                    <td>HTTP/2 &amp; HTTP/3</td>
+                    <td>2015 / 2022</td>
+                    <td>Faster, more efficient transport for modern websites</td>
+                </tr>
+                <tr>
+                    <td>Progressive Web Apps</td>
+                    <td>2015</td>
+                    <td>Let websites be installed and behave like native apps</td>
+                </tr>
+                <tr>
+                    <td>WebAssembly</td>
+                    <td>2017</td>
+                    <td>Runs near-native-speed compiled code inside the browser</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+{% endblock %}

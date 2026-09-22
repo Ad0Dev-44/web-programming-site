@@ -17,6 +17,7 @@ def home():
         {"week": 2, "title": "History of the Web", "url": "/web-history"},
         {"week": 2, "title": "History of the Internet (AI)", "url": "/internet-history-ai"},
         {"week": 2, "title": "History of the Web (AI)", "url": "/web-history-ai"},
+        {"week": 3, "title": "Web Research", "url": "/personal-research"}
     ]
     return render_template("index.html", weekly_work=weekly_work)
 
@@ -40,6 +41,10 @@ def internet_history_ai():
 def web_history_ai():
     return render_template("web-history-ai.html")
 
+
+@app.route("/personal-research")
+def personal_research():
+    return render_template("personal-research.html")
 
 if __name__ == "__main__":
     app.run(debug=True)

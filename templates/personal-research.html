@@ -1,0 +1,365 @@
+{% extends "base.html" %}
+{% block title %}Forms, Buttons & CSS Research{% endblock %}
+
+{% block content %}
+
+    <section>
+        <h2>Forms, Buttons, and CSS: A Research Page</h2>
+        <p>
+            This page covers three practical topics from the course:
+            validating form input with regular expressions, the real
+            difference between the <code>&lt;button&gt;</code> element and
+            <code>&lt;input type="button"&gt;</code>, and the CSS at-rules
+            (<code>@media</code>, <code>@import</code>, and others) used to
+            make a page responsive and flexible.
+        </p>
+    </section>
+
+    <nav aria-label="Page sections">
+        <a href="#regular_expressions">Regular Expressions in Forms</a>
+        <a href="#buttons">Button vs. Input Button</a>
+        <a href="#css-rules">CSS At-Rules</a>
+    </nav>
+
+
+    <section id="regular_expressions">
+        <h3>Regular Expressions in Forms</h3>
+        <p>
+            A regular expression (regex) is a pattern used to match text.
+            In HTML forms, the <code>pattern</code> attribute lets a text
+            input reject any value that does not match a given regex,
+            without writing any JavaScript. The browser checks the pattern
+            automatically when the form is submitted.
+        </p>
+
+        <article>
+            <h4>The <code>pattern</code> Attribute</h4>
+            <p>
+                The <code>pattern</code> attribute accepts a JavaScript-style
+                regular expression (without the surrounding slashes). If the
+                input's value does not fully match the pattern, the browser
+                blocks submission and shows a validation message, which can
+                be customized with the <code>title</code> attribute.
+            </p>
+            <p>
+                Example — a text field that only accepts a 5-digit ZIP code:
+            </p>
+            <pre>
+                <code>&lt;input type="text" 
+                          name="zip" 
+                          pattern="^\d{5}$" 
+                          title="Enter a 5-digit ZIP code"
+                          required&gt;</code></pre>
+            <p>
+                Source:
+                <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/pattern" target="_blank">
+                    MDN — pattern attribute
+                </a>
+            </p>
+        </article>
+
+        <article>
+            <h4>Common Validation Patterns</h4>
+            <p>
+                A few patterns come up constantly in real forms. They are a
+                starting point, not a guarantee — regex validation on the
+                client is about catching honest typos early, not security.
+            </p>
+            <table border="1" cellpadding="6" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Field</th>
+                        <th>Pattern</th>
+                        <th>Matches</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Email (simple)</td>
+                        <td><code>^[^\s@]+@[^\s@]+\.[^\s@]+$</code></td>
+                        <td>text@text.text with no spaces</td>
+                    </tr>
+                    <tr>
+                        <td>US ZIP code</td>
+                        <td><code>^\d{5}$</code></td>
+                        <td>Exactly 5 digits</td>
+                    </tr>
+                    <tr>
+                        <td>US phone number</td>
+                        <td><code>^\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$</code></td>
+                        <td>(123) 456-7890, 123-456-7890, 1234567890</td>
+                    </tr>
+                    <tr>
+                        <td>Username</td>
+                        <td><code>^[A-Za-z0-9_]{3,16}$</code></td>
+                        <td>3–16 letters, numbers, or underscores</td>
+                    </tr>
+                    <tr>
+                        <td>Password (letter + number, 8+ chars)</td>
+                        <td><code>^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$</code></td>
+                        <td>At least one letter, one digit, 8+ characters</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>
+                Source:
+                <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expressions" target="_blank">
+                    MDN — Regular Expressions Guide
+                </a>
+            </p>
+        </article>
+
+        <article>
+            <h4>Client-Side Validation Is Not Security</h4>
+            <p>
+                The <code>pattern</code> attribute runs entirely in the
+                browser, so it improves user experience by catching mistakes
+                immediately — but it can be bypassed by disabling JavaScript,
+                editing the HTML, or sending a request directly to the
+                server. Any value that matters (an email that must be
+                unique, a price, a permission level) has to be validated
+                again on the server, in Flask's case with something like
+                <code>request.form</code> checks or a library such as WTForms.
+            </p>
+            <p>
+                Source:
+                <a href="https://developer.mozilla.org/en-US/docs/Learn/Forms/Form_validation" target="_blank">
+                    MDN — Client-Side Form Validation
+                </a>
+            </p>
+        </article>
+    </section>
+
+    <!-- ============================================================ -->
+    <section id="buttons">
+        <h3>Button vs. Input Button</h3>
+        <p>
+            HTML gives you two different ways to make a clickable button in
+            a form, and they behave differently in a way that regularly
+            trips people up: <code>&lt;button&gt;</code> and
+            <code>&lt;input type="button"&gt;</code> (or
+            <code>type="submit"</code> / <code>type="reset"</code>).
+        </p>
+
+        <article>
+            <h4>Default Behavior Inside a Form</h4>
+            <p>
+                The biggest gotcha: a plain <code>&lt;button&gt;</code>
+                with no <code>type</code> attribute defaults to
+                <code>type="submit"</code> when placed inside a
+                <code>&lt;form&gt;</code>. That means it will submit the
+                form even if the intent was just a decorative or JavaScript
+                button, unless <code>type="button"</code> is set explicitly.
+                An <code>&lt;input type="button"&gt;</code>, by contrast,
+                never submits a form on its own — it does nothing until a
+                script is attached to it.
+            </p>
+            <p>
+                Source:
+                <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/button" target="_blank">
+                    MDN — &lt;button&gt; element
+                </a>
+            </p>
+        </article>
+
+        <article>
+            <h4>Content Model</h4>
+            <p>
+                <code>&lt;input&gt;</code> is a void element — it can never
+                have child elements, so its visible label comes only from
+                its <code>value</code> attribute and is always plain text.
+                <code>&lt;button&gt;</code> is a container element, so it
+                can hold an icon, an image, or styled <code>&lt;span&gt;</code>
+                text inside it, which makes it far more flexible for design.
+            </p>
+            <pre><code>&lt;!-- input: label must be plain text --&gt;
+&lt;input type="submit" value="Send Message"&gt;
+
+&lt;!-- button: can contain markup --&gt;
+&lt;button type="submit"&gt;
+    &lt;img src="send-icon.svg" alt=""&gt; Send Message
+&lt;/button&gt;</code></pre>
+        </article>
+
+        <article>
+            <h4>Comparison Table</h4>
+            <table border="1" cellpadding="6" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Element</th>
+                        <th>Default Type</th>
+                        <th>Can Contain HTML?</th>
+                        <th>Typical Use</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>&lt;button&gt;</code></td>
+                        <td><code>submit</code> (inside a form)</td>
+                        <td>Yes</td>
+                        <td>Submit buttons with icons/labels, or JS-only buttons with <code>type="button"</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>&lt;input type="button"&gt;</code></td>
+                        <td>None — does nothing by itself</td>
+                        <td>No (text only, via <code>value</code>)</td>
+                        <td>Simple JavaScript-triggered actions</td>
+                    </tr>
+                    <tr>
+                        <td><code>&lt;input type="submit"&gt;</code></td>
+                        <td><code>submit</code></td>
+                        <td>No</td>
+                        <td>Simple text-only submit buttons</td>
+                    </tr>
+                    <tr>
+                        <td><code>&lt;input type="reset"&gt;</code></td>
+                        <td><code>reset</code></td>
+                        <td>No</td>
+                        <td>Clearing all fields in a form</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>
+                Source:
+                <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/button" target="_blank">
+                    MDN — &lt;input type="button"&gt;
+                </a>
+            </p>
+        </article>
+    </section>
+
+    <!-- ============================================================ -->
+    <section id="css-rules">
+        <h3>CSS At-Rules</h3>
+        <p>
+            At-rules are CSS statements that start with <code>@</code> and
+            instruct the stylesheet to do something conditional or
+            structural, rather than just style an element directly. The
+            most common one in responsive design is <code>@media</code>,
+            but several others show up often enough to be worth knowing.
+        </p>
+
+        <article>
+            <h4><code>@media</code> — Responsive Breakpoints</h4>
+            <p>
+                <code>@media</code> applies a block of CSS only when a
+                condition is true — most often the width of the viewport.
+                This is the core tool behind responsive, mobile-friendly
+                layouts.
+            </p>
+            <pre><code>/* Stack a two-column layout on narrow screens */
+@media screen and (max-width: 600px) {
+    .content-columns {
+        flex-direction: column;
+    }
+}</code></pre>
+            <p>
+                Source:
+                <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@media" target="_blank">
+                    MDN — @media
+                </a>
+            </p>
+        </article>
+
+        <article>
+            <h4><code>@import</code> — Pulling In Other Stylesheets</h4>
+            <p>
+                <code>@import</code> loads another CSS file's rules into the
+                current stylesheet. It must appear before any other rules
+                (other than <code>@charset</code>), and each imported file
+                triggers an extra network request, so it's generally slower
+                than linking stylesheets directly in the HTML <code>&lt;head&gt;</code>.
+            </p>
+            <pre><code>@import url("reset.css");</code></pre>
+            <p>
+                Source:
+                <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@import" target="_blank">
+                    MDN — @import
+                </a>
+            </p>
+        </article>
+
+        <article>
+            <h4><code>@font-face</code> — Custom Fonts</h4>
+            <p>
+                <code>@font-face</code> lets a page load and use a specific
+                font file instead of relying only on fonts already installed
+                on the visitor's device.
+            </p>
+            <pre><code>@font-face {
+    font-family: "MyHeadingFont";
+    src: url("fonts/myheadingfont.woff2") format("woff2");
+}</code></pre>
+            <p>
+                Source:
+                <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face" target="_blank">
+                    MDN — @font-face
+                </a>
+            </p>
+        </article>
+
+        <article>
+            <h4><code>@keyframes</code> — Animation Sequences</h4>
+            <p>
+                <code>@keyframes</code> defines the stages of a CSS
+                animation, which an element then plays using the
+                <code>animation</code> property.
+            </p>
+            <pre><code>@keyframes fade-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+.card {
+    animation: fade-in 0.4s ease-in;
+}</code></pre>
+            <p>
+                Source:
+                <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@keyframes" target="_blank">
+                    MDN — @keyframes
+                </a>
+            </p>
+        </article>
+
+        <article>
+            <h4><code>@supports</code> — Feature Queries</h4>
+            <p>
+                <code>@supports</code> applies a block of CSS only if the
+                browser actually supports a given property or value,
+                allowing a fallback style for older browsers.
+            </p>
+            <pre><code>@supports (display: grid) {
+    .layout {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+}</code></pre>
+            <p>
+                Source:
+                <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@supports" target="_blank">
+                    MDN — @supports
+                </a>
+            </p>
+        </article>
+
+        <article>
+            <h4>Quick Reference</h4>
+            <table border="1" cellpadding="6" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>At-Rule</th>
+                        <th>Purpose</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><code>@media</code></td><td>Apply styles conditionally, usually based on screen size</td></tr>
+                    <tr><td><code>@import</code></td><td>Load another stylesheet's rules into this one</td></tr>
+                    <tr><td><code>@font-face</code></td><td>Load and register a custom font file</td></tr>
+                    <tr><td><code>@keyframes</code></td><td>Define the steps of a CSS animation</td></tr>
+                    <tr><td><code>@supports</code></td><td>Apply styles only if the browser supports a feature</td></tr>
+                </tbody>
+            </table>
+        </article>
+    </section>
+
+{% endblock %}

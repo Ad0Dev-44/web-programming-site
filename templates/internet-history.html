@@ -1,101 +1,426 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>History of the Internet</title>
-</head>
-<body>
-    <header>
-        <h1>History of the Internet</h1>
-        <img src="{{ url_for('static', filename='images/Arpanet1969.jpeg') }}" 
-         alt="Illustration of the ARPANET node map in 1969" width="200" height="100">
-    </header>
-    <nav>
-        <ul>
-            <li><a href="{{ url_for('home') }}">Home</a></li>
-            <li><a href="{{ url_for('web_history') }}">History of the Web</a></li>
-        </ul>
-    </nav>
-    <main>
-        <!-- Timeline of the Internet's Development -->
-        <section id="timeline">
-            <h2>Timeline</h2>
+{% extends "base.html" %}
+{% block title %}History of the Internet{% endblock %}
 
-            <article>
-                <h3>October 29, 1969 — First ARPANET Message</h3>
-                <p>
-                    UCLA student programmer Charley Kline sent the first host-to-host message over ARPANET to Bill Duvall at the Stanford Research Institute (SRI). This demonstrated that geographically separated computers could exchange data reliably.
-                </p>
-                <p>
-                    Source:
-                    <a href="https://computerhistory.org/blog/history-of-the-future-october-29-1969-fifty-years-of-a-connected-world/" target="_blank">
-                        Computer History Museum
-                    </a>
-                </p>
-            </article>
+{% block content %}
+        <section>
+        <h2>History of the Internet</h2>
+        <img src="{{ url_for('static', filename='images/Arpanet1969.jpeg') }}"
+             alt="Illustration of the ARPANET node map in 1969" width="200" height="100">
+    </section>
 
-            <article>
-                <h3>January 1, 1983 — ARPANET Adopts TCP/IP</h3>
-                <p>
-                    ARPANET completed its transition from NCP to TCP/IP,
-                    allowing independent networks to communicate through a
-                    common protocol — a key step toward the modern Internet.
-                </p>
-                <p>
-                    Source:
-                    <a href="https://www.internetsociety.org/internet/history-internet/brief-history-internet/" target="_blank">
-                        Internet Society
-                    </a>
-                </p>
-            </article>
+    <section>
+        <h3>Explore the Early ARPANET</h3>
+        <p>
+            Explore the development of the ARPANET from 1969 to 1980,
+            including the growth of its nodes and network connections.
+        </p>
 
-            <article>
-                <h3>November 1983 — Domain Name System (DNS) Invented</h3>
-                <p>
-                    RFC 882 defined DNS;s a scalable, hierarchical naming system,
-                    replacing a single manually maintained list of host names. 
-                </p>
-                <p>
-                    Source:
-                    <a href="https://datatracker.ietf.org/doc/html/rfc882" target="_blank">
-                        IETF (RFC 882)
-                    </a>
-                </p>
-            </article>
+        <iframe
+            src="https://www.lib.utah.edu/digital-scholarship/arpanet/timeline.php"
+            title="Interactive ARPANET Timeline"
+            loading="lazy">
+        </iframe>
+    </section>
 
-            <article>
-                <h3>1986 — NSFNET Backbone Launched</h3>
-                <p>
-                    The U.S. National Science Foundation (NSF) funded NSFNET, a 56 Kbps backbone connecting supercomputing centers and regional research networks.This scaled the network from thousands to millions of connected hosts.
-                </p>
-                <p>
-                    Source:
-                    <a href="https://www.nsf.gov/impacts/internet" target="_blank">
-                        U.S. National Science Foundation
-                    </a>
-                </p>
-            </article>
+    <!-- Full timeline of the Internet's development -->
+    <section id="timeline">
 
-            <article>
-                <h3>April 30, 1995 — NSFNET Backbone Decommissioned</h3>
-                <p>
-                    As commercial Internet Service Providers (ISPs) expanded, NSF
-                    funding ended, marking the shift toward a commercial,
-                    publicly accessible Internet.
-                </p>
-                <p>
-                    Source:
-                    <a href="https://www.internetsociety.org/internet/history-internet/brief-history-internet/" target="_blank">
-                        Internet Society
-                    </a>
-                </p>
-            </article>
-            
-        </section>
-    </main>
-    <footer>
-        <p>This page was created for educational purposes only.</p>
-        <p>&copy; 2026 Adrian El-Rahi. All rights reserved.</p>
-    </footer>
-</body>
+        <article id="event-1969">
+            <h4>October 29, 1969 — First ARPANET Message</h4>
+            <p>
+                UCLA student programmer Charley Kline sent the first host-to-host message over ARPANET to Bill Duvall at the Stanford Research Institute (SRI). This demonstrated that geographically separated computers could exchange data reliably.
+            </p>
+            <p>
+                Source:
+                <a href="https://computerhistory.org/blog/history-of-the-future-october-29-1969-fifty-years-of-a-connected-world/" target="_blank">
+                    Computer History Museum
+                </a>
+            </p>
+        </article>
+
+        <article id="event-1983-tcpip">
+            <h4>January 1, 1983 — ARPANET Adopts TCP/IP</h4>
+            <p>
+                ARPANET completed its transition from NCP to TCP/IP,
+                allowing independent networks to communicate through a
+                common protocol — a key step toward the modern Internet.
+            </p>
+            <p>
+                Source:
+                <a href="https://www.internetsociety.org/internet/history-internet/brief-history-internet/" target="_blank">
+                    Internet Society
+                </a>
+            </p>
+        </article>
+
+        <article id="event-1983-dns">
+            <h4>November 1983 — Domain Name System (DNS) Invented</h4>
+            <p>
+                RFC 882 defined DNS: a scalable, hierarchical naming system,
+                replacing a single manually maintained list of host names.
+            </p>
+            <p>
+                Source:
+                <a href="https://datatracker.ietf.org/doc/html/rfc882" target="_blank">
+                    IETF (RFC 882)
+                </a>
+            </p>
+        </article>
+
+        <article id="event-1986">
+            <h4>1986 — NSFNET Backbone Launched</h4>
+            <p>
+                The U.S. National Science Foundation (NSF) funded NSFNET, a 56 Kbps backbone connecting supercomputing centers and regional research networks. This scaled the network from thousands to millions of connected hosts.
+            </p>
+            <p>
+                Source:
+                <a href="https://www.nsf.gov/impacts/internet" target="_blank">
+                    U.S. National Science Foundation
+                </a>
+            </p>
+        </article>
+
+        <article id="event-1989">
+            <h4>March 1989 — Tim Berners-Lee Proposes the World Wide Web</h4>
+            <p>
+                While working at CERN, Tim Berners-Lee circulated a proposal
+                for a distributed hypertext system to help researchers share
+                information. The idea combined hypertext with the Internet,
+                laying the groundwork for HTTP, HTML, and the URL.
+            </p>
+            <p>
+                Source:
+                <a href="https://home.cern/science/computing/birth-web" target="_blank">
+                    CERN
+                </a>
+            </p>
+        </article>
+
+        <article id="event-1991">
+            <h4>August 6, 1991 — The World Wide Web Goes Public</h4>
+            <p>
+                Berners-Lee published the first website and made the
+                WorldWideWeb software available to the public, introducing
+                the concepts of web pages, hyperlinks, and browsers that
+                define the Web today.
+            </p>
+            <p>
+                Source:
+                <a href="https://home.cern/science/computing/birth-web/short-history-web" target="_blank">
+                    CERN
+                </a>
+            </p>
+        </article>
+
+        <article id="event-1993-domain">
+            <h4>April 30, 1993 — CERN Puts the Web in the Public Domain</h4>
+            <p>
+                CERN released the World Wide Web technology royalty-free,
+                removing licensing barriers and enabling anyone to build
+                on the Web without paying fees.
+            </p>
+            <p>
+                Source:
+                <a href="https://home.cern/science/computing/birth-web/licensing-web" target="_blank">
+                    CERN
+                </a>
+            </p>
+        </article>
+
+        <article id="event-1993-mosaic">
+            <h4>1993 — Mosaic Browser Released</h4>
+            <p>
+                The NCSA Mosaic browser brought a graphical, easy-to-use
+                interface to the Web, including inline images, and is
+                widely credited with sparking mainstream public interest
+                in the Internet.
+            </p>
+            <p>
+                Source:
+                <a href="https://www.livinginternet.com/w/wi_mosaic.htm" target="_blank">
+                    Living Internet
+                </a>
+            </p>
+        </article>
+
+        <article id="event-1994">
+            <h4>1994–1995 — Commercial Internet Takes Off</h4>
+            <p>
+                Netscape Navigator popularized web browsing, while Amazon
+                (1994) and eBay (1995) launched as some of the earliest
+                commercial websites, signaling the Internet's shift from
+                a research tool to a consumer marketplace.
+            </p>
+            <p>
+                Source:
+                <a href="https://www.internetsociety.org/internet/history-internet/brief-history-internet/" target="_blank">
+                    Internet Society
+                </a>
+            </p>
+        </article>
+
+        <article id="event-1995">
+            <h4>April 30, 1995 — NSFNET Backbone Decommissioned</h4>
+            <p>
+                As commercial Internet Service Providers (ISPs) expanded, NSF
+                funding ended, marking the shift toward a commercial,
+                publicly accessible Internet.
+            </p>
+            <p>
+                Source:
+                <a href="https://www.internetsociety.org/internet/history-internet/brief-history-internet/" target="_blank">
+                    Internet Society
+                </a>
+            </p>
+        </article>
+
+        <article id="event-1998">
+            <h4>September 1998 — Google Founded</h4>
+            <p>
+                Larry Page and Sergey Brin founded Google, whose PageRank
+                algorithm dramatically improved search relevance and
+                reshaped how people navigated the growing Web.
+            </p>
+            <p>
+                Source:
+                <a href="https://about.google/our-story/" target="_blank">
+                    Google
+                </a>
+            </p>
+        </article>
+
+        <article id="event-2000">
+            <h4>2000–2001 — Dot-Com Bubble Bursts</h4>
+            <p>
+                A speculative boom in Internet-based companies collapsed,
+                wiping out trillions in market value, but the surviving
+                infrastructure and companies laid the foundation for the
+                next phase of Web growth.
+            </p>
+            <p>
+                Source:
+                <a href="https://www.investopedia.com/terms/d/dotcom-bubble.asp" target="_blank">
+                    Investopedia
+                </a>
+            </p>
+        </article>
+
+        <article id="event-2004">
+            <h4>2004–2006 — Rise of Web 2.0 and Social Media</h4>
+            <p>
+                Platforms such as Facebook (2004), YouTube (2005), and
+                Twitter (2006) turned the Web into an interactive,
+                user-generated medium, a shift often labeled "Web 2.0."
+            </p>
+            <p>
+                Source:
+                <a href="https://www.britannica.com/topic/Web-2-0" target="_blank">
+                    Encyclopaedia Britannica
+                </a>
+            </p>
+        </article>
+
+        <article id="event-2006">
+            <h4>2006 — Cloud Computing Goes Mainstream</h4>
+            <p>
+                Amazon Web Services launched S3 and EC2, popularizing
+                on-demand cloud infrastructure and letting businesses
+                rent computing power instead of owning data centers.
+            </p>
+            <p>
+                Source:
+                <a href="https://aws.amazon.com/about-aws/whats-new/2006/" target="_blank">
+                    Amazon Web Services
+                </a>
+            </p>
+        </article>
+
+        <article id="event-2007">
+            <h4>June 29, 2007 — The iPhone Launches Mobile Internet</h4>
+            <p>
+                Apple's iPhone made full web browsing practical on a
+                pocket device, accelerating the shift of Internet use
+                from desktops to smartphones worldwide.
+            </p>
+            <p>
+                Source:
+                <a href="https://www.apple.com/newsroom/2007/01/09Apple-Reinvents-the-Phone-with-iPhone/" target="_blank">
+                    Apple Newsroom
+                </a>
+            </p>
+        </article>
+
+        <article id="event-2012">
+            <h4>June 6, 2012 — World IPv6 Launch</h4>
+            <p>
+                Major ISPs, home networking manufacturers, and web
+                companies permanently enabled IPv6, addressing the
+                exhaustion of the older IPv4 address space and preparing
+                the Internet for billions of new connected devices.
+            </p>
+            <p>
+                Source:
+                <a href="https://www.internetsociety.org/deploy360/ipv6/world-ipv6-launch/" target="_blank">
+                    Internet Society
+                </a>
+            </p>
+        </article>
+
+        <article id="event-2013">
+            <h4>2013 — Global Surveillance Disclosures</h4>
+            <p>
+                Edward Snowden's disclosures about government surveillance
+                programs sparked a worldwide debate about online privacy,
+                encryption, and the balance between security and civil
+                liberties on the Internet.
+            </p>
+            <p>
+                Source:
+                <a href="https://www.britannica.com/topic/Edward-Snowden" target="_blank">
+                    Encyclopaedia Britannica
+                </a>
+            </p>
+        </article>
+
+        <article id="event-2019">
+            <h4>2019–2020 — 5G Rollout and the COVID-19 Surge</h4>
+            <p>
+                Commercial 5G networks began rolling out globally just as
+                the COVID-19 pandemic pushed remote work, online learning,
+                telehealth, and video conferencing into daily life for
+                billions of people, straining and reshaping Internet
+                infrastructure.
+            </p>
+            <p>
+                Source:
+                <a href="https://www.itu.int/en/mediacentre/Pages/PR-2020-COVID19.aspx" target="_blank">
+                    International Telecommunication Union (ITU)
+                </a>
+            </p>
+        </article>
+
+        <article id="event-2022">
+            <h4>November 30, 2022 — Generative AI Reaches the Mainstream</h4>
+            <p>
+                OpenAI's release of ChatGPT brought conversational
+                generative AI to a mass audience, kicking off rapid
+                adoption of AI chatbots and assistants across search,
+                productivity, and content creation on the Web.
+            </p>
+            <p>
+                Source:
+                <a href="https://openai.com/index/chatgpt/" target="_blank">
+                    OpenAI
+                </a>
+            </p>
+        </article>
+
+        <article id="event-2023">
+            <h4>2023–2026 — The AI-Integrated Internet</h4>
+            <p>
+                AI assistants and agents became embedded directly into
+                browsers, search engines, and productivity tools, while
+                debates over data privacy, AI-generated content, and
+                platform regulation continued to shape how the Internet
+                is governed and used today.
+            </p>
+            <p>
+                Source:
+                <a href="https://www.internetsociety.org/" target="_blank">
+                    Internet Society
+                </a>
+            </p>
+        </article>
+
+    </section>
+
+    <!-- Summary table of key protocols and technologies, extended through the present -->
+    <section id="protocols">
+        <h3>Key Protocols and Technologies</h3>
+        <table border="1" cellpadding="6" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>Protocol / Technology</th>
+                    <th>Introduced</th>
+                    <th>Purpose</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>NCP (Network Control Protocol)</td>
+                    <td>1970</td>
+                    <td>Original ARPANET host-to-host protocol, later replaced by TCP/IP</td>
+                </tr>
+                <tr>
+                    <td>TCP/IP</td>
+                    <td>1983</td>
+                    <td>Core communication protocol suite enabling networks of networks</td>
+                </tr>
+                <tr>
+                    <td>DNS</td>
+                    <td>1983</td>
+                    <td>Translates human-readable domain names into IP addresses</td>
+                </tr>
+                <tr>
+                    <td>HTTP</td>
+                    <td>1990–1991</td>
+                    <td>Protocol for transferring hypertext (web pages) between clients and servers</td>
+                </tr>
+                <tr>
+                    <td>HTML</td>
+                    <td>1990–1991</td>
+                    <td>Markup language used to structure and format web pages</td>
+                </tr>
+                <tr>
+                    <td>SSL/TLS</td>
+                    <td>1995 / 1999</td>
+                    <td>Encrypts data in transit, enabling secure ("https") communication</td>
+                </tr>
+                <tr>
+                    <td>Wi-Fi (802.11)</td>
+                    <td>1997</td>
+                    <td>Wireless local-area networking standard</td>
+                </tr>
+                <tr>
+                    <td>IPv6</td>
+                    <td>1998 (spec) / 2012 (launch)</td>
+                    <td>Expanded address space to accommodate billions of connected devices</td>
+                </tr>
+                <tr>
+                    <td>4G LTE</td>
+                    <td>2009</td>
+                    <td>Mobile network standard fast enough to rival fixed broadband</td>
+                </tr>
+                <tr>
+                    <td>HTTP/2</td>
+                    <td>2015</td>
+                    <td>Sped up page loading by multiplexing requests over one connection</td>
+                </tr>
+                <tr>
+                    <td>5G</td>
+                    <td>2019</td>
+                    <td>High-speed, low-latency mobile standard supporting massive device density</td>
+                </tr>
+                <tr>
+                    <td>HTTP/3 (QUIC)</td>
+                    <td>2022</td>
+                    <td>Further reduces latency by running HTTP over a faster, UDP-based transport</td>
+                </tr>
+                <tr>
+                    <td>Low-Earth-Orbit Satellite Internet</td>
+                    <td>2019–present</td>
+                    <td>Delivers broadband to rural and remote areas unreached by fiber or cable</td>
+                </tr>
+                <tr>
+                    <td>AI-Driven Network Infrastructure</td>
+                    <td>2023–present</td>
+                    <td>Edge computing and traffic optimization built to handle AI workloads at scale</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+{% endblock %}
+
+
+
+

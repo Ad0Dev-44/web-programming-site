@@ -2,8 +2,20 @@
 {% block title %}History of the Internet{% endblock %}
 
 {% block content %}
-        <section>
+    <section id="intro">
         <h2>History of the Internet</h2>
+        <p>
+            The Internet began as a small research project connecting a
+            handful of university computers and grew into the global
+            infrastructure that now underpins communication, commerce,
+            and daily life for billions of people. What started as
+            ARPANET in 1969 evolved through the invention of TCP/IP and
+            DNS, the birth of the World Wide Web, the dot-com boom and
+            bust, the rise of social media and cloud computing, and the
+            more recent emergence of mobile, 5G, and AI-integrated
+            networks. This page traces that evolution through key events
+            and the technologies that made each stage possible.
+        </p>
         <img src="{{ url_for('static', filename='images/Arpanet1969.jpeg') }}"
              alt="Illustration of the ARPANET node map in 1969" width="200" height="100">
     </section>
@@ -24,6 +36,7 @@
 
     <!-- Full timeline of the Internet's development -->
     <section id="timeline">
+        <h3>Timeline of Key Events</h3>
 
         <article id="event-1969">
             <h4>October 29, 1969 — First ARPANET Message</h4>
@@ -420,7 +433,3 @@
         </table>
     </section>
 {% endblock %}
-
-
-
-

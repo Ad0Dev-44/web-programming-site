@@ -112,11 +112,11 @@ href="{{ url_for('static', filename='more_style.css') }}"/>
 
             <div class="field-row">
                 <p>
-                    <label for="gpa">Current GPA (out of 100) *</label><br>
-                    <input type="text" id="gpa" name="gpa"
-                           pattern="(100([.,]0{1,2})?|\d{1,2}([.,]\d{1,2})?)( ?/ ?100)?"
-                           inputmode="decimal" placeholder="85.50"
-                           title="A number from 0 to 100, e.g. 85, 85.5, 85,50 or 85/100" required>
+                <label for="gpa">Current GPA (out of 100) *</label><br>
+                <input type="text" id="gpa" name="gpa"
+                    pattern="(100([.,]0{1,2})?|[4-9]\d([.,]\d{1,2})?)( ?/ ?100)?"
+                    inputmode="decimal" placeholder="85.50"
+                    title="A number from 40 to 100, e.g. 85, 85.5, 85,50 or 85/100" required>
                 </p>
                 <p>
                     <label for="credits">Credits Completed *</label><br>

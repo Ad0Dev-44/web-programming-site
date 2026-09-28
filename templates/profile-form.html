@@ -1,0 +1,381 @@
+{% extends "base.html" %}
+{% block title %}Engineering Student Profile{% endblock %}
+
+{% block head %}
+<link rel="stylesheet"
+href="{{ url_for('static', filename='more_style.css') }}"/>
+{% endblock %}
+
+{% block content %}
+<h2>Engineering Student Profile</h2>
+<p>Complete this form with your academic background, technical skills, internship experience, and Final Year Project (FYP) preferences.</p>
+
+<div class="form-intro">
+    <p><strong>Before you start</strong></p>
+    <p>Have your student ID, GitHub profile link, GIN446 Render website link, and a tentative project idea ready. The form has five short sections, and each one gets a &#10003; in the steps as you complete it. Fields marked with * are required.</p>
+</div>
+
+<form action="{{ url_for('submit_profile') }}" method="post">
+
+    <nav class="form-steps" aria-label="Form sections">
+        <ol>
+            <li><a href="#sec-personal">Personal</a></li>
+            <li><a href="#sec-academic">Academic</a></li>
+            <li><a href="#sec-technical">Technical</a></li>
+            <li><a href="#sec-project">Project</a></li>
+            <li><a href="#sec-confirm">Confirm</a></li>
+        </ol>
+    </nav>
+
+    <div class="form-sections">
+
+        <fieldset id="sec-personal">
+            <legend>Personal Information</legend>
+            <p class="section-note">Tell us who you are and how to reach you.</p>
+
+            <p>
+                <label for="fullname">Full Name *</label><br>
+                <input type="text" id="fullname" name="fullname"
+                       pattern="[A-Za-zÀ-ÖØ-öø-ÿ'\-]+( [A-Za-zÀ-ÖØ-öø-ÿ'\-]+)+"
+                       autocomplete="name" placeholder="First name and last name"
+                       title="At least two words. Letters, hyphens and apostrophes only, e.g. Marie-Jose O'Connor" required>
+            </p>
+
+            <div class="field-row">
+                <p>
+                    <label for="student_id">Student ID *</label><br>
+                    <input type="text" id="student_id" name="student_id"
+                           pattern="20[0-3]\d{6}" inputmode="numeric" maxlength="9"
+                           placeholder="e.g. 202312345"
+                           title="9 digits starting with the admission year, e.g. 202312345" required>
+                </p>
+                <p>
+                    <label for="birthdate">Date of Birth *</label><br>
+                    <input type="date" id="birthdate" name="birthdate"
+                           min="1970-01-01" max="2010-12-31" autocomplete="bday" required>
+                </p>
+            </div>
+
+            <div class="field-row">
+                <p>
+                    <label for="email">USEK Email *</label><br>
+                    <input type="email" id="email" name="email"
+                           pattern="[A-Za-z0-9._%+\-]+@(net\.)?usek\.edu\.lb"
+                           autocomplete="email" placeholder="student@net.usek.edu.lb"
+                           title="A USEK address ending in @net.usek.edu.lb or @usek.edu.lb" required>
+                </p>
+                <p>
+                    <label for="phone">Mobile Number *</label><br>
+                    <input type="tel" id="phone" name="phone"
+                           pattern="(\+961|00961|0)?[ .\-]?(3|70|71|76|78|79|81)[ .\-]?\d{3}[ .\-]?\d{3}"
+                           autocomplete="tel" placeholder="+961 70 123456"
+                           title="Lebanese mobile number, e.g. +961 70 123456, 0096170123456, 03 123 456 or 70-123-456" required>
+                </p>
+            </div>
+
+            <div class="field-row">
+                <p>
+                    <label for="portfolio">GitHub Profile *</label><br>
+                    <input type="url" id="portfolio" name="portfolio"
+                           pattern="https?://(www\.)?github\.com/[A-Za-z0-9]+(\-[A-Za-z0-9]+)*/?"
+                           placeholder="https://github.com/username"
+                           title="Your GitHub profile link, e.g. https://github.com/username" required>
+                </p>
+                <p>
+                    <label for="gin446">GIN446 Website *</label><br>
+                    <input type="url" id="gin446" name="gin446"
+                           pattern="https://[A-Za-z0-9\-]+\.onrender\.com(/\S*)?"
+                           placeholder="https://your-site.onrender.com"
+                           title="Your Render website link, e.g. https://your-site.onrender.com" required>
+                </p>
+            </div>
+        </fieldset>
+
+        <fieldset id="sec-academic">
+            <legend>Academic Information</legend>
+            <p class="section-note">Your current standing and expected graduation.</p>
+
+            <p>
+                <label for="major">Engineering Major *</label><br>
+                <select name="major" id="major" required>
+                    <option value="">-- Select your major --</option>
+                    <option value="agriculture">Agricultural Engineering</option>
+                    <option value="biomedical">Biomedical Engineering</option>
+                    <option value="chemical">Chemical Engineering</option>
+                    <option value="computer">Computer Engineering</option>
+                    <option value="electrical">Electrical and Electronics Engineering</option>
+                    <option value="mechanical">Mechanical Engineering</option>
+                    <option value="telecommunication">Telecommunications Engineering</option>
+                    <option value="food">Food Engineering</option>
+                </select>
+            </p>
+
+            <div class="field-row">
+                <p>
+                    <label for="gpa">Current GPA (out of 100) *</label><br>
+                    <input type="text" id="gpa" name="gpa"
+                           pattern="(100([.,]0{1,2})?|\d{1,2}([.,]\d{1,2})?)( ?/ ?100)?"
+                           inputmode="decimal" placeholder="85.50"
+                           title="A number from 0 to 100, e.g. 85, 85.5, 85,50 or 85/100" required>
+                </p>
+                <p>
+                    <label for="credits">Credits Completed *</label><br>
+                    <input type="number" id="credits" name="credits" min="0" max="200" step="1" required>
+                </p>
+            </div>
+
+            <div class="field-row">
+                <p>
+                    Expected Graduation Term *<br>
+                    <input type="radio" id="spring" name="graduation" value="Spring" required>
+                    <label for="spring">Spring</label>
+                    <input type="radio" id="summer" name="graduation" value="Summer">
+                    <label for="summer">Summer</label>
+                    <input type="radio" id="fall" name="graduation" value="Fall">
+                    <label for="fall">Fall</label>
+                </p>
+                <p>
+                    <label for="graduation_month">Expected Graduation Month &amp; Year *</label><br>
+                    <input type="month" id="graduation_month" name="graduation_month"
+                           min="2026-09" max="2032-12" required>
+                </p>
+            </div>
+
+            <p>
+                Have you completed an engineering internship? *<br>
+                <input type="radio" id="internship_yes" name="internship_completed" value="Yes" required>
+                <label for="internship_yes">Yes</label>
+                <input type="radio" id="internship_no" name="internship_completed" value="No">
+                <label for="internship_no">No</label>
+            </p>
+
+            <details>
+                <summary>Internship details (only if you answered Yes)</summary>
+                <div class="field-row">
+                    <p>
+                        <label for="internship_company">Company / Organization</label><br>
+                        <input type="text" id="internship_company" name="internship_company"
+                               pattern="[A-Za-z0-9][A-Za-z0-9 &amp;.,'\/\-]{1,59}"
+                               placeholder="e.g. Ogero Telecom"
+                               title="2 to 60 characters: letters, numbers, spaces and . , &amp; ' / -">
+                    </p>
+                    <p>
+                        <label for="internship_duration">Duration</label><br>
+                        <select id="internship_duration" name="internship_duration">
+                            <option value="">-- Select --</option>
+                            <option value="under1">Less than 1 month</option>
+                            <option value="1to2">1 to 2 months</option>
+                            <option value="2to3">2 to 3 months</option>
+                            <option value="over3">More than 3 months</option>
+                        </select>
+                    </p>
+                </div>
+            </details>
+        </fieldset>
+
+        <fieldset id="sec-technical">
+            <legend>Technical Background</legend>
+            <p class="section-note">Skills and tools you are comfortable with.</p>
+
+            <p>Select all areas in which you have experience:</p>
+
+            <input type="checkbox" id="programming" name="skills" value="Programming">
+            <label for="programming">Programming</label><br>
+
+            <input type="checkbox" id="embedded" name="skills" value="Embedded Systems">
+            <label for="embedded">Embedded Systems</label><br>
+
+            <input type="checkbox" id="electronics" name="skills" value="Electronics">
+            <label for="electronics">Electronics</label><br>
+
+            <input type="checkbox" id="networks" name="skills" value="Computer Networks">
+            <label for="networks">Computer Networks</label><br>
+
+            <input type="checkbox" id="telecom" name="skills" value="Telecommunications">
+            <label for="telecom">Telecommunications</label><br>
+
+            <input type="checkbox" id="biomedical_instr" name="skills" value="Biomedical Instrumentation">
+            <label for="biomedical_instr">Biomedical Instrumentation</label><br>
+
+            <input type="checkbox" id="ai_ml" name="skills" value="AI / Machine Learning">
+            <label for="ai_ml">Artificial Intelligence / Machine Learning</label><br>
+
+            <input type="checkbox" id="signal" name="skills" value="Signal Processing">
+            <label for="signal">Signal Processing</label>
+
+            <p>
+                <label for="skills_other">Other skills (optional, separate with commas)</label><br>
+                <input type="text" id="skills_other" name="skills_other"
+                       pattern="[A-Za-z0-9 ,.+#\/\-]{2,100}"
+                       placeholder="e.g. PLC, CAD, Data Analysis"
+                       title="2 to 100 characters: letters, numbers, spaces and , . + # / -">
+            </p>
+
+            <div class="field-row">
+                <p>
+                    <label for="language">Primary Programming Language *</label><br>
+                    <input type="text" id="language" name="language" list="languages"
+                           pattern="[A-Za-z][A-Za-z0-9+# .]{0,29}"
+                           placeholder="Start typing..."
+                           title="Language name, e.g. Python, C++, C#, Verilog" required>
+                    <datalist id="languages">
+                        <option value="Python">
+                        <option value="C">
+                        <option value="C++">
+                        <option value="C#">
+                        <option value="Java">
+                        <option value="JavaScript">
+                        <option value="MATLAB">
+                        <option value="R">
+                        <option value="Verilog">
+                        <option value="VHDL">
+                    </datalist>
+                </p>
+                <p>
+                    <label for="language_level">Proficiency Level *</label><br>
+                    <select id="language_level" name="language_level" required>
+                        <option value="">-- Select level --</option>
+                        <option value="beginner">Beginner</option>
+                        <option value="intermediate">Intermediate</option>
+                        <option value="advanced">Advanced</option>
+                    </select>
+                </p>
+            </div>
+
+            <p>Engineering software used (select all that apply):</p>
+
+            <input type="checkbox" id="sw_matlab" name="software" value="MATLAB">
+            <label for="sw_matlab">MATLAB</label>
+            <input type="checkbox" id="sw_simulink" name="software" value="Simulink">
+            <label for="sw_simulink">Simulink</label>
+            <input type="checkbox" id="sw_labview" name="software" value="LabVIEW">
+            <label for="sw_labview">LabVIEW</label>
+            <input type="checkbox" id="sw_ltspice" name="software" value="LTspice">
+            <label for="sw_ltspice">LTspice</label>
+            <input type="checkbox" id="sw_vivado" name="software" value="Vivado">
+            <label for="sw_vivado">Vivado</label>
+            <input type="checkbox" id="sw_solidworks" name="software" value="SolidWorks">
+            <label for="sw_solidworks">SolidWorks</label>
+            <input type="checkbox" id="sw_proteus" name="software" value="Proteus">
+            <label for="sw_proteus">Proteus</label>
+            <input type="checkbox" id="sw_autocad" name="software" value="AutoCAD">
+            <label for="sw_autocad">AutoCAD</label>
+        </fieldset>
+
+        <fieldset id="sec-project">
+            <legend>Final Year Project</legend>
+            <p class="section-note">Your project idea and preferred meeting slot.</p>
+
+            <p>
+                <label for="project_title">Proposed Project Title *</label><br>
+                <input type="text" id="project_title" name="project_title"
+                       pattern="[A-Za-z0-9][A-Za-z0-9 ,.:;&amp;'\(\)\/\-]{4,99}"
+                       placeholder="Enter a tentative project title"
+                       title="5 to 100 characters: letters, numbers, spaces and , . : ; &amp; ' ( ) / -" required>
+            </p>
+
+            <div class="field-row">
+                <p>
+                    <label for="project_area">Preferred Project Area *</label><br>
+                    <select id="project_area" name="project_area" required>
+                        <option value="">-- Select an area --</option>
+                        <optgroup label="Computer Engineering">
+                            <option value="ai">Artificial Intelligence</option>
+                            <option value="web">Web Applications</option>
+                            <option value="cybersecurity">Cybersecurity</option>
+                            <option value="iot">Internet of Things</option>
+                        </optgroup>
+                        <optgroup label="Electrical Engineering">
+                            <option value="power">Power Systems</option>
+                            <option value="renewable">Renewable Energy</option>
+                            <option value="control">Control Systems</option>
+                        </optgroup>
+                        <optgroup label="Biomedical Engineering">
+                            <option value="imaging">Medical Imaging</option>
+                            <option value="biosensors">Biosensors</option>
+                            <option value="devices">Medical Devices</option>
+                        </optgroup>
+                        <optgroup label="Telecommunications Engineering">
+                            <option value="wireless">Wireless Communications</option>
+                            <option value="5g6g">5G / 6G Networks</option>
+                            <option value="satellite">Satellite Systems</option>
+                        </optgroup>
+                        <optgroup label="Mechanical, Chemical, Food and Agricultural Engineering">
+                            <option value="robotics">Robotics and Mechatronics</option>
+                            <option value="process">Process and Thermal Systems</option>
+                            <option value="agrifood">Agri-Food Technology</option>
+                        </optgroup>
+                        <optgroup label="Other">
+                            <option value="other">Other / Interdisciplinary</option>
+                        </optgroup>
+                    </select>
+                </p>
+                <p>
+                    <label for="project_type">Project Type *</label><br>
+                    <select id="project_type" name="project_type" required>
+                        <option value="">-- Select a type --</option>
+                        <option value="research">Research-oriented</option>
+                        <option value="prototype">Hardware / Software Prototype</option>
+                        <option value="industry">Industry-sponsored</option>
+                    </select>
+                </p>
+            </div>
+
+            <p>
+                <label for="description">Brief Project Description *</label><br>
+                <textarea id="description" name="description" rows="5" cols="50"
+                          minlength="50" maxlength="1000"
+                          placeholder="Describe the problem, proposed solution, and expected outcome (50 to 1000 characters)..." required></textarea>
+            </p>
+
+            <div class="field-row">
+                <p>
+                    <label for="team_size">Preferred Team Size (1 to 4) *</label><br>
+                    <input type="number" id="team_size" name="team_size" min="1" max="4" step="1" value="2" required>
+                </p>
+                <p>
+                    <label for="project_color">Project Dashboard Color</label><br>
+                    <input type="color" id="project_color" name="project_color" value="#336699">
+                </p>
+            </div>
+
+            <div class="field-row">
+                <p>
+                    <label for="meeting_date">Preferred Meeting Date *</label><br>
+                    <input type="date" id="meeting_date" name="meeting_date" required>
+                </p>
+                <p>
+                    <label for="meeting_time">Preferred Meeting Time (08:00 to 17:00) *</label><br>
+                    <input type="time" id="meeting_time" name="meeting_time"
+                           min="08:00" max="17:00" step="900" required>
+                </p>
+            </div>
+        </fieldset>
+
+        <fieldset id="sec-confirm">
+            <legend>Confirmation</legend>
+            <p class="section-note">Review your answers, then confirm and submit. You can use the steps to jump back to any section.</p>
+
+            <p class="confirm-row">
+                <input type="checkbox" id="confirmation" name="confirmation" value="confirmed" required>
+                <label for="confirmation">I confirm that the information provided is accurate. *</label>
+            </p>
+
+            <p class="form-actions">
+                <button type="submit">Submit Profile</button>
+                <button type="reset">Clear Form</button>
+            </p>
+        </fieldset>
+
+    </div>
+</form>
+
+{% endblock %}
+
+{% block page_navigation %}
+<div class="page-navigation">
+    <a href="{{ url_for('personal_research') }}" class="nav-button">
+        ← Previous Page
+    </a>
+</div>
+{% endblock %}

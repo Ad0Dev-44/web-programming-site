@@ -1,40 +1,110 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>{% block title %}My Web Programming Portfolio{% endblock %}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='my_style.css') }}">
+
+    {% block head %}{% endblock %}
 </head>
-<body>
+
+<body id="top">
+
     <header>
         {% block header %}
-        <h1><a href="{{ url_for('home') }}">Web Programming Portfolio —<br> Adrian El-Rahi</a></h1>
-        <img src="{{ url_for('static', filename='images/WebDesign.jpg') }}"
-             alt="People working on web design via computers"
-             width="150">
+
+        <h1>
+            <a href="{{ url_for('home') }}">
+                Web Programming Portfolio —<br>
+                Adrian El-Rahi
+            </a>
+        </h1>
+
+        <img
+            src="{{ url_for('static', filename='images/WebDesign.jpg') }}"
+            alt="People working on web design via computers"
+            width="150"
+        >
+
         <nav>
             <ul>
-                <li><a href="{{ url_for('home') }}">Home</a></li>
-                <li><a href="{{ url_for('internet_history') }}">History of the Internet</a></li>
-                <li><a href="{{ url_for('web_history') }}">History of the Web</a></li>
-                <li><a href="{{ url_for('personal_research') }}">Forms, Buttons &amp; CSS Research</a></li>
+                <li>
+                    <a href="{{ url_for('home') }}">Home</a>
+                </li>
+
+                <li>
+                    <a href="{{ url_for('internet_history') }}">
+                        History of the Internet
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ url_for('web_history') }}">
+                        History of the Web
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ url_for('personal_research') }}">
+                        Forms, Buttons &amp; CSS Research
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ url_for('submit_profile') }}">
+                        Build Engineering Student Profile Form
+                    </a>
+                </li>
             </ul>
         </nav>
+
         {% endblock %}
     </header>
 
+
     <main>
+
         {% block content %}
         {% endblock %}
+
+        {% block page_navigation %}
+        {% endblock %}
+
     </main>
+
 
     <footer>
         {% block footer %}
-        <p>Web Programming — built with Flask and deployed on Render.</p>
-        <p>This website was created for educational purposes only, as part of the GIN446 - Web Programming course, School of Engineering, USEK (Fall 2026-2027).</p>
-        <p>&copy; 2026 Adrian El-Rahi. All rights reserved.</p>
+
+        <p>
+            Web Programming — built with Flask and deployed on Render.
+        </p>
+
+        <p>
+            This website was created for educational purposes only,
+            as part of the GIN446 - Web Programming course,
+            School of Engineering, USEK (Fall 2026-2027).
+        </p>
+
+        <p>
+            &copy; 2026 Adrian El-Rahi. All rights reserved.
+        </p>
+
         {% endblock %}
     </footer>
+
+
+    <!-- Floating scroll controls -->
+    <div class="page-scroll-controls" aria-label="Scroll controls">
+        <a href="#top" aria-label="Scroll to top">↑</a>
+        <a href="#bottom" aria-label="Scroll to bottom">↓</a>
+    </div>
+
+    <div id="bottom"></div>
+
 </body>
 </html>

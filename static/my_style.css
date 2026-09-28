@@ -10,7 +10,6 @@
    ========================================================= */
 
 :root {
-    /* Colors */
     --color-background: #f8fafc;
     --color-surface: #ffffff;
     --color-surface-alt: #eef5f7;
@@ -27,26 +26,10 @@
 
     --color-border: #d8e2e7;
 
-    /* Typography */
-    --font-body:
-        "Segoe UI",
-        Roboto,
-        Helvetica,
-        Arial,
-        sans-serif;
+    --font-body: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --font-heading: Georgia, "Times New Roman", serif;
+    --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
 
-    --font-heading:
-        Georgia,
-        "Times New Roman",
-        serif;
-
-    --font-mono:
-        "SFMono-Regular",
-        Consolas,
-        "Liberation Mono",
-        monospace;
-
-    /* Layout */
     --content-width: 1100px;
 
     --space-xs: 0.4rem;
@@ -56,17 +39,12 @@
     --space-xl: 3rem;
     --space-2xl: 4rem;
 
-    /* Corners */
     --radius-sm: 6px;
     --radius-md: 10px;
     --radius-lg: 14px;
 
-    /* Effects */
-    --shadow-sm:
-        0 2px 8px rgba(15, 23, 42, 0.06);
-
-    --shadow-md:
-        0 8px 24px rgba(15, 23, 42, 0.08);
+    --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.06);
+    --shadow-md: 0 8px 24px rgba(15, 23, 42, 0.08);
 
     --border-thin: 1px solid var(--color-border);
 
@@ -75,7 +53,7 @@
 
 
 /* =========================================================
-   2. RESET
+   2. RESET / GLOBAL
    ========================================================= */
 
 * {
@@ -97,11 +75,6 @@ body {
     font-size: 17px;
     line-height: 1.75;
 }
-
-
-/* =========================================================
-   3. GLOBAL ELEMENTS
-   ========================================================= */
 
 img {
     display: block;
@@ -129,7 +102,7 @@ a:focus-visible {
 
 
 /* =========================================================
-   4. TYPOGRAPHY
+   3. TYPOGRAPHY
    ========================================================= */
 
 h1,
@@ -179,39 +152,25 @@ strong {
 
 
 /* =========================================================
-   5. HEADER
+   4. HEADER
    ========================================================= */
 
 header {
     display: grid;
-
-    /*
-       Mobile-first layout:
-
-       Column 1 = logo
-       Column 2 = title
-       Navigation = full width below
-    */
     grid-template-columns: 72px 1fr;
+    gap: 1rem;
 
-    column-gap: 1rem;
-    row-gap: 1.25rem;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+
+    padding: 1.25rem 1rem;
 
     background-color: var(--color-surface);
-
     border-bottom: var(--border-thin);
-
-    padding:
-        1.25rem
-        1rem;
 
     box-shadow: var(--shadow-sm);
 }
-
-
-/* =========================================================
-   6. HEADER LOGO
-   ========================================================= */
 
 header > img {
     grid-column: 1;
@@ -222,18 +181,11 @@ header > img {
 
     object-fit: cover;
 
-    margin: 0;
-
     border: var(--border-thin);
     border-radius: var(--radius-md);
 
     box-shadow: var(--shadow-sm);
 }
-
-
-/* =========================================================
-   7. PORTFOLIO TITLE
-   ========================================================= */
 
 header h1 {
     grid-column: 2;
@@ -244,14 +196,11 @@ header h1 {
     margin: 0;
 
     font-size: 1.55rem;
-
     line-height: 1.2;
 }
 
 header h1 a {
     color: var(--color-text);
-
-    text-decoration: none;
 }
 
 header h1 a:hover {
@@ -260,10 +209,10 @@ header h1 a:hover {
 
 
 /* =========================================================
-   8. NAVIGATION
+   5. MAIN NAVIGATION
    ========================================================= */
 
-nav {
+header nav {
     grid-column: 1 / -1;
     grid-row: 2;
 
@@ -272,10 +221,9 @@ nav {
     border-top: var(--border-thin);
 }
 
-nav ul {
+header nav ul {
     display: flex;
     flex-direction: column;
-
     gap: 0.25rem;
 
     margin: 0;
@@ -284,11 +232,11 @@ nav ul {
     list-style: none;
 }
 
-nav li {
+header nav li {
     margin: 0;
 }
 
-nav a {
+header nav a {
     display: block;
 
     padding: 0.6rem 0.8rem;
@@ -301,37 +249,27 @@ nav a {
     font-weight: 600;
 }
 
-nav a:hover {
+header nav a:hover {
     background-color: var(--color-primary-light);
-
     color: var(--color-primary);
 }
 
 
 /* =========================================================
-   9. MAIN
+   6. MAIN CONTENT
    ========================================================= */
 
 main {
     width: calc(100% - 2rem);
-
     max-width: var(--content-width);
 
     margin: 0 auto;
 
-    padding:
-        var(--space-xl)
-        0;
+    padding: var(--space-xl) 0;
 }
-
-
-/* =========================================================
-   10. SECTIONS
-   ========================================================= */
 
 main > section {
     margin-bottom: var(--space-xl);
-
     padding-bottom: var(--space-xl);
 
     border-bottom: var(--border-thin);
@@ -339,7 +277,6 @@ main > section {
 
 main > section:last-child {
     margin-bottom: 0;
-
     border-bottom: none;
 }
 
@@ -358,32 +295,19 @@ main section h2::after {
     margin-top: 0.8rem;
 
     background-color: var(--color-accent);
-
     border-radius: 2px;
 }
 
 
 /* =========================================================
-   11. PAGE INTRODUCTION IMAGES
+   7. IMAGES
    ========================================================= */
-
-/*
-   The first image inside the main content is treated as
-   a historical feature image.
-
-   This works with your existing HTML and does not require
-   a new class or ID.
-*/
 
 main > section:first-child > img {
     width: 100%;
     max-width: 800px;
 
-    height: auto;
-
-    margin:
-        var(--space-lg)
-        auto;
+    margin: var(--space-lg) auto;
 
     border: var(--border-thin);
     border-radius: var(--radius-lg);
@@ -395,7 +319,7 @@ main > section:first-child > img {
 
 
 /* =========================================================
-   12. CONTENT LINKS
+   8. CONTENT LINKS
    ========================================================= */
 
 main p a,
@@ -411,13 +335,12 @@ main li a {
 main p a:hover,
 main li a:hover {
     color: var(--color-accent);
-
     text-decoration-color: var(--color-accent);
 }
 
 
 /* =========================================================
-   13. LISTS
+   9. LISTS / WEEKLY WORK
    ========================================================= */
 
 main ul,
@@ -430,25 +353,28 @@ main li {
     margin-bottom: 0.5rem;
 }
 
-
-/* Weekly work entries */
-
 main section ul {
     display: grid;
     grid-template-columns: 1fr;
     gap: var(--space-md);
+
     margin-top: var(--space-lg);
     padding-left: 0;
+
     list-style: none;
 }
 
 main section ul li {
     margin: 0;
     padding: 1rem 1.1rem;
+
     background-color: var(--color-surface);
+
     border: var(--border-thin);
     border-radius: var(--radius-md);
+
     box-shadow: var(--shadow-sm);
+
     transition:
         border-color var(--transition-fast),
         box-shadow var(--transition-fast),
@@ -458,45 +384,29 @@ main section ul li {
 main section ul li:hover {
     border-color: var(--color-primary);
     box-shadow: var(--shadow-md);
-    transform: translateY(-2px);
-}
-
-main section ul li:hover {
-    border-color: var(--color-primary);
-
-    box-shadow: var(--shadow-md);
-
     transform: translateX(3px);
 }
 
 
 /* =========================================================
-   14. CONTAINER
+   10. CONTAINER / CARDS
    ========================================================= */
 
 .container {
     width: calc(100% - 2rem);
-
     max-width: var(--content-width);
 
-    margin-left: auto;
-    margin-right: auto;
+    margin: 0 auto;
 }
 
-
-/* =========================================================
-   15. CARDS
-   ========================================================= */
-
 .card {
+    margin-bottom: var(--space-lg);
+    padding: var(--space-lg);
+
     background-color: var(--color-surface);
 
     border: var(--border-thin);
     border-radius: var(--radius-md);
-
-    padding: var(--space-lg);
-
-    margin-bottom: var(--space-lg);
 
     box-shadow: var(--shadow-sm);
 
@@ -508,22 +418,19 @@ main section ul li:hover {
 
 .card:hover {
     transform: translateY(-2px);
-
     border-color: var(--color-primary);
-
     box-shadow: var(--shadow-md);
 }
 
 
 /* =========================================================
-   16. RESEARCH / HISTORY
+   11. RESEARCH / HISTORY
    ========================================================= */
 
 .timeline {
     position: relative;
 
     margin: var(--space-xl) 0;
-
     padding-left: 1.75rem;
 }
 
@@ -544,14 +451,13 @@ main section ul li:hover {
 .timeline-item {
     position: relative;
 
+    margin-bottom: var(--space-lg);
+    padding: var(--space-lg);
+
     background-color: var(--color-surface);
 
     border: var(--border-thin);
     border-radius: var(--radius-md);
-
-    padding: var(--space-lg);
-
-    margin-bottom: var(--space-lg);
 
     box-shadow: var(--shadow-sm);
 }
@@ -570,7 +476,6 @@ main section ul li:hover {
     background-color: var(--color-primary);
 
     border: 3px solid var(--color-background);
-
     border-radius: 50%;
 }
 
@@ -578,11 +483,9 @@ main section ul li:hover {
     display: inline-block;
 
     margin-bottom: var(--space-sm);
-
     padding: 0.2rem 0.65rem;
 
     background-color: var(--color-primary-light);
-
     color: var(--color-primary);
 
     border-radius: 999px;
@@ -594,51 +497,76 @@ main section ul li:hover {
 .note,
 .highlight {
     margin: var(--space-lg) 0;
-
-    padding:
-        var(--space-md)
-        var(--space-lg);
+    padding: var(--space-md) var(--space-lg);
 
     background-color: var(--color-accent-light);
 
     border-left: 4px solid var(--color-accent);
-
     border-radius: var(--radius-sm);
 }
 
 
 /* =========================================================
-   17. EMBEDDED CONTENT
+   12. IN-PAGE SECTION NAVIGATION
+   ========================================================= */
+
+nav[aria-label="Page sections"] {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+
+    margin: var(--space-sm) 0 var(--space-lg);
+    padding: 0;
+
+    border: none;
+}
+
+nav[aria-label="Page sections"] a {
+    padding: 0.4rem 0.8rem;
+
+    background-color: var(--color-surface-alt);
+
+    border: var(--border-thin);
+    border-radius: var(--radius-sm);
+
+    color: var(--color-primary);
+
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+nav[aria-label="Page sections"] a:hover {
+    background-color: var(--color-primary-light);
+
+    border-color: var(--color-primary);
+
+    color: var(--color-accent);
+}
+
+
+/* =========================================================
+   13. EMBEDDED CONTENT
    ========================================================= */
 
 main section iframe {
     display: block;
 
     width: 100%;
-
-    /*
-       Mobile-first:
-       Keep the iframe useful without allowing it to
-       dominate the entire screen.
-    */
     height: 420px;
 
-    margin:
-        var(--space-lg)
-        0
-        0;
+    margin-top: var(--space-lg);
+
+    background-color: var(--color-surface);
 
     border: var(--border-thin);
     border-radius: var(--radius-md);
-
-    background-color: var(--color-surface);
 
     box-shadow: var(--shadow-sm);
 }
 
 
 /* =========================================================
-   18. TABLES
+   14. TABLES
    ========================================================= */
 
 table {
@@ -667,7 +595,6 @@ td {
 
 th {
     background-color: var(--color-surface-alt);
-
     font-weight: 700;
 }
 
@@ -677,7 +604,7 @@ tr:last-child td {
 
 
 /* =========================================================
-   19. CODE
+   15. CODE
    ========================================================= */
 
 code {
@@ -712,7 +639,6 @@ pre code {
     padding: 0;
 
     background: transparent;
-
     border: none;
 
     color: inherit;
@@ -720,15 +646,125 @@ pre code {
 
 
 /* =========================================================
-   20. FOOTER
+   16. BOTTOM PAGE NAVIGATION
+   ========================================================= */
+
+.page-navigation {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: var(--space-md);
+
+    margin-top: var(--space-xl);
+    padding-top: var(--space-xl);
+
+    border-top: var(--border-thin);
+}
+
+.nav-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0.7rem 1.2rem;
+
+    background-color: var(--color-primary);
+    color: #ffffff;
+
+    border: 1px solid var(--color-primary);
+    border-radius: var(--radius-md);
+
+    font-weight: 600;
+
+    box-shadow: var(--shadow-sm);
+
+    transition:
+        background-color var(--transition-fast),
+        border-color var(--transition-fast),
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast);
+}
+
+.nav-button:hover {
+    background-color: var(--color-accent);
+    border-color: var(--color-accent);
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.nav-button:focus-visible {
+    outline: 3px solid var(--color-accent);
+    outline-offset: 3px;
+}
+
+@media (max-width: 500px) {
+    .page-navigation {
+        flex-direction: row;
+        justify-content: flex-end;
+        flex-wrap: wrap;
+    }
+}
+
+
+/* =========================================================
+   17. PAGE SCROLL CONTROLS
+   ========================================================= */
+
+.page-scroll-controls {
+    position: fixed;
+
+    right: 1rem;
+    bottom: 1rem;
+
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    z-index: 900;
+}
+
+.page-scroll-controls a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 42px;
+    height: 42px;
+
+    background-color: var(--color-surface);
+
+    border: var(--border-thin);
+    border-radius: 50%;
+
+    color: var(--color-primary);
+
+    font-size: 1.25rem;
+    font-weight: 700;
+
+    box-shadow: var(--shadow-md);
+
+    transition:
+        background-color var(--transition-fast),
+        color var(--transition-fast),
+        transform var(--transition-fast);
+}
+
+.page-scroll-controls a:hover {
+    background-color: var(--color-primary);
+    color: #ffffff;
+
+    transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   18. FOOTER
    ========================================================= */
 
 footer {
     margin-top: var(--space-xl);
-
-    padding:
-        var(--space-xl)
-        1rem;
+    padding: var(--space-xl) 1rem;
 
     background-color: var(--color-surface);
 
@@ -743,52 +779,19 @@ footer {
 
 footer p {
     max-width: 750px;
-
-    margin:
-        0 auto
-        0.4rem;
+    margin: 0 auto 0.4rem;
 }
 
 footer p:last-child {
     margin-top: var(--space-md);
 
     color: var(--color-text);
-
     font-weight: 600;
 }
 
 
 /* =========================================================
-   20.5 IN-PAGE SECTION NAVIGATION (Cleaned up)
-   ========================================================= */
-
-nav[aria-label="Page sections"] {
-    display: flex;
-    gap: var(--space-xs);
-    margin: var(--space-sm) 0 var(--space-lg) 0;
-    flex-wrap: wrap;
-    border: none; /* Removes any wrapping lines */
-    padding: 0;   /* Removes unwanted box padding */
-}
-
-nav[aria-label="Page sections"] a {
-    background-color: var(--color-surface-alt);
-    color: var(--color-primary);
-    padding: 0.4rem 0.8rem;
-    border-radius: var(--radius-sm);
-    text-decoration: none;
-    border: var(--border-thin);
-    font-size: 0.9rem;
-    font-weight: 600;
-}
-
-nav[aria-label="Page sections"] a:hover {
-    background-color: var(--color-primary-light);
-    color: var(--color-accent);
-    border-color: var(--color-primary);
-}
-/* =========================================================
-   21. DARK THEME
+   19. DARK THEME
    ========================================================= */
 
 @media (prefers-color-scheme: dark) {
@@ -810,17 +813,14 @@ nav[aria-label="Page sections"] a:hover {
 
         --color-border: #263449;
 
-        --shadow-sm:
-            0 2px 8px rgba(0, 0, 0, 0.25);
-
-        --shadow-md:
-            0 8px 24px rgba(0, 0, 0, 0.3);
+        --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.25);
+        --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.3);
     }
 }
 
 
 /* =========================================================
-   22. TABLET / DESKTOP
+   20. TABLET / DESKTOP
    ========================================================= */
 
 @media (min-width: 701px) {
@@ -828,7 +828,7 @@ nav[aria-label="Page sections"] a:hover {
     header {
         grid-template-columns: 100px minmax(0, 1fr);
 
-        column-gap: 1.5rem;
+        gap: 1.5rem;
 
         padding:
             1.75rem
@@ -845,24 +845,19 @@ nav[aria-label="Page sections"] a:hover {
         line-height: 1.15;
     }
 
-    nav ul {
+    header nav ul {
         flex-direction: row;
         flex-wrap: wrap;
         gap: var(--space-xs);
     }
 
-    nav a {
-        padding:
-            0.55rem
-            0.9rem;
+    header nav a {
+        padding: 0.55rem 0.9rem;
     }
 
     main {
         width: calc(100% - 3rem);
-
-        padding:
-            var(--space-2xl)
-            0;
+        padding: var(--space-2xl) 0;
     }
 
     main section h2 {
@@ -873,31 +868,14 @@ nav[aria-label="Page sections"] a:hover {
         font-size: 1.65rem;
     }
 
-    /*
-       Weekly Work:
-       two-column responsive Grid on larger screens.
-    */
-
     main section ul {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
-    /*
-       Larger historical feature image on desktop.
-    */
-
     main > section:first-child > img {
         max-width: 850px;
-
-        margin:
-            var(--space-xl)
-            auto;
+        margin: var(--space-xl) auto;
     }
-
-    /*
-       Give the embedded video / timeline more room
-       on larger screens.
-    */
 
     main section iframe {
         height: 600px;
@@ -908,9 +886,36 @@ nav[aria-label="Page sections"] a:hover {
             var(--space-xl)
             max(1.5rem, calc((100% - var(--content-width)) / 2));
     }
+
+    .page-scroll-controls {
+        right: max(
+            1rem,
+            calc((100vw - var(--content-width)) / 2 - 4rem)
+        );
+    }
 }
+
+
 /* =========================================================
-   23. REDUCED MOTION
+   21. MOBILE PAGE NAVIGATION
+   ========================================================= */
+
+@media (max-width: 500px) {
+
+    .page-navigation {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .nav-button {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+
+/* =========================================================
+   22. REDUCED MOTION
    ========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
@@ -920,7 +925,8 @@ nav[aria-label="Page sections"] a:hover {
     }
 
     *,
-    *::before {
+    *::before,
+    *::after {
         transition: none !important;
     }
 }

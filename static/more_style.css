@@ -1,0 +1,865 @@
+/* =========================================================
+   FORM PAGE STYLES
+   Engineering Student Profile
+   Loads after my_style.css and reuses its design variables.
+   ========================================================= */
+
+
+/* =========================================================
+   1. FORM VARIABLES
+   ========================================================= */
+
+:root {
+    --form-error: #b42318;
+    --form-on-primary: #ffffff;
+    --form-focus-ring: color-mix(in srgb, var(--color-accent) 28%, transparent);
+    --form-error-ring: color-mix(in srgb, var(--form-error) 25%, transparent);
+    --form-field-bg: var(--color-background);
+
+    /* Height of the site's sticky header */
+    --site-header-height: 180px;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --form-error: #f87171;
+        --form-on-primary: #0b1120;
+    }
+}
+
+
+/* =========================================================
+   1.5 INTRODUCTION PANEL
+   ========================================================= */
+
+.form-intro {
+    margin: 0;
+    padding: var(--space-md) var(--space-lg);
+
+    background-color: var(--color-primary-light);
+
+    border-left: 4px solid var(--color-primary);
+    border-radius: var(--radius-sm);
+}
+
+.form-intro p:last-child {
+    margin-bottom: 0;
+}
+
+.form-intro strong {
+    color: var(--color-primary-dark);
+}
+
+
+/* =========================================================
+   2. FORM LAYOUT
+   ========================================================= */
+
+form {
+    margin-top: var(--space-lg);
+    color-scheme: light dark;
+}
+
+
+/* One continuous column of section cards */
+
+.form-sections {
+    display: grid;
+    gap: var(--space-lg);
+
+    min-width: 0;
+
+    counter-reset: section;
+}
+
+.form-sections > fieldset {
+    counter-increment: section;
+
+    scroll-margin-top: calc(var(--site-header-height) + 5rem);
+}
+
+
+/* =========================================================
+   3. FIELDSETS AS CARDS
+   ========================================================= */
+
+fieldset {
+    min-width: 0;
+    margin: 0;
+    padding: var(--space-lg);
+
+    background-color: var(--color-surface);
+
+    border: var(--border-thin);
+    border-radius: var(--radius-lg);
+
+    box-shadow: var(--shadow-sm);
+}
+
+legend {
+    float: left;
+    width: 100%;
+
+    margin: 0 0 var(--space-md);
+    padding: 0 0 var(--space-sm);
+
+    border-bottom: var(--border-thin);
+
+    color: var(--color-text);
+
+    font-family: var(--font-heading);
+    font-size: 1.3rem;
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+legend + * {
+    clear: both;
+}
+
+
+/* Numbered section badge */
+
+legend::before {
+    content: counter(section);
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 2rem;
+    height: 2rem;
+
+    margin-right: 0.75rem;
+
+    background-color: var(--color-primary-light);
+    color: var(--color-primary-dark);
+
+    border-radius: 50%;
+
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    font-weight: 700;
+
+    vertical-align: middle;
+}
+
+fieldset:not(:has(:invalid)) > legend::before {
+    content: "\2713";
+
+    background-color: var(--color-accent);
+    color: var(--form-on-primary);
+}
+
+.section-note {
+    color: var(--color-text-muted);
+    font-size: 0.95rem;
+}
+
+
+/* =========================================================
+   3.5 FIELD ROWS
+   ========================================================= */
+
+.field-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-md);
+
+    margin-bottom: var(--space-md);
+}
+
+.field-row > p {
+    margin: 0;
+}
+
+.field-row:last-child {
+    margin-bottom: 0;
+}
+
+@media (min-width: 701px) {
+    .field-row {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+fieldset > p {
+    margin-bottom: var(--space-md);
+}
+
+fieldset > p:last-child {
+    margin-bottom: 0;
+}
+
+
+/* =========================================================
+   4. LABELS AND HELPER TEXT
+   ========================================================= */
+
+label {
+    display: block;
+
+    margin-bottom: 0.35rem;
+
+    color: var(--color-text);
+
+    font-size: 0.95rem;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+label + br,
+select[multiple] + br {
+    display: none;
+}
+
+small {
+    display: block;
+
+    margin-top: 0.4rem;
+
+    color: var(--color-text-muted);
+
+    font-size: 0.85rem;
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   5. TEXT FIELDS, SELECTS AND TEXTAREA
+   ========================================================= */
+
+input:not([type="checkbox"]):not([type="radio"]):not([type="color"]),
+select,
+textarea {
+    display: block;
+    width: 100%;
+
+    padding: 0.65rem 0.85rem;
+
+    background-color: var(--form-field-bg);
+    color: var(--color-text);
+
+    border: var(--border-thin);
+    border-radius: var(--radius-sm);
+
+    font: inherit;
+    font-size: 1rem;
+    line-height: 1.4;
+
+    transition:
+        border-color var(--transition-fast),
+        box-shadow var(--transition-fast),
+        background-color var(--transition-fast);
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: var(--color-text-muted);
+    opacity: 0.75;
+}
+
+input:not([type="checkbox"]):not([type="radio"]):not([type="color"]):hover,
+select:hover,
+textarea:hover {
+    border-color: var(--color-primary);
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: 2px solid transparent;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px var(--form-focus-ring);
+}
+
+
+/* Validation */
+
+input:user-valid,
+select:user-valid,
+textarea:user-valid {
+    border-color: var(--color-accent);
+}
+
+input:user-invalid,
+select:user-invalid,
+textarea:user-invalid {
+    border-color: var(--form-error);
+}
+
+input:user-invalid:focus,
+select:user-invalid:focus,
+textarea:user-invalid:focus {
+    box-shadow: 0 0 0 3px var(--form-error-ring);
+}
+
+
+/* Textarea */
+
+textarea {
+    min-height: 8rem;
+    resize: vertical;
+}
+
+
+/* Single-select dropdown */
+
+select:not([multiple]) {
+    padding-right: 2.5rem;
+
+    appearance: none;
+
+    background-image:
+        linear-gradient(45deg, transparent 50%, var(--color-text-muted) 50%),
+        linear-gradient(135deg, var(--color-text-muted) 50%, transparent 50%);
+
+    background-position:
+        calc(100% - 1.35rem) 50%,
+        calc(100% - 1rem) 50%;
+
+    background-size: 0.35rem 0.35rem;
+    background-repeat: no-repeat;
+
+    cursor: pointer;
+}
+
+
+/* Multi-select */
+
+select[multiple] {
+    padding: 0.4rem;
+}
+
+select[multiple] option {
+    padding: 0.4rem 0.6rem;
+    border-radius: 4px;
+}
+
+
+/* Color picker */
+
+input[type="color"] {
+    display: block;
+
+    width: 4.5rem;
+    height: 2.75rem;
+
+    padding: 0.2rem;
+
+    background-color: var(--form-field-bg);
+
+    border: var(--border-thin);
+    border-radius: var(--radius-sm);
+
+    cursor: pointer;
+}
+
+input[type="color"]:hover {
+    border-color: var(--color-primary);
+}
+
+input[type="color"]:focus-visible {
+    outline: 3px solid var(--color-accent);
+    outline-offset: 3px;
+}
+
+
+/* =========================================================
+   6. RADIO BUTTONS AND SKILL CHECKBOXES
+   ========================================================= */
+
+input[type="radio"],
+input:is([name="skills"], [name="software"]) {
+    position: absolute;
+
+    width: 1px;
+    height: 1px;
+
+    margin: 0;
+
+    opacity: 0;
+}
+
+input[type="radio"] + label,
+input:is([name="skills"], [name="software"]) + label {
+    display: inline-block;
+
+    margin: 0 0.35rem 0.5rem 0;
+    padding: 0.4rem 0.95rem;
+
+    background-color: var(--form-field-bg);
+    color: var(--color-text-muted);
+
+    border: var(--border-thin);
+    border-radius: 999px;
+
+    font-size: 0.92rem;
+    font-weight: 600;
+
+    cursor: pointer;
+    user-select: none;
+
+    transition:
+        background-color var(--transition-fast),
+        border-color var(--transition-fast),
+        color var(--transition-fast);
+}
+
+input[type="radio"] + label:hover,
+input:is([name="skills"], [name="software"]) + label:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}
+
+input[type="radio"]:checked + label,
+input:is([name="skills"], [name="software"]):checked + label {
+    background-color: var(--color-primary-light);
+    border-color: var(--color-primary);
+    color: var(--color-primary-dark);
+}
+
+input:is([name="skills"], [name="software"]):checked + label::before {
+    content: "\2713\00a0";
+}
+
+input[type="radio"]:focus-visible + label,
+input:is([name="skills"], [name="software"]):focus-visible + label {
+    outline: 3px solid var(--color-accent);
+    outline-offset: 2px;
+}
+
+fieldset > label:last-child {
+    margin-bottom: 0;
+}
+
+p:has(> input[type="radio"]) {
+    color: var(--color-text);
+
+    font-size: 0.95rem;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+p:has(> input[type="radio"]) br {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+input:is([name="skills"], [name="software"]) + label + p {
+    margin-top: var(--space-md);
+}
+
+
+/* =========================================================
+   7. OPTIONAL DETAILS
+   ========================================================= */
+
+details {
+    padding: 0.9rem 1.1rem;
+
+    background-color: var(--color-surface-alt);
+
+    border: var(--border-thin);
+    border-radius: var(--radius-md);
+}
+
+summary {
+    color: var(--color-primary);
+    font-weight: 600;
+    cursor: pointer;
+}
+
+summary::marker {
+    color: var(--color-accent);
+}
+
+summary:hover {
+    color: var(--color-accent);
+}
+
+summary:focus-visible {
+    outline: 3px solid var(--color-accent);
+    outline-offset: 3px;
+}
+
+details[open] summary {
+    margin-bottom: var(--space-md);
+    padding-bottom: var(--space-sm);
+
+    border-bottom: var(--border-thin);
+}
+
+details p:last-child {
+    margin-bottom: 0;
+}
+
+
+/* =========================================================
+   8. CONFIRMATION
+   ========================================================= */
+
+#sec-confirm {
+    border-left: 4px solid var(--color-accent);
+}
+
+.confirm-row {
+    display: flex;
+    align-items: center;
+
+    background-color: var(--form-field-bg);
+
+    border: var(--border-thin);
+    border-radius: var(--radius-md);
+
+    transition:
+        background-color var(--transition-fast),
+        border-color var(--transition-fast);
+}
+
+.confirm-row:hover {
+    border-color: var(--color-accent);
+}
+
+.confirm-row:has(#confirmation:checked) {
+    background-color: var(--color-accent-light);
+    border-color: var(--color-accent);
+}
+
+.confirm-row:has(#confirmation:user-invalid) {
+    border-color: var(--form-error);
+}
+
+#confirmation {
+    flex: 0 0 auto;
+
+    width: 1.3rem;
+    height: 1.3rem;
+
+    margin: 0 0 0 1.1rem;
+
+    accent-color: var(--color-accent);
+    cursor: pointer;
+}
+
+#confirmation:focus-visible {
+    outline: 3px solid var(--color-accent);
+    outline-offset: 3px;
+}
+
+#confirmation + label {
+    flex: 1;
+
+    margin: 0;
+    padding: 1rem 1.1rem 1rem 0.8rem;
+
+    font-weight: 600;
+    cursor: pointer;
+}
+
+
+/* =========================================================
+   9. BUTTONS
+   ========================================================= */
+
+.form-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+
+    margin: 0;
+    padding-top: var(--space-md);
+
+    border-top: var(--border-thin);
+}
+
+button {
+    padding: 0.75rem 1.75rem;
+
+    border: 1px solid transparent;
+    border-radius: var(--radius-sm);
+
+    font: inherit;
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.2;
+
+    cursor: pointer;
+
+    transition:
+        background-color var(--transition-fast),
+        border-color var(--transition-fast),
+        color var(--transition-fast),
+        box-shadow var(--transition-fast),
+        transform var(--transition-fast);
+}
+
+button:focus-visible {
+    outline: 3px solid var(--color-accent);
+    outline-offset: 3px;
+}
+
+button[type="submit"] {
+    background-color: var(--color-primary);
+    color: var(--form-on-primary);
+}
+
+button[type="submit"]:hover {
+    background-color: var(--color-primary-dark);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-1px);
+}
+
+button[type="reset"] {
+    background-color: transparent;
+    color: var(--color-text-muted);
+
+    border-color: var(--color-border);
+}
+
+button[type="reset"]:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}
+
+
+/* =========================================================
+   10. STEP NAVIGATOR
+   ========================================================= */
+
+/*
+   Mobile:
+   Sticky horizontal navigation below the site header.
+
+   Desktop:
+   Sticky vertical navigation in a left column of the form grid.
+*/
+
+.form-steps {
+    /* Override the global header nav rules */
+    grid-column: auto;
+    grid-row: auto;
+
+    position: sticky;
+    top: calc(var(--site-header-height) + 0.5rem);
+
+    z-index: 100;
+
+    margin-bottom: var(--space-md);
+    padding: 0.5rem;
+
+    background-color: var(--color-surface);
+
+    border: var(--border-thin);
+    border-radius: var(--radius-md);
+
+    box-shadow: var(--shadow-sm);
+}
+
+.form-steps ol {
+    display: flex;
+    gap: 0.25rem;
+
+    margin: 0;
+    padding: 0;
+
+    overflow-x: auto;
+
+    list-style: none;
+
+    counter-reset: step;
+}
+
+.form-steps li {
+    flex: 0 0 auto;
+
+    margin: 0;
+
+    counter-increment: step;
+}
+
+.form-steps a {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+
+    padding: 0.45rem 0.75rem;
+
+    border-radius: var(--radius-sm);
+
+    color: var(--color-text-muted);
+
+    font-size: 0.9rem;
+    font-weight: 600;
+
+    white-space: nowrap;
+}
+
+.form-steps a:hover {
+    background-color: var(--color-primary-light);
+    color: var(--color-primary);
+}
+
+.form-steps a::before {
+    content: counter(step);
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 1.6rem;
+    height: 1.6rem;
+
+    background-color: var(--color-surface-alt);
+
+    border: var(--border-thin);
+    border-radius: 50%;
+
+    color: var(--color-text-muted);
+
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+
+/* Completed sections */
+
+form:not(:has(#sec-personal :invalid)) .form-steps a[href="#sec-personal"]::before,
+form:not(:has(#sec-academic :invalid)) .form-steps a[href="#sec-academic"]::before,
+form:not(:has(#sec-technical :invalid)) .form-steps a[href="#sec-technical"]::before,
+form:not(:has(#sec-project :invalid)) .form-steps a[href="#sec-project"]::before,
+form:not(:has(#sec-confirm :invalid)) .form-steps a[href="#sec-confirm"]::before {
+    content: "\2713";
+
+    background-color: var(--color-accent);
+
+    border-color: var(--color-accent);
+
+    color: var(--form-on-primary);
+}
+
+
+/* =========================================================
+   10.5 ACTIVE STEP
+   ========================================================= */
+
+/*
+   :target changes when a navigation link is clicked.
+   CSS alone cannot detect the section currently visible
+   during normal scrolling.
+*/
+
+form:has(#sec-personal:target) .form-steps a[href="#sec-personal"],
+form:has(#sec-academic:target) .form-steps a[href="#sec-academic"],
+form:has(#sec-technical:target) .form-steps a[href="#sec-technical"],
+form:has(#sec-project:target) .form-steps a[href="#sec-project"],
+form:has(#sec-confirm:target) .form-steps a[href="#sec-confirm"] {
+    background-color: var(--color-primary-light);
+    color: var(--color-primary);
+}
+
+form:has(#sec-personal:target) .form-steps a[href="#sec-personal"]::before,
+form:has(#sec-academic:target) .form-steps a[href="#sec-academic"]::before,
+form:has(#sec-technical:target) .form-steps a[href="#sec-technical"]::before,
+form:has(#sec-project:target) .form-steps a[href="#sec-project"]::before,
+form:has(#sec-confirm:target) .form-steps a[href="#sec-confirm"]::before {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}
+
+
+/* =========================================================
+   11. TABLET / DESKTOP
+   ========================================================= */
+
+@media (min-width: 960px) {
+
+    /* Desktop header is shorter than on mobile.
+       Increase this if the sidebar still slips under the header
+       (for example when the nav links wrap onto two lines). */
+    :root {
+        --site-header-height: 125px;
+    }
+
+    /* Two columns: steps | sections */
+    form {
+        display: grid;
+        grid-template-columns: 200px minmax(0, 1fr);
+        gap: var(--space-lg);
+        align-items: start;
+    }
+
+    .form-steps {
+        position: sticky;
+        top: calc(var(--site-header-height) + var(--space-md));
+
+        grid-column: 1;
+        grid-row: 1;
+
+        width: auto;
+        margin: 0;
+        padding: var(--space-sm);
+
+        max-height: calc(100vh - var(--site-header-height) - 2rem);
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .form-sections {
+        grid-column: 2;
+        grid-row: 1;
+
+        margin-left: 0;
+        min-width: 0;
+    }
+
+    .form-steps ol {
+        flex-direction: column;
+        overflow: visible;
+    }
+
+    .form-steps a {
+        padding: 0.6rem 0.75rem;
+    }
+
+    .form-sections > fieldset {
+        scroll-margin-top:
+            calc(var(--site-header-height) + var(--space-md));
+    }
+}
+
+
+/* =========================================================
+   12. MOBILE PAGE NAVIGATION
+   ========================================================= */
+
+@media (max-width: 500px) {
+
+    .page-navigation {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .nav-button {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+
+/* =========================================================
+   13. REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        transition: none !important;
+    }
+}

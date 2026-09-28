@@ -433,3 +433,15 @@
         </table>
     </section>
 {% endblock %}
+
+{% block page_navigation %}
+<div class="page-navigation">
+    <a href="{{ url_for('home') }}" class="nav-button">
+        ← Previous Page
+    </a>
+
+    <a href="{{ url_for('web_history') }}" class="nav-button">
+        Next Page →
+    </a>
+</div>
+{% endblock %}

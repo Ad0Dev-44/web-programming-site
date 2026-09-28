@@ -1,8 +1,7 @@
 /* =========================================================
    FORM PAGE STYLES
    Engineering Student Profile
-   Loads after style.css and reuses its design variables.
-   No changes to the HTML are required.
+   Loads after my_style.css and reuses its design variables.
    ========================================================= */
 
 
@@ -16,6 +15,9 @@
     --form-focus-ring: color-mix(in srgb, var(--color-accent) 28%, transparent);
     --form-error-ring: color-mix(in srgb, var(--form-error) 25%, transparent);
     --form-field-bg: var(--color-background);
+
+    /* Height of the site's sticky header */
+    --site-header-height: 180px;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -54,15 +56,10 @@
    ========================================================= */
 
 form {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    gap: var(--space-md);
-
     margin-top: var(--space-lg);
-
-    /* Native date pickers, scrollbars and controls follow the theme */
     color-scheme: light dark;
 }
+
 
 /* One continuous column of section cards */
 
@@ -78,8 +75,7 @@ form {
 .form-sections > fieldset {
     counter-increment: section;
 
-    /* Keeps the section heading clear of the sticky navigator */
-    scroll-margin-top: 5rem;
+    scroll-margin-top: calc(var(--site-header-height) + 5rem);
 }
 
 
@@ -100,10 +96,6 @@ fieldset {
     box-shadow: var(--shadow-sm);
 }
 
-/*
-   The legend becomes a card heading inside the fieldset
-   instead of sitting on top of the border.
-*/
 legend {
     float: left;
     width: 100%;
@@ -125,7 +117,8 @@ legend + * {
     clear: both;
 }
 
-/* Numbered badge; turns into a check mark once the section is valid */
+
+/* Numbered section badge */
 
 legend::before {
     content: counter(section);
@@ -160,13 +153,12 @@ fieldset:not(:has(:invalid)) > legend::before {
 
 .section-note {
     color: var(--color-text-muted);
-
     font-size: 0.95rem;
 }
 
 
 /* =========================================================
-   3.5 FIELD ROWS (two fields side by side on wider screens)
+   3.5 FIELD ROWS
    ========================================================= */
 
 .field-row {
@@ -186,7 +178,6 @@ fieldset:not(:has(:invalid)) > legend::before {
 }
 
 @media (min-width: 701px) {
-
     .field-row {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
@@ -217,7 +208,6 @@ label {
     line-height: 1.4;
 }
 
-/* The line breaks between labels and fields are not needed */
 label + br,
 select[multiple] + br {
     display: none;
@@ -275,8 +265,6 @@ textarea:hover {
     border-color: var(--color-primary);
 }
 
-/* Focus */
-
 input:focus,
 select:focus,
 textarea:focus {
@@ -285,7 +273,8 @@ textarea:focus {
     box-shadow: 0 0 0 3px var(--form-focus-ring);
 }
 
-/* Validation feedback (only after the user has interacted) */
+
+/* Validation */
 
 input:user-valid,
 select:user-valid,
@@ -305,15 +294,16 @@ textarea:user-invalid:focus {
     box-shadow: 0 0 0 3px var(--form-error-ring);
 }
 
+
 /* Textarea */
 
 textarea {
     min-height: 8rem;
-
     resize: vertical;
 }
 
-/* Single-select dropdown arrow */
+
+/* Single-select dropdown */
 
 select:not([multiple]) {
     padding-right: 2.5rem;
@@ -323,16 +313,19 @@ select:not([multiple]) {
     background-image:
         linear-gradient(45deg, transparent 50%, var(--color-text-muted) 50%),
         linear-gradient(135deg, var(--color-text-muted) 50%, transparent 50%);
+
     background-position:
         calc(100% - 1.35rem) 50%,
         calc(100% - 1rem) 50%;
+
     background-size: 0.35rem 0.35rem;
     background-repeat: no-repeat;
 
     cursor: pointer;
 }
 
-/* Multi-select list */
+
+/* Multi-select */
 
 select[multiple] {
     padding: 0.4rem;
@@ -340,9 +333,9 @@ select[multiple] {
 
 select[multiple] option {
     padding: 0.4rem 0.6rem;
-
     border-radius: 4px;
 }
+
 
 /* Color picker */
 
@@ -373,14 +366,8 @@ input[type="color"]:focus-visible {
 
 
 /* =========================================================
-   6. RADIO BUTTONS AND SKILL CHECKBOXES AS CHOICE CHIPS
+   6. RADIO BUTTONS AND SKILL CHECKBOXES
    ========================================================= */
-
-/*
-   The real inputs stay in the page (keyboard and validation
-   still work) but are visually hidden. The label next to each
-   input is drawn as a chip.
-*/
 
 input[type="radio"],
 input:is([name="skills"], [name="software"]) {
@@ -432,8 +419,6 @@ input:is([name="skills"], [name="software"]):checked + label {
     color: var(--color-primary-dark);
 }
 
-/* A check mark tells multi-select chips apart from radio chips */
-
 input:is([name="skills"], [name="software"]):checked + label::before {
     content: "\2713\00a0";
 }
@@ -448,8 +433,6 @@ fieldset > label:last-child {
     margin-bottom: 0;
 }
 
-/* Question text in front of the radio chips */
-
 p:has(> input[type="radio"]) {
     color: var(--color-text);
 
@@ -460,11 +443,8 @@ p:has(> input[type="radio"]) {
 
 p:has(> input[type="radio"]) br {
     display: block;
-
     margin-bottom: 0.5rem;
 }
-
-/* Space between the last skill chip and the next field */
 
 input:is([name="skills"], [name="software"]) + label + p {
     margin-top: var(--space-md);
@@ -472,7 +452,7 @@ input:is([name="skills"], [name="software"]) + label + p {
 
 
 /* =========================================================
-   7. OPTIONAL DETAILS (INTERNSHIP)
+   7. OPTIONAL DETAILS
    ========================================================= */
 
 details {
@@ -486,9 +466,7 @@ details {
 
 summary {
     color: var(--color-primary);
-
     font-weight: 600;
-
     cursor: pointer;
 }
 
@@ -525,8 +503,6 @@ details p:last-child {
     border-left: 4px solid var(--color-accent);
 }
 
-/* The whole row is a clickable agreement box */
-
 .confirm-row {
     display: flex;
     align-items: center;
@@ -547,7 +523,6 @@ details p:last-child {
 
 .confirm-row:has(#confirmation:checked) {
     background-color: var(--color-accent-light);
-
     border-color: var(--color-accent);
 }
 
@@ -564,7 +539,6 @@ details p:last-child {
     margin: 0 0 0 1.1rem;
 
     accent-color: var(--color-accent);
-
     cursor: pointer;
 }
 
@@ -580,7 +554,6 @@ details p:last-child {
     padding: 1rem 1.1rem 1rem 0.8rem;
 
     font-weight: 600;
-
     cursor: pointer;
 }
 
@@ -633,9 +606,7 @@ button[type="submit"] {
 
 button[type="submit"]:hover {
     background-color: var(--color-primary-dark);
-
     box-shadow: var(--shadow-md);
-
     transform: translateY(-1px);
 }
 
@@ -648,7 +619,6 @@ button[type="reset"] {
 
 button[type="reset"]:hover {
     border-color: var(--color-primary);
-
     color: var(--color-primary);
 }
 
@@ -658,20 +628,24 @@ button[type="reset"]:hover {
    ========================================================= */
 
 /*
-   Overrides the site-wide nav rules from style.css.
-   Mobile: sticky bar at the top of the form.
-   Desktop: sticky sidebar next to the sections.
-   Each step shows a check mark when its section is valid.
+   Mobile:
+   Sticky horizontal navigation below the site header.
+
+   Desktop:
+   Sticky vertical navigation in a left column of the form grid.
 */
 
 .form-steps {
+    /* Override the global header nav rules */
     grid-column: auto;
     grid-row: auto;
 
     position: sticky;
-    top: 0;
-    z-index: 20;
+    top: calc(var(--site-header-height) + 0.5rem);
 
+    z-index: 100;
+
+    margin-bottom: var(--space-md);
     padding: 0.5rem;
 
     background-color: var(--color-surface);
@@ -717,12 +691,12 @@ button[type="reset"]:hover {
 
     font-size: 0.9rem;
     font-weight: 600;
+
     white-space: nowrap;
 }
 
 .form-steps a:hover {
     background-color: var(--color-primary-light);
-
     color: var(--color-primary);
 }
 
@@ -747,6 +721,9 @@ button[type="reset"]:hover {
     font-weight: 700;
 }
 
+
+/* Completed sections */
+
 form:not(:has(#sec-personal :invalid)) .form-steps a[href="#sec-personal"]::before,
 form:not(:has(#sec-academic :invalid)) .form-steps a[href="#sec-academic"]::before,
 form:not(:has(#sec-technical :invalid)) .form-steps a[href="#sec-technical"]::before,
@@ -763,27 +740,81 @@ form:not(:has(#sec-confirm :invalid)) .form-steps a[href="#sec-confirm"]::before
 
 
 /* =========================================================
+   10.5 ACTIVE STEP
+   ========================================================= */
+
+/*
+   :target changes when a navigation link is clicked.
+   CSS alone cannot detect the section currently visible
+   during normal scrolling.
+*/
+
+form:has(#sec-personal:target) .form-steps a[href="#sec-personal"],
+form:has(#sec-academic:target) .form-steps a[href="#sec-academic"],
+form:has(#sec-technical:target) .form-steps a[href="#sec-technical"],
+form:has(#sec-project:target) .form-steps a[href="#sec-project"],
+form:has(#sec-confirm:target) .form-steps a[href="#sec-confirm"] {
+    background-color: var(--color-primary-light);
+    color: var(--color-primary);
+}
+
+form:has(#sec-personal:target) .form-steps a[href="#sec-personal"]::before,
+form:has(#sec-academic:target) .form-steps a[href="#sec-academic"]::before,
+form:has(#sec-technical:target) .form-steps a[href="#sec-technical"]::before,
+form:has(#sec-project:target) .form-steps a[href="#sec-project"]::before,
+form:has(#sec-confirm:target) .form-steps a[href="#sec-confirm"]::before {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}
+
+
+/* =========================================================
    11. TABLET / DESKTOP
    ========================================================= */
 
 @media (min-width: 960px) {
 
-    form {
-        grid-template-columns: 220px minmax(0, 1fr);
-        align-items: start;
+    /* Desktop header is shorter than on mobile.
+       Increase this if the sidebar still slips under the header
+       (for example when the nav links wrap onto two lines). */
+    :root {
+        --site-header-height: 125px;
+    }
 
-        gap: var(--space-xl);
+    /* Two columns: steps | sections */
+    form {
+        display: grid;
+        grid-template-columns: 200px minmax(0, 1fr);
+        gap: var(--space-lg);
+        align-items: start;
     }
 
     .form-steps {
-        top: var(--space-md);
+        position: sticky;
+        top: calc(var(--site-header-height) + var(--space-md));
 
+        grid-column: 1;
+        grid-row: 1;
+
+        width: auto;
+        margin: 0;
         padding: var(--space-sm);
+
+        max-height: calc(100vh - var(--site-header-height) - 2rem);
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .form-sections {
+        grid-column: 2;
+        grid-row: 1;
+
+        margin-left: 0;
+        min-width: 0;
     }
 
     .form-steps ol {
         flex-direction: column;
-
         overflow: visible;
     }
 
@@ -792,6 +823,43 @@ form:not(:has(#sec-confirm :invalid)) .form-steps a[href="#sec-confirm"]::before
     }
 
     .form-sections > fieldset {
-        scroll-margin-top: var(--space-md);
+        scroll-margin-top:
+            calc(var(--site-header-height) + var(--space-md));
+    }
+}
+
+
+/* =========================================================
+   12. MOBILE PAGE NAVIGATION
+   ========================================================= */
+
+@media (max-width: 500px) {
+
+    .page-navigation {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .nav-button {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+
+/* =========================================================
+   13. REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        transition: none !important;
     }
 }

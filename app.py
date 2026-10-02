@@ -45,12 +45,14 @@ app = Flask(__name__)
 def home():
     """Serve the portfolio home page."""
     weekly_work = [
+        {"week": 1, "title": "Original html of the Home page", "url": "/original-html"},
         {"week": 2, "title": "History of the Internet", "url": "/internet-history"},
         {"week": 2, "title": "History of the Web", "url": "/web-history"},
         {"week": 2, "title": "History of the Internet (AI)", "url": "/internet-history-ai"},
         {"week": 2, "title": "History of the Web (AI)", "url": "/web-history-ai"},
         {"week": 3, "title": "Web Research", "url": "/personal-research"},
         {"week": 4, "title": "Engineering Student Profile", "url": "/submit-profile"},
+        {"week": 5, "title": "JavaScript app", "url": "/quiz"},
     ]
     return render_template("index.html", weekly_work=weekly_work)
 
@@ -78,6 +80,9 @@ def web_history_ai():
 def personal_research():
     return render_template("personal-research.html")
 
+@app.route("/original-html")
+def original_html():
+    return render_template("OriginalHtml.html")
 
 @app.route("/submit-profile", methods=["GET", "POST"])
 def submit_profile():
@@ -97,6 +102,13 @@ def submit_profile():
     # First visit (GET): just show the empty form.
     return render_template("profile-form.html")
 
+@app.route("/quiz", methods=["GET", "POST"])
+def quiz():
+    return render_template("quiz.html")
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+
+
+ 

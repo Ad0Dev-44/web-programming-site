@@ -1,0 +1,496 @@
+/* =========================================================
+   QUIZ PAGE
+   Builds on my_style.css: uses its design variables, so the
+   dark theme applies automatically. Everything is scoped to
+   main.container / IDs so it never restyles the site header,
+   footer, or other pages.
+   ========================================================= */
+
+
+/* =========================================================
+   1. LAYOUT
+   ========================================================= */
+
+main.container {
+    max-width: 760px;
+}
+
+main.container > h1 {
+    margin-bottom: var(--space-lg);
+
+    text-align: center;
+    font-size: clamp(1.8rem, 4vw, 2.3rem);
+}
+
+main.container > h1::after {
+    content: "";
+
+    display: block;
+
+    width: 3.5rem;
+    height: 3px;
+
+    margin: 0.8rem auto 0;
+
+    background-color: var(--color-accent);
+    border-radius: 2px;
+}
+
+
+/* =========================================================
+   2. QUIZ CARD
+   ========================================================= */
+
+#quizPanel {
+    margin-bottom: 0;
+    padding: var(--space-lg);
+
+    background-color: var(--color-surface);
+
+    border: var(--border-thin);
+    border-radius: var(--radius-lg);
+
+    box-shadow: var(--shadow-md);
+}
+
+#resultsPanel {
+    display: none; /* shown by quiz.js after submission */
+
+    padding: 0;
+}
+
+
+/* =========================================================
+   3. PROGRESS AND QUESTION
+   ========================================================= */
+
+#progress {
+    display: inline-block;
+
+    margin-bottom: var(--space-sm);
+    padding: 0.2rem 0.65rem;
+
+    background-color: var(--color-primary-light);
+    color: var(--color-primary);
+
+    border-radius: 999px;
+
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+#questionText {
+    margin: var(--space-sm) 0 var(--space-md);
+
+    font-family: var(--font-body);
+    font-size: 1.3rem;
+    font-weight: 600;
+    line-height: 1.5;
+
+    /* keeps the line breaks inside code snippets */
+    white-space: pre-wrap;
+}
+
+/* remove the accent underline the site adds to section h2s */
+#questionText::after {
+    display: none;
+}
+
+
+/* =========================================================
+   4. CHOICES
+   ========================================================= */
+
+.choice {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+
+    margin: 0 0 0.6rem;
+    padding: 0.75rem 1rem;
+
+    background-color: var(--color-surface);
+
+    border: var(--border-thin);
+    border-radius: var(--radius-md);
+
+    cursor: pointer;
+
+    transition:
+        border-color var(--transition-fast),
+        background-color var(--transition-fast),
+        transform var(--transition-fast);
+}
+
+.choice:hover {
+    background-color: var(--color-primary-light);
+    border-color: var(--color-primary);
+
+    transform: translateX(3px);
+}
+
+.choice:has(input:checked) {
+    background-color: var(--color-accent-light);
+    border-color: var(--color-accent);
+}
+
+.choice:focus-within {
+    outline: 3px solid var(--color-accent);
+    outline-offset: 2px;
+}
+
+.choice input[type="radio"] {
+    flex-shrink: 0;
+
+    width: 1.1rem;
+    height: 1.1rem;
+
+    margin: 0;
+
+    accent-color: var(--color-accent);
+}
+
+
+/* =========================================================
+   5. BUTTONS
+   ========================================================= */
+
+.navigation {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+
+    margin-top: var(--space-lg);
+    padding-top: var(--space-md);
+
+    border-top: var(--border-thin);
+}
+
+main.container button {
+    padding: 0.7rem 1.2rem;
+
+    background-color: var(--color-surface);
+    color: var(--color-primary);
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background-color var(--transition-fast),
+        border-color var(--transition-fast),
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast);
+}
+
+.navigation button {
+    flex: 1 1 auto;
+}
+
+main.container button:hover:not(:disabled) {
+    background-color: var(--color-primary-light);
+    border-color: var(--color-primary);
+}
+
+main.container button:focus-visible {
+    outline: 3px solid var(--color-accent);
+    outline-offset: 3px;
+}
+
+main.container button:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+/* primary action, same look as the site's .nav-button */
+.submit {
+    width: 100%;
+    margin-top: var(--space-md);
+
+    background-color: var(--color-primary);
+    color: #ffffff;
+
+    border-color: var(--color-primary);
+
+    box-shadow: var(--shadow-sm);
+}
+
+main.container .submit:hover:not(:disabled) {
+    background-color: var(--color-accent);
+    border-color: var(--color-accent);
+
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+
+/* =========================================================
+   6. RESULTS SUMMARY
+   ========================================================= */
+
+#resultsPanel h2 {
+    font-size: 1.9rem;
+}
+
+#scoreText,
+#percentageText {
+    margin: 0;
+    padding: 0.8rem 1.2rem;
+
+    background-color: var(--color-surface);
+
+    border: var(--border-thin);
+}
+
+#scoreText {
+    border-radius: var(--radius-md) var(--radius-md) 0 0;
+
+    font-family: var(--font-heading);
+    font-size: 1.6rem;
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+#percentageText {
+    margin-bottom: var(--space-md);
+
+    border-top: none;
+    border-radius: 0 0 var(--radius-md) var(--radius-md);
+
+    color: var(--color-text-muted);
+    font-weight: 600;
+}
+
+/* same look as the site's .note callout */
+#performanceText {
+    margin: var(--space-md) 0 0;
+    padding: var(--space-md) var(--space-lg);
+
+    background-color: var(--color-accent-light);
+
+    border-left: 4px solid var(--color-accent);
+    border-radius: var(--radius-sm);
+}
+
+#resultsPanel h3 {
+    margin: var(--space-xl) 0 var(--space-md);
+}
+
+
+/* =========================================================
+   7. REVIEW (CORRECTION)
+   One card per question. Styled from static markup only:
+   <article class="review"> with a heading and four paragraphs.
+   ========================================================= */
+
+.review-intro {
+    margin-bottom: var(--space-lg);
+
+    color: var(--color-text-muted);
+}
+
+#correction {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-lg);
+
+    margin: 0;
+    padding: 0;
+
+    overflow: visible;
+
+    background: transparent;
+    color: inherit;
+
+    box-shadow: none;
+
+    /* undo the site's <pre> look in case this is still a <pre> */
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    white-space: normal;
+}
+
+/* ---------- card ---------- */
+
+.review {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.75rem;
+
+    min-width: 0;
+
+    padding-bottom: 1.1rem;
+    overflow: hidden;
+
+    background-color: var(--color-surface);
+
+    border: var(--border-thin);
+    border-left: 5px solid var(--color-primary);
+    border-radius: var(--radius-md);
+
+    box-shadow: var(--shadow-sm);
+
+    animation: review-in 0.45s ease both;
+
+    transition: box-shadow var(--transition-fast);
+}
+
+.review:hover {
+    box-shadow: var(--shadow-md);
+}
+
+/* cards appear one after another */
+.review:nth-child(2) { animation-delay: 0.07s; }
+.review:nth-child(3) { animation-delay: 0.14s; }
+.review:nth-child(4) { animation-delay: 0.21s; }
+.review:nth-child(5) { animation-delay: 0.28s; }
+.review:nth-child(6) { animation-delay: 0.35s; }
+.review:nth-child(7) { animation-delay: 0.42s; }
+.review:nth-child(8) { animation-delay: 0.49s; }
+.review:nth-child(9) { animation-delay: 0.56s; }
+.review:nth-child(10) { animation-delay: 0.63s; }
+
+@keyframes review-in {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+/* everything inside the card except the header strip */
+.review > :not(.review-number) {
+    margin: 0 1.1rem;
+}
+
+/* ---------- header strip ---------- */
+
+.review-number {
+    margin: 0;
+    padding: 0.7rem 1.1rem;
+
+    background-color: var(--color-primary-light);
+    color: var(--color-primary);
+
+    border-bottom: var(--border-thin);
+
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+/* ---------- question ---------- */
+
+.review-question {
+    font-size: 0.98rem;
+    font-weight: 500;
+    line-height: 1.6;
+
+    /* keeps the line breaks of code snippets */
+    white-space: pre-wrap;
+}
+
+/* ---------- answers ---------- */
+
+.review-row {
+    display: grid;
+    grid-template-columns: 9rem 1fr;
+    gap: 0.75rem;
+    align-items: baseline;
+
+    padding: 0.65rem 0.9rem;
+
+    background-color: var(--color-surface-alt);
+
+    border: var(--border-thin);
+    border-radius: var(--radius-sm);
+
+    font-weight: 500;
+    overflow-wrap: anywhere;
+}
+
+.correct-answer {
+    background-color: var(--color-accent-light);
+    border-color: var(--color-accent);
+}
+
+.review-label {
+    color: var(--color-text-muted);
+
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.correct-answer .review-label {
+    color: var(--color-accent);
+}
+
+/* ---------- explanation ---------- */
+
+.review-explanation {
+    padding: 0.85rem 1rem;
+
+    background-color: var(--color-primary-light);
+
+    border-left: 3px solid var(--color-primary);
+    border-radius: var(--radius-sm);
+
+    line-height: 1.65;
+}
+
+.review-explanation .review-label {
+    display: block;
+
+    margin-bottom: 0.3rem;
+
+    color: var(--color-primary);
+}
+
+.review-explanation .review-label::before {
+    content: "\1F4A1  ";
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .review {
+        animation: none;
+    }
+}
+
+
+/* =========================================================
+   8. MOBILE
+   ========================================================= */
+
+@media (max-width: 500px) {
+
+    #quizPanel {
+        padding: var(--space-md);
+    }
+
+    #questionText {
+        font-size: 1.15rem;
+    }
+
+    .choice {
+        padding: 0.65rem 0.8rem;
+    }
+
+    .review-row {
+        grid-template-columns: 1fr;
+        gap: 0.2rem;
+    }
+
+}

@@ -4,18 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>{% block title %}My Web Programming Portfolio{% endblock %}</title>
-
-    <link rel="stylesheet" href="{{ url_for('static', filename='my_style.css') }}">
-
-    {% block head %}{% endblock %}
+    <title>Original HTML</title>
 </head>
 
-<body id="top">
+<body>
 
     <header>
-        {% block header %}
 
         <h1>
             <a href="{{ url_for('home') }}">
@@ -59,33 +53,35 @@
                         Build Engineering Student Profile Form
                     </a>
                 </li>
-
-                 <li>
-                    <a href="{{ url_for('quiz') }}">
-                        Quiz
-                    </a>
-                </li>
             </ul>
         </nav>
 
-        {% endblock %}
     </header>
 
 
     <main>
 
-        {% block content %}
-        {% endblock %}
-
-        {% block page_navigation %}
-        {% endblock %}
+        
+<section>
+        <h2>Weekly Work</h2>
+        <p>A live site that grows one page or feature every week.</p>
+        <!-- Each week you add a link here to that week's page or feature. -->
+        <p>
+            <strong>GitHub:</strong>
+            <a href="https://github.com/Ad0Dev-44/web-programming-site" target="_blank">View Repository</a>
+        </p>
+        <ul>
+            {% for item in weekly_work %}
+                <li><a href="{{ item.url }}">Week {{ item.week }} — {{ item.title }}</a></li>
+            {% else %}
+                <li>Week 1 — live site launched.</li>
+            {% endfor %}
+        </ul>
 
     </main>
 
 
     <footer>
-        {% block footer %}
-
         <p>
             Web Programming — built with Flask and deployed on Render.
         </p>
@@ -100,17 +96,7 @@
             &copy; 2026 Adrian El-Rahi. All rights reserved.
         </p>
 
-        {% endblock %}
     </footer>
-
-
-    <!-- Floating scroll controls -->
-    <div class="page-scroll-controls" aria-label="Scroll controls">
-        <a href="#top" aria-label="Scroll to top">↑</a>
-        <a href="#bottom" aria-label="Scroll to bottom">↓</a>
-    </div>
-
-    <div id="bottom"></div>
-
 </body>
 </html>
+

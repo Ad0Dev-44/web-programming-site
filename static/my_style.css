@@ -26,6 +26,9 @@
 
     --color-border: #d8e2e7;
 
+    --color-warning: #b42318;
+    --color-warning-light: #fef3f2;
+
     --font-body: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     --font-heading: Georgia, "Times New Roman", serif;
     --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
@@ -505,7 +508,26 @@ main section ul li:hover {
     border-radius: var(--radius-sm);
 }
 
+/* Warning / remark box (e.g. pattern attribute caveat) */
+.remark {
+    margin: var(--space-lg) 0;
+    padding: var(--space-md) var(--space-lg);
 
+    background-color: var(--color-warning-light);
+    color: var(--color-text);
+
+    border-left: 4px solid var(--color-warning);
+    border-radius: var(--radius-sm);
+}
+
+.remark::first-line {
+    font-weight: 600;
+}
+
+.remark::before {
+    content: "\26A0\00a0";
+    color: var(--color-warning);
+}
 /* =========================================================
    12. IN-PAGE SECTION NAVIGATION
    ========================================================= */
@@ -813,6 +835,9 @@ footer p:last-child {
 
         --color-border: #263449;
 
+        --color-warning: #f87171;
+        --color-warning-light: #3b1a1a;
+
         --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.25);
         --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.3);
     }
@@ -820,7 +845,10 @@ footer p:last-child {
 
 
 /* =========================================================
-   20. TABLET / DESKTOP
+   20. TABLET (min-width: 701px)
+   Replaces the old single 701px block. Layout switches from
+   stacked mobile to a two-column grid for lists, row-based nav,
+   and larger header/image sizing.
    ========================================================= */
 
 @media (min-width: 701px) {
@@ -830,9 +858,7 @@ footer p:last-child {
 
         gap: 1.5rem;
 
-        padding:
-            1.75rem
-            max(1.5rem, calc((100% - var(--content-width)) / 2));
+        padding: 1.75rem 1.5rem;
     }
 
     header > img {
@@ -875,6 +901,60 @@ footer p:last-child {
     main > section:first-child > img {
         max-width: 850px;
         margin: var(--space-xl) auto;
+    }
+
+    main section iframe {
+        height: 500px;
+    }
+
+    footer {
+        padding: var(--space-xl) 1.5rem;
+    }
+}
+
+
+/* =========================================================
+   20b. DESKTOP (min-width: 1025px)
+   Builds on the tablet styles. Header and footer padding align
+   to the centered content column, lists go to three columns,
+   and the floating scroll controls move into the side gutter.
+   ========================================================= */
+
+@media (min-width: 1025px) {
+
+    header {
+        padding:
+            1.75rem
+            max(1.5rem, calc((100% - var(--content-width)) / 2));
+    }
+
+    header h1 {
+        font-size: 2.6rem;
+    }
+
+    header nav a {
+        padding: 0.6rem 1.1rem;
+        font-size: 1rem;
+    }
+
+    main {
+        padding: var(--space-2xl) 0 calc(var(--space-2xl) + var(--space-md));
+    }
+
+    main section h2 {
+        font-size: 3rem;
+    }
+
+    main section h3 {
+        font-size: 1.8rem;
+    }
+
+    main section ul {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    main > section:first-child > img {
+        max-width: 900px;
     }
 
     main section iframe {

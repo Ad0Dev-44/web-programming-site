@@ -17,6 +17,8 @@ href="{{ url_for('static', filename='form_style.css') }}"/>
 
 <form action="{{ url_for('submit_profile') }}" method="post">
 
+    <input type="hidden" name="form_version" value="2026-2027">
+
     <nav class="form-steps" aria-label="Form sections">
         <ol>
             <li><a href="#sec-personal">Personal</a></li>
@@ -125,15 +127,15 @@ href="{{ url_for('static', filename='form_style.css') }}"/>
             </div>
 
             <div class="field-row">
-                <p>
-                    Expected Graduation Term *<br>
+                <fieldset class="radio-group">
+                    <legend>Expected Graduation Term *</legend>
                     <input type="radio" id="spring" name="graduation" value="Spring" required>
                     <label for="spring">Spring</label>
                     <input type="radio" id="summer" name="graduation" value="Summer">
                     <label for="summer">Summer</label>
                     <input type="radio" id="fall" name="graduation" value="Fall">
                     <label for="fall">Fall</label>
-                </p>
+                </fieldset>
                 <p>
                     <label for="graduation_month">Expected Graduation Month &amp; Year *</label><br>
                     <input type="month" id="graduation_month" name="graduation_month"
@@ -141,13 +143,13 @@ href="{{ url_for('static', filename='form_style.css') }}"/>
                 </p>
             </div>
 
-            <p>
-                Have you completed an engineering internship? *<br>
+            <fieldset class="radio-group">
+                <legend>Have you completed an engineering internship? *</legend>
                 <input type="radio" id="internship_yes" name="internship_completed" value="Yes" required>
                 <label for="internship_yes">Yes</label>
                 <input type="radio" id="internship_no" name="internship_completed" value="No">
                 <label for="internship_no">No</label>
-            </p>
+            </fieldset>
 
             <details>
                 <summary>Internship details (only if you answered Yes)</summary>
@@ -242,24 +244,20 @@ href="{{ url_for('static', filename='form_style.css') }}"/>
                 </p>
             </div>
 
-            <p>Engineering software used (select all that apply):</p>
-
-            <input type="checkbox" id="sw_matlab" name="software" value="MATLAB">
-            <label for="sw_matlab">MATLAB</label>
-            <input type="checkbox" id="sw_simulink" name="software" value="Simulink">
-            <label for="sw_simulink">Simulink</label>
-            <input type="checkbox" id="sw_labview" name="software" value="LabVIEW">
-            <label for="sw_labview">LabVIEW</label>
-            <input type="checkbox" id="sw_ltspice" name="software" value="LTspice">
-            <label for="sw_ltspice">LTspice</label>
-            <input type="checkbox" id="sw_vivado" name="software" value="Vivado">
-            <label for="sw_vivado">Vivado</label>
-            <input type="checkbox" id="sw_solidworks" name="software" value="SolidWorks">
-            <label for="sw_solidworks">SolidWorks</label>
-            <input type="checkbox" id="sw_proteus" name="software" value="Proteus">
-            <label for="sw_proteus">Proteus</label>
-            <input type="checkbox" id="sw_autocad" name="software" value="AutoCAD">
-            <label for="sw_autocad">AutoCAD</label>
+            <p>
+                <label for="software">Engineering Software Used</label><br>
+                <select id="software" name="software" multiple size="8">
+                    <option value="MATLAB">MATLAB</option>
+                    <option value="Simulink">Simulink</option>
+                    <option value="LabVIEW">LabVIEW</option>
+                    <option value="LTspice">LTspice</option>
+                    <option value="Vivado">Vivado</option>
+                    <option value="SolidWorks">SolidWorks</option>
+                    <option value="Proteus">Proteus</option>
+                    <option value="AutoCAD">AutoCAD</option>
+                </select><br>
+                <small>Hold Ctrl (Windows) or Command (Mac) to select several options.</small>
+            </p>
         </fieldset>
 
         <fieldset id="sec-project">

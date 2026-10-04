@@ -450,6 +450,67 @@ input:is([name="skills"], [name="software"]) + label + p {
     margin-top: var(--space-md);
 }
 
+/* Radio groups: a lighter, compact fieldset with the legend on its border */
+.form-sections fieldset.radio-group {
+    margin: 0 0 var(--space-md);
+    padding: 0.25rem var(--space-md) var(--space-sm);
+
+    background-color: var(--form-field-bg);
+
+    border: var(--border-thin);
+    border-radius: var(--radius-md);
+
+    box-shadow: none;
+
+    transition: border-color var(--transition-fast);
+}
+
+.form-sections fieldset.radio-group:hover {
+    border-color: var(--color-primary);
+}
+
+/* Legend as a caption sitting on the border, not a section heading */
+.form-sections fieldset.radio-group > legend {
+    float: none;
+    width: auto;
+
+    margin: 0;
+    padding: 0 0.5rem;
+
+    border-bottom: none;
+
+    color: var(--color-text);
+
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+/* No number badge or checkmark: these are sub-groups, not sections */
+.form-sections fieldset.radio-group > legend::before {
+    display: none;
+}
+
+/* Tighter pills, so the box has even padding all round */
+.form-sections fieldset.radio-group > label {
+    margin: 0.5rem 0.35rem 0 0;
+}
+
+/* Inside a two-column row: no extra margin, line up with the neighbouring field */
+.field-row > fieldset.radio-group {
+    margin-bottom: 0;
+}
+
+.field-row:has(> fieldset.radio-group) {
+    align-items: end;
+}
+
+/* Border turns red if the user submits without choosing */
+.form-sections fieldset.radio-group:has(input:user-invalid) {
+    border-color: var(--form-error);
+}
+
 
 /* =========================================================
    7. OPTIONAL DETAILS

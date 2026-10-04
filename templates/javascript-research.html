@@ -1,0 +1,683 @@
+{% extends "base.html" %}
+{% block title %}JavaScript Research{% endblock %}
+
+{% block content %}
+
+    <section>
+        <h2>JavaScript Research Page</h2>
+        <p>
+            This page covers some practical topics from the course and will be expanded as much as javascript research requires.
+        </p>
+    </section>
+
+    <nav aria-label="Page sections">
+        <a href="#jscript">JScript</a>
+        <a href="#ecmascript">ECMAScript Features</a>
+        <a href="#iife">IIFE (Immediately Invoked Function Expression)</a>
+        <a href="#variadic">Variadic Functions and Rest Parameter Functions</a>
+    </nav>
+
+
+    <section id="jscript">
+    <h3>JScript</h3>
+
+<p>
+    JScript was Microsoft's implementation of a scripting language for
+    web pages. It was introduced in <strong>1996</strong> with
+    Internet Explorer 3.0 and was largely compatible with
+    Netscape's JavaScript. Microsoft developed JScript partly because
+    "JavaScript" was a trademark associated with Netscape.
+</p>
+
+<p>
+    Although JScript and JavaScript were closely related, they were
+    separate implementations. This meant that a script could behave
+    differently depending on which browser was being used. This was
+    particularly significant during the early development of the Web,
+    when browsers did not always implement scripting features in the
+    same way.
+</p>
+
+<h4>JScript and JavaScript</h4>
+
+<table>
+
+    <thead>
+        <tr>
+            <th>JScript</th>
+            <th>JavaScript</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr>
+            <td>Developed by Microsoft</td>
+            <td>Originally developed by Netscape</td>
+        </tr>
+
+        <tr>
+            <td>Primarily associated with Internet Explorer</td>
+            <td>Used across many browsers</td>
+        </tr>
+
+        <tr>
+            <td>Introduced in 1996</td>
+            <td>Introduced in 1995</td>
+        </tr>
+
+        <tr>
+            <td>Microsoft-specific implementation</td>
+            <td>Eventually standardized through ECMAScript</td>
+        </tr>
+    </tbody>
+</table>
+
+<h4>Example of JScript</h4>
+
+<p>
+    JScript used syntax that was very similar to JavaScript. For
+    example, a simple script could display a message in the browser:
+</p>
+
+<pre><code>&lt;script&gt;
+var message = "Hello from JScript!";
+alert(message);
+
+</script></code></pre>
+
+
+<p>
+    The similarity between JScript and JavaScript meant that many
+    simple scripts could work in both environments. However, differences
+    between browser implementations could cause compatibility problems.
+</p>
+
+<h4>The Decline of JScript</h4>
+
+<p>
+    As web standards became increasingly important, browser developers
+    moved toward implementing standardized ECMAScript features rather
+    than maintaining proprietary scripting dialects. JScript therefore
+    became associated with legacy versions of Internet Explorer.
+</p>
+
+<p>
+    Microsoft eventually replaced Internet Explorer with
+    <strong>Microsoft Edge</strong>, which uses modern web standards
+    and does not use the traditional JScript engine for normal web
+    development. JScript is therefore considered a legacy technology
+    rather than a language used for modern web development.
+</p>
+
+<aside>
+    <strong>Historical significance:</strong>
+    JScript is an example of how competing browser implementations
+    contributed to compatibility problems during the early history of
+    the Web. The development and adoption of standards such as
+    ECMAScript helped reduce these differences.
+</aside>
+
+<h4>Sources</h4>
+
+<ul>
+    <li>
+        <a href="https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-es3/7d5c1a1a-0c0f-4b1e-8b9a-1b5f5c7c3e4d"
+           target="_blank"
+           rel="noopener">
+            Microsoft — JScript Documentation
+        </a>
+    </li>
+
+    <li>
+        <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript"
+           target="_blank"
+           rel="noopener">
+            MDN Web Docs — JavaScript
+        </a>
+    </li>
+</ul>
+
+</section>
+
+
+    <!-- ============================================================ -->
+    <section id="ecmascript">
+    <h3>ECMAScript Features</h3>
+
+<p>
+    ECMAScript is the standardized specification that defines the core
+    features of JavaScript. It is developed and maintained by
+    <strong>TC39</strong>, a technical committee of Ecma International.
+    JavaScript implementations, such as those found in web browsers,
+    follow the ECMAScript standard.
+</p>
+
+<p>
+    ECMAScript has evolved significantly over the years. One of its most
+    important milestones was <strong>ECMAScript 2015 (ES6)</strong>,
+    which introduced many features that are now commonly used in modern
+    JavaScript development. Since ES2016, new editions have generally
+    been released on a yearly basis.
+</p>
+
+<h4>Evolution of ECMAScript</h4>
+
+<p>
+    The following table presents some important ECMAScript editions and
+    examples of the features they introduced:
+</p>
+
+<table>
+
+    <thead>
+        <tr>
+            <th>Version</th>
+            <th>Year</th>
+            <th>Notable Features</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr>
+            <td>ES5</td>
+            <td>2009</td>
+            <td>Strict mode, JSON support, array methods</td>
+        </tr>
+
+        <tr>
+            <td>ES2015 (ES6)</td>
+            <td>2015</td>
+            <td>
+                <code>let</code>, <code>const</code>, arrow functions,
+                classes, modules, promises, destructuring
+            </td>
+        </tr>
+
+        <tr>
+            <td>ES2017</td>
+            <td>2017</td>
+            <td>
+                <code>async</code>/<code>await</code> and
+                <code>Object.values()</code>
+            </td>
+        </tr>
+
+        <tr>
+            <td>ES2020</td>
+            <td>2020</td>
+            <td>
+                Optional chaining, nullish coalescing and
+                <code>BigInt</code>
+            </td>
+        </tr>
+
+        <tr>
+            <td>ES2022</td>
+            <td>2022</td>
+            <td>
+                Private class fields, top-level <code>await</code>
+                and <code>Object.hasOwn()</code>
+            </td>
+        </tr>
+
+        <tr>
+            <td>ES2025</td>
+            <td>2025</td>
+            <td>
+                Iterator helpers, <code>RegExp.escape()</code> and
+                <code>Promise.try()</code>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<p class="source-note">
+    Source:
+    <a href="https://tc39.es/ecma262/2025/multipage/"
+       target="_blank"
+       rel="noopener">
+        ECMAScript Language Specification
+    </a>
+</p>
+
+
+<h4>Important Features</h4>
+
+<h5>Let and Const</h5>
+
+<p>
+    ECMAScript 2015 introduced <code>let</code> and <code>const</code>
+    as block-scoped alternatives to <code>var</code>. A
+    <code>let</code> variable can be reassigned, while a
+    <code>const</code> variable cannot be reassigned after it has been
+    initialized.
+</p>
+
+<pre><code>let score = 80;
+score = 90;
+
+const name = "John";</code></pre>
+
+<h5>Arrow Functions</h5>
+
+<p>
+    Arrow functions provide a shorter syntax for writing functions.
+    They are frequently used with array methods and callback functions.
+</p>
+
+<pre><code>const numbers = [1, 2, 3];
+
+const doubled = numbers.map(
+number => number * 2
+);</code></pre>
+
+
+<h5>Destructuring</h5>
+
+<p>
+    Destructuring makes it possible to extract values from arrays or
+    objects and assign them directly to variables. This can make code
+    shorter and easier to read.
+</p>
+
+<pre><code>const student = {
+name: "Maria",
+major: "Computer Engineering"
+};
+
+const { name, major } = student;</code></pre>
+
+<h5>Async and Await</h5>
+
+<p>
+    ECMAScript 2017 introduced <code>async</code> and
+    <code>await</code>, which provide a clearer way to work with
+    asynchronous operations based on Promises. They are commonly used
+    when retrieving data from servers or APIs.
+</p>
+
+<pre><code>async function getData() {
+const response = await fetch("/data");
+return response.json();
+}</code></pre>
+
+<h4>Why ECMAScript Matters</h4>
+
+<p>
+    The development of ECMAScript has helped JavaScript evolve from a
+    relatively simple scripting language into a language used to build
+    complex web applications and other software. Standardization also
+    provides a common specification that different JavaScript
+    implementations can follow.
+</p>
+
+<aside>
+    <strong>Did you know?</strong>
+    ECMAScript and JavaScript are closely related, but they are not
+    exactly the same thing. ECMAScript defines the language standard,
+    while JavaScript implementations follow that standard and may also
+    provide additional features such as browser Web APIs.
+</aside>
+
+
+<h4>Sources</h4>
+
+<ul>
+    <li>
+        <a href="https://tc39.es/ecma262/"
+           target="_blank"
+           rel="noopener">
+            Ecma International — ECMAScript Language Specification
+        </a>
+    </li>
+
+    <li>
+        <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Language_overview"
+           target="_blank"
+           rel="noopener">
+            MDN Web Docs — JavaScript Language Overview
+        </a>
+    </li>
+</ul>
+
+
+</section>
+
+    <!-- ============================================================ -->
+    <section id="iife">
+    <h3>IIFE (Immediately Invoked Function Expression)</h3>
+
+<p>
+    An <strong>Immediately Invoked Function Expression (IIFE)</strong>
+    is a JavaScript function that is defined and executed immediately.
+    Unlike a normal function, an IIFE does not need to be called
+    separately after it has been created.
+</p>
+
+<p>
+    IIFEs were commonly used in older JavaScript applications to create
+    a private scope for variables. Before modern features such as
+    <code>let</code>, <code>const</code>, and JavaScript modules became
+    widely available, IIFEs provided a way to prevent variables from
+    unnecessarily becoming accessible outside a particular section of
+    code.
+</p>
+
+<h4>Basic Syntax</h4>
+
+<p>
+    An IIFE is usually written by placing a function expression inside
+    parentheses and immediately invoking it with another pair of
+    parentheses:
+</p>
+
+<pre><code>(function () {
+console.log("This function runs immediately!");
+
+})();</code></pre>
+
+<p>
+    The final <code>()</code> calls the function as soon as it has been
+    created. The surrounding parentheses make the function an
+    expression rather than a normal function declaration.
+</p>
+
+<h4>Using a Private Variable</h4>
+
+<p>
+    One important use of IIFEs was creating variables that could only be
+    accessed from inside the function. This helped prevent accidental
+    conflicts with variables in other parts of a program.
+</p>
+
+<pre><code>(function () {
+const message = "Private information";
+
+console.log(message);
+
+})();</code></pre>
+
+<p>
+    In this example, <code>message</code> exists only inside the IIFE.
+    Code outside the function cannot directly access it.
+</p>
+
+<h4>Passing Arguments</h4>
+
+<p>
+    An IIFE can also receive arguments just like a regular function.
+    This allows data to be passed into its private scope.
+</p>
+
+<pre><code>(function (name) {
+console.log("Hello, " + name);
+
+})("Hady");</code></pre>
+
+<h4>Why Were IIFEs Important?</h4>
+
+<p>
+    IIFEs became particularly useful before JavaScript had modern
+    module systems and block-scoped declarations. They allowed
+    developers to isolate variables and create a form of private
+    scope, which reduced the possibility of naming conflicts in
+    larger scripts.
+</p>
+
+<h4>Summary of IIFE Characteristics</h4>
+<table>
+
+    <thead>
+        <tr>
+            <th>Characteristic</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr>
+            <td>Execution</td>
+            <td>The function runs immediately after it is created.</td>
+        </tr>
+
+        <tr>
+            <td>Scope</td>
+            <td>Variables can be kept inside the function's scope.</td>
+        </tr>
+
+        <tr>
+            <td>Arguments</td>
+            <td>An IIFE can receive arguments like a normal function.</td>
+        </tr>
+
+        <tr>
+            <td>Common use</td>
+            <td>Older scripts, initialization code, and avoiding global variables.</td>
+        </tr>
+    </tbody>
+</table>
+
+<h4>IIFEs in Modern JavaScript</h4>
+
+<p>
+    IIFEs are still valid JavaScript, but they are less necessary in
+    modern applications. Features such as <code>let</code> and
+    <code>const</code>, as well as ES modules, provide cleaner ways to
+    control scope and organize code.
+</p>
+
+<aside>
+    <strong>Key idea:</strong>
+    An IIFE combines two actions: creating a function expression and
+    immediately calling that function. Its main historical advantage
+    was providing an isolated scope for variables.
+</aside>
+
+<h4>Source</h4>
+
+<ul>
+    <li>
+        <a href="https://developer.mozilla.org/en-US/docs/Glossary/IIFE"
+           target="_blank"
+           rel="noopener">
+            MDN Web Docs — IIFE
+        </a>
+    </li>
+</ul>
+
+</section>
+
+<!-- variadic functions -->
+<section id="variadic">
+    <h3>Variadic Functions and Rest Parameter Functions</h3>
+
+<p>
+    A <strong>variadic function</strong> is a function that can accept
+    a variable number of arguments. Instead of requiring a fixed number
+    of parameters, the function can process as many arguments as are
+    provided when it is called.
+</p>
+
+<p>
+    JavaScript has traditionally supported functions with a variable
+    number of arguments through the special <code>arguments</code>
+    object. ECMAScript 2015 introduced the <strong>rest parameter</strong>,
+    which provides a clearer and more convenient way to collect multiple
+    arguments into an array.
+</p>
+
+<h4>Traditional Approach</h4>
+
+<p>
+    Before rest parameters, developers could use the
+    <code>arguments</code> object to access all arguments passed to a
+    function.
+</p>
+
+<pre><code>function sum() {
+let total = 0;
+
+for (let i = 0; i &lt; arguments.length; i++) {
+    total += arguments[i];
+}
+
+return total;
+
+}
+
+console.log(sum(2, 4, 6));</code></pre>
+
+<p>
+    In this example, the function does not define any parameters, but
+    it can still receive and process three arguments. The
+    <code>arguments</code> object contains the values passed to the
+    function.
+</p>
+
+<h4>Rest Parameters</h4>
+
+<p>
+    ECMAScript 2015 introduced the rest parameter syntax
+    <code>...</code>. It collects all remaining arguments into a real
+    array, making them easier to work with.
+</p>
+
+<pre><code>function sum(...numbers) {
+return numbers.reduce(
+    (total, number) => total + number,
+    0
+);
+
+}
+
+console.log(sum(2, 4, 6, 8));</code></pre>
+
+<p>
+    Here, <code>numbers</code> becomes an array containing all the
+    arguments passed to the function. The same function can therefore
+    accept two, four, or many more numbers without changing its
+    definition.
+</p>
+
+<h4>Fixed and Variable Parameters</h4>
+
+<p>
+    A rest parameter can also be combined with regular parameters.
+    This is useful when a function requires some information but can
+    accept additional values.
+</p>
+
+<pre><code>function introduce(name, ...skills) {
+console.log(name);
+console.log(skills);
+
+}
+
+introduce(
+"Pascal",
+"Python",
+"JavaScript",
+"SQL"
+);</code></pre>
+
+<p>
+    In this example, <code>name</code> receives the first argument,
+    while all remaining arguments are collected inside the
+    <code>skills</code> array.
+</p>
+
+<h4>Key Differences</h4>
+
+<table>
+    <caption>Arguments Object vs. Rest Parameters</caption>
+
+    <thead>
+        <tr>
+            <th>Feature</th>
+            <th><code>arguments</code></th>
+            <th>Rest Parameter</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr>
+            <td>Introduced</td>
+            <td>Early JavaScript</td>
+            <td>ECMAScript 2015</td>
+        </tr>
+
+        <tr>
+            <td>Syntax</td>
+            <td><code>arguments</code></td>
+            <td><code>...parameters</code></td>
+        </tr>
+
+        <tr>
+            <td>Data type</td>
+            <td>Array-like object</td>
+            <td>Actual Array</td>
+        </tr>
+
+        <tr>
+            <td>Readability</td>
+            <td>More verbose</td>
+            <td>More concise and explicit</td>
+        </tr>
+
+        <tr>
+            <td>Common use</td>
+            <td>Legacy JavaScript code</td>
+            <td>Modern JavaScript</td>
+        </tr>
+    </tbody>
+</table>
+
+<h4>Why Are Rest Parameters Useful?</h4>
+
+<p>
+    Rest parameters make variadic functions easier to write and
+    understand. They are especially useful for functions that need to
+    process an unknown number of values, such as mathematical
+    calculations, combining lists, or handling optional arguments.
+</p>
+
+<aside>
+    <strong>Key idea:</strong>
+    The rest parameter <code>...</code> collects multiple arguments
+    into an array. It is called "rest" because it represents the
+    remaining arguments after any regular parameters.
+</aside>
+
+<h4>Source</h4>
+
+<ul>
+    <li>
+        <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/rest"
+           target="_blank"
+           rel="noopener">
+            MDN Web Docs — Rest Parameters
+        </a>
+    </li>
+
+    <li>
+        <a href="https://tc39.es/ecma262/"
+           target="_blank"
+           rel="noopener">
+            Ecma International — ECMAScript Language Specification
+        </a>
+    </li>
+</ul>
+
+</section
+
+
+
+{% endblock %}
+
+    {% block page_navigation %}
+<div class="page-navigation">
+    <a href="{{ url_for('quiz') }}" class="nav-button">
+        ← Previous Page
+    </a>
+</div>
+{% endblock %}

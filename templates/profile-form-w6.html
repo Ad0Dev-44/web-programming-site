@@ -40,7 +40,7 @@ href="{{ url_for('static', filename='form_style.css') }}"/>
                 <input type="text" id="fullname" name="fullname"
                        pattern="[A-Za-zÀ-ÖØ-öø-ÿ'\-]+( [A-Za-zÀ-ÖØ-öø-ÿ'\-]+)+"
                        autocomplete="name" placeholder="First name and last name"
-                       title="At least two words. Letters, hyphens and apostrophes only, e.g. Marie-Jose O'Connor" required>
+                       title="At least two words. Letters, hyphens and apostrophes only, e.g. Charbel Fahed" required>
             </p>
 
             <div class="field-row">
@@ -360,13 +360,12 @@ href="{{ url_for('static', filename='form_style.css') }}"/>
             </p>
 
             <p class="form-actions">
-                <button type="submit" id="preview-btn">Preview Profile</button>
+                <button type="submit" id="preview-btn">Preview</button>
                 <button type="reset">Clear Form</button>
             </p>
         </fieldset>
 
-        <!-- Review panel: lives inside .form-sections so it sits in the same grid
-             column as the form cards. No class on this div so "hidden" works. -->
+        <!-- Review panel -->
         <div id="review-panel" hidden>
             <h2>Review your profile</h2>
             <div id="review-content"></div>
@@ -379,7 +378,6 @@ href="{{ url_for('static', filename='form_style.css') }}"/>
     </div>
 </form>
 
-<!-- The script must be INSIDE a block, otherwise Jinja ignores it in a child template -->
 <script>
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -395,20 +393,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const getSoftware = () => [...document.getElementById('software').selectedOptions].map(o => o.value);
     const selectText = sel => (sel.value && sel.selectedIndex >= 0) ? sel.options[sel.selectedIndex].text : '';
 
-    // HTML min can't be relative to today
+    // min date not today
     document.getElementById('meeting_date').min = new Date().toLocaleDateString('en-CA');
 
-    // ---------- Validation HTML cannot express ----------
+    // Validation HTML cannot express 
     function runCustomChecks() {
         const gradMonth = document.getElementById('graduation_month');
         const meetingDate = document.getElementById('meeting_date');
         gradMonth.setCustomValidity('');
         meetingDate.setCustomValidity('');
 
-        // 1. Graduation month must fit the selected term
+        // Graduation month must fit the selected term
         const semester = getRadio('graduation');
         if (gradMonth.value && semester) {
-            // "2027-05" -> split gives ["2027", "05"] -> [1] is "05" -> Number gives 5
+            // "2026-05" --> 5
             const selectedMonth = Number(gradMonth.value.split('-')[1]);
             let monthMatchesTerm = true;
 
@@ -425,12 +423,12 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        // 2. Internship fields are required only when the answer is Yes
-        const yes = getRadio('internship_completed') === 'Yes';
-        document.getElementById('internship_company').required = yes;
-        document.getElementById('internship_duration').required = yes;
+        // Internship fields required iff answer === Yes
+        const completed = getRadio('internship_completed') === 'Yes';
+        document.getElementById('internship_company').required = completed;
+        document.getElementById('internship_duration').required = completed;
 
-        // 3. No weekends
+        // No weekends
         if (meetingDate.value) {
             const day = new Date(meetingDate.value).getUTCDay();
             if (day === 0 || day === 6) {
@@ -439,18 +437,21 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Internship answer changed: open the details on Yes, clear them on No
-    form.querySelectorAll('input[name="internship_completed"]').forEach(r =>
-        r.addEventListener('change', () => {
-            if (r.value === 'Yes') {
-                internshipDetails.open = true;
-            } else {
-                document.getElementById('internship_company').value = '';
-                document.getElementById('internship_duration').value = '';
-                internshipDetails.open = false;
-            }
-        })
-    );
+    // Internship answer changed: Yes --> open details, No --> clear details
+    const yesRadio = document.getElementById('internship_yes');
+    const noRadio = document.getElementById('internship_no');
+
+    // Yes --> open details
+    yesRadio.addEventListener('change', () => {
+        internshipDetails.open = true;
+    });
+
+    // No --> clear details and close them
+    noRadio.addEventListener('change', () => {
+        document.getElementById('internship_company').value = '';
+        document.getElementById('internship_duration').value = '';
+        internshipDetails.open = false;
+    });
 
     // A control hidden inside a closed <details> can't show its error bubble
     // (the browser blocks submit silently), so open the details first.
@@ -459,7 +460,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (d) d.open = true;
     }, true);
 
-    // ---------- Step indicators ----------
+    
     const sections = ['sec-personal', 'sec-academic', 'sec-technical', 'sec-project', 'sec-confirm'];
 
     function updateSteps() {
@@ -484,7 +485,7 @@ document.addEventListener('DOMContentLoaded', () => {
     form.addEventListener('reset', () => setTimeout(() => { refresh(); closeReview(); }, 0));
     refresh();
 
-    // ---------- Collect data ----------
+    // Collecting data
     function collectData() {
         const skills = getSkills();
         const sw = getSoftware();
@@ -612,7 +613,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 {% block page_navigation %}
 <div class="page-navigation">
-    <a href="{{ url_for('personal_research') }}" class="nav-button">
+    <a href="{{ url_for('javascript_research') }}" class="nav-button">
         ← Previous Page
     </a>
 </div>

@@ -40,7 +40,7 @@ href="{{ url_for('static', filename='form_style.css') }}"/>
                 <input type="text" id="fullname" name="fullname"
                        pattern="[A-Za-zÀ-ÖØ-öø-ÿ'\-]+( [A-Za-zÀ-ÖØ-öø-ÿ'\-]+)+"
                        autocomplete="name" placeholder="First name and last name"
-                       title="At least two words. Letters, hyphens and apostrophes only, e.g. Marie-Jose O'Connor" required>
+                       title="At least two words. Letters, hyphens and apostrophes only, e.g. Charbel Fahed" required>
             </p>
 
             <div class="field-row">
@@ -56,7 +56,7 @@ href="{{ url_for('static', filename='form_style.css') }}"/>
                 <p>
                     <label for="birthdate">Date of Birth *</label><br>
                     <input type="date" id="birthdate" name="birthdate"
-                           min="1970-01-01" max="2010-12-31" autocomplete="bday" required>
+                           min="1970-01-01" max="2008-12-31" autocomplete="bday" required>
                 </p>
             </div>
 
@@ -117,11 +117,9 @@ href="{{ url_for('static', filename='form_style.css') }}"/>
             <div class="field-row">
                 <p>
                 <label for="gpa">Current GPA (out of 100) *</label><br>
-                <input type="text" id="gpa" name="gpa"
-                    pattern="(100([.,]0{1,2})?|[4-9]\d([.,]\d{1,2})?)( ?/ ?100)?"
-                    inputmode="decimal" placeholder="85.50"
-                    title="A number from 40 to 100, e.g. 85, 85.5, 85,50 or 85/100" required>
-                </p>
+                    <input type="number" id="gpa" name="gpa"
+                           min="70" max="100" step="0.01"
+                           inputmode="decimal" placeholder="85.50" required>
                 <p>
                     <label for="credits">Credits Completed *</label><br>
                     <input type="number" id="credits" name="credits" min="0" max="200" step="1" required>
@@ -141,7 +139,7 @@ href="{{ url_for('static', filename='form_style.css') }}"/>
                 <p>
                     <label for="graduation_month">Expected Graduation Month &amp; Year *</label><br>
                     <input type="month" id="graduation_month" name="graduation_month"
-                           min="2026-09" max="2032-12" required>
+                           min="2026-10" max="2032-12" required>
                 </p>
             </div>
 
@@ -341,7 +339,7 @@ href="{{ url_for('static', filename='form_style.css') }}"/>
 
             <div class="field-row">
                 <p>
-                    <label for="meeting_date">Preferred Meeting Date *</label><br>
+                    <label for="meeting_date">Preferred Meeting Date (weekdays only) *</label><br>
                     <input type="date" id="meeting_date" name="meeting_date" required>
                 </p>
                 <p>
@@ -376,6 +374,9 @@ href="{{ url_for('static', filename='form_style.css') }}"/>
 <div class="page-navigation">
     <a href="{{ url_for('personal_research') }}" class="nav-button">
         ← Previous Page
+    </a>
+    <a href="{{ url_for('quiz') }}" class="nav-button">
+        Next Page →
     </a>
 </div>
 {% endblock %}

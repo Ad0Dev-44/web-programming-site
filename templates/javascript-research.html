@@ -668,10 +668,120 @@ introduce(
     </li>
 </ul>
 
-</section
+</section>
+
+<!-- Nodelist and Collection -->
+<section id="nodelist-collection">
+    <h3>NodeList vs HTMLCollection</h3>
+  <p>Both are array-like objects that hold DOM nodes. You can read <code>.length</code> and use an index, but neither is a real array. They differ in what they contain, how they update, and which methods they offer.</p>
+ 
+  <h4>HTMLCollection</h4>
+  <p>Contains <strong>elements only</strong> and is <strong>always live</strong>: when the DOM changes, the collection updates itself. It has no <code>forEach</code>, so convert it with <code>Array.from()</code> to loop.</p>
+
+<pre>const items = document.getElementsByClassName("item"); // HTMLCollection
+const kids  = document.body.children;                   // HTMLCollection
+items.namedItem("first");                               // lookup by id or name</pre>
+ 
+  <h4>NodeList</h4>
+  <p>Can contain <strong>any node type</strong> (elements, text, comments). It is <strong>static</strong> when returned by <code>querySelectorAll()</code> and <strong>live</strong> when returned by <code>childNodes</code>. It supports <code>forEach</code>, <code>entries</code>, <code>keys</code> and <code>values</code>.</p>
+
+<pre>const list  = document.querySelectorAll(".item"); // static NodeList
+const nodes = document.body.childNodes;           // live NodeList
+list.forEach(el =&gt; console.log(el.textContent));</pre>
+ 
+  <h4>Side by side</h4>
+  <div class="scroll">
+  <table>
+    <thead>
+      <tr>
+        <th></th>
+        <th>HTMLCollection</th>
+        <th>NodeList</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th>Contains</th>
+        <td>Elements only</td>
+        <td>Any node (elements, text, comments)</td>
+      </tr>
+      <tr>
+        <th>Live?</th>
+        <td>Always</td>
+        <td>Static for <code>querySelectorAll</code>, live for <code>childNodes</code></td>
+      </tr>
+      <tr>
+        <th>Returned by</th>
+        <td><code>getElementsByClassName</code>, <code>getElementsByTagName</code>, <code>.children</code>, <code>document.forms</code></td>
+        <td><code>querySelectorAll</code>, <code>childNodes</code>, <code>getElementsByName</code></td>
+      </tr>
+      <tr>
+        <th><code>forEach</code></th>
+        <td>No</td>
+        <td>Yes</td>
+      </tr>
+      <tr>
+        <th>Lookup by id or name</th>
+        <td><code>namedItem()</code></td>
+        <td>Not available</td>
+      </tr>
+    </tbody>
+  </table>
+
+  </div>
+ 
+</section>
 
 
+<section id="js-map">
+  <h3>Map in JavaScript</h3>
+  <p>A <code>Map</code> stores key-value pairs and remembers the order in which keys were inserted. Unlike a plain object, its keys can be <strong>any value</strong>: strings, numbers, objects, even functions.</p>
+ 
+  <h4>Creating and using a Map</h4>
+    <pre>const scores = new Map();
+    scores.set("ana", 90);
+    scores.set("omar", 75).set("lina", 82); // set() is chainable
+    
+    scores.get("omar");   // 75
+    scores.has("ana");    // true
+    scores.delete("lina");
+    scores.size;          // 2 (a property, not a method)
+    scores.clear();       // remove everything
+    
+    // or build it from an array of [key, value] pairs
+    const m = new Map([["a", 1], ["b", 2]]);</pre>
+ 
+  <h4>Looping</h4>
+<pre>for (const [key, value] of m) console.log(key, value);
+    m.forEach((value, key) =&gt; console.log(key, value));
+    [...m.keys()];     // ["a", "b"]
+    [...m.values()];   // [1, 2]
+    [...m.entries()];  // [["a", 1], ["b", 2]]</pre>
 
+  <p>Iteration always follows insertion order.</p>
+ 
+
+  <h4>Map vs plain object</h4>
+  <div class="scroll">
+
+    <table>
+        <thead>
+        <tr><th></th><th>Map</th><th>Object</th></tr>
+        </thead>
+        <tbody>
+        <tr><th>Key types</th><td>Any value</td><td>Strings and symbols (other keys are converted to strings)</td></tr>
+        <tr><th>Size</th><td><code>map.size</code></td><td>Count manually, e.g. <code>Object.keys(obj).length</code></td></tr>
+        <tr><th>Order</th><td>Insertion order</td><td>Insertion order for strings, but integer-like keys are sorted first</td></tr>
+        <tr><th>Iteration</th><td>Directly iterable</td><td>Needs <code>Object.keys</code>, <code>values</code> or <code>entries</code></td></tr>
+        <tr><th>Inherited keys</th><td>None</td><td>Has prototype properties such as <code>toString</code></td></tr>
+        <tr><th>Frequent add/remove</th><td>Designed for it</td><td>Not optimized for it</td></tr>
+        <tr><th>JSON</th><td>Not supported directly</td><td><code>JSON.stringify</code> works</td></tr>
+        </tbody>
+    </table>
+
+  </div>
+
+</section>
 {% endblock %}
 
     {% block page_navigation %}

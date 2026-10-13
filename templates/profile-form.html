@@ -47,9 +47,11 @@ href="{{ url_for('static', filename='form_style.css') }}"/>
                 <p>
                     <label for="student_id">Student ID *</label><br>
                     <input type="text" id="student_id" name="student_id"
-                           pattern="20[0-3]\d{6}" inputmode="numeric" maxlength="9"
-                           placeholder="e.g. 202312345"
-                           title="9 digits starting with the admission year, e.g. 202312345" required>
+                    pattern="20(0\d|1\d|2[0-6])\d{5}"
+                    inputmode="numeric" maxlength="9"
+                    placeholder="e.g. 202312345"
+                    title="9 digits: admission year (2000-2026) followed by 5 digits, e.g. 202312345"
+                    required>
                 </p>
                 <p>
                     <label for="birthdate">Date of Birth *</label><br>

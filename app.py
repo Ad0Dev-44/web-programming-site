@@ -40,6 +40,8 @@ from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
+from quiz_api import init_quiz
+init_quiz(app)
 
 @app.route("/")
 def home():
@@ -54,6 +56,7 @@ def home():
         {"week": 4, "title": "Engineering Student Profile", "url": "/submit-profile"},
         {"week": 5, "title": "JavaScript app", "url": "/quiz"},
         {"week": 5, "title": "JavaScript Research", "url": "/javascript-research"},
+        {"week": 6, "title": "Profile Form (Week 6)", "url": "/profile-form-w6"},
     ]
     return render_template("index.html", weekly_work=weekly_work)
 
@@ -84,6 +87,10 @@ def personal_research():
 @app.route("/original-html")
 def original_html():
     return render_template("OriginalHtml.html")
+
+@app.route("/profile-form-w6")
+def profile_form_w6():
+    return render_template("profile-form-w6.html")
 
 @app.route("/submit-profile", methods=["GET", "POST"])
 def submit_profile():

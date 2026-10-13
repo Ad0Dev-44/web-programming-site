@@ -18,6 +18,9 @@ from random import choices
 from flask import Flask
 from quiz_api import db, Question, database_uri
 
+
+#Internal Database URL: DATABASE_URL = "postgresql://jsquiz_user:vWadOMu9NJAhmYo6jZcGUaS6GoDnUph2@dpg-db71h1cs728c73d4ll4g-a/jsquiz"
+#External Database URL: DATABASE_URL = "postgresql://jsquiz_user:vWadOMu9NJAhmYo6jZcGUaS6GoDnUph2@dpg-db71h1cs728c73d4ll4g-a.frankfurt-postgres.render.com/jsquiz"
 QUESTIONS = [
     {
         "question": "What is the output of the following code snippet?\n\nconsole.log(null == undefined, null === undefined);",

@@ -453,100 +453,93 @@ document.addEventListener('DOMContentLoaded', () => {
         internshipDetails.open = false;
     });
 
-    // A control hidden inside a closed <details> can't show its error bubble
-    // (the browser blocks submit silently), so open the details first.
     form.addEventListener('invalid', e => {
         const d = e.target.closest('details');
         if (d) d.open = true;
     }, true);
 
-    
-    const sections = ['sec-personal', 'sec-academic', 'sec-technical', 'sec-project', 'sec-confirm'];
-
+    // Step indicators
     function updateSteps() {
-        sections.forEach(id => {
-            const section = document.getElementById(id);
-            const link = document.querySelector(`.form-steps a[href="#${id}"]`);
-            if (!section || !link) return;
-            if (!link.dataset.label) link.dataset.label = link.textContent.trim();
-            const done = section.querySelectorAll('input:invalid, select:invalid, textarea:invalid').length === 0;
-            link.textContent = done ? link.dataset.label + ' ✓' : link.dataset.label;
-            link.classList.toggle('step-done', done);
+        document.querySelectorAll('.form-steps a').forEach(link => {
+            const section = document.querySelector(link.hash);   
+            link.classList.toggle('step-done', !section.querySelector(':invalid'));
         });
     }
-
+ 
     function refresh() {
         runCustomChecks();
         updateSteps();
     }
-
+ 
     form.addEventListener('input', refresh);
     form.addEventListener('change', refresh);
     form.addEventListener('reset', () => setTimeout(() => { refresh(); closeReview(); }, 0));
     refresh();
-
-    // Collecting data
+ 
+    // Collecting data: reads every named field of the form at once
     function collectData() {
-        const skills = getSkills();
-        const sw = getSoftware();
-        const hadInternship = getRadio('internship_completed');
-
+        const data = new FormData(form);
+        const get = name => (data.get(name) ?? '').trim();        // one value, or ''
+        const list = name => data.getAll(name).join(', ');        // all values of a repeated name
+        const selectedText = id => selectText(document.getElementById(id));
+        const internship = get('internship_completed');
+ 
         return [
             ['Personal Information', [
-                ['Full Name', document.getElementById('fullname').value.trim()],
-                ['Student ID', document.getElementById('student_id').value.trim()],
-                ['Date of Birth', document.getElementById('birthdate').value],
-                ['USEK Email', document.getElementById('email').value.trim()],
-                ['Mobile Number', document.getElementById('phone').value.trim()],
-                ['GitHub Profile', document.getElementById('portfolio').value.trim()],
-                ['GIN446 Website', document.getElementById('gin446').value.trim()]
+                ['Full Name', get('fullname')],
+                ['Student ID', get('student_id')],
+                ['Date of Birth', get('birthdate')],
+                ['USEK Email', get('email')],
+                ['Mobile Number', get('phone')],
+                ['GitHub Profile', get('portfolio')],
+                ['GIN446 Website', get('gin446')]
             ]],
             ['Academic Information', [
-                ['Engineering Major', selectText(document.getElementById('major'))],
-                ['Current GPA (out of 100)', Number(document.getElementById('gpa').value).toFixed(2)],
-                ['Credits Completed', document.getElementById('credits').value],
-                ['Graduation Term', getRadio('graduation')],
-                ['Graduation Month & Year', document.getElementById('graduation_month').value],
-                ['Internship Completed', hadInternship],
-                ...(hadInternship === 'Yes' ? [
-                    ['Internship Company', document.getElementById('internship_company').value.trim()],
-                    ['Internship Duration', selectText(document.getElementById('internship_duration'))]
+                ['Engineering Major', selectedText('major')],
+                ['Current GPA (out of 100)', Number(get('gpa')).toFixed(2)],
+                ['Credits Completed', get('credits')],
+                ['Graduation Term', get('graduation')],
+                ['Graduation Month & Year', get('graduation_month')],
+                ['Internship Completed', internship],
+                ...(internship === 'Yes' ? [
+                    ['Internship Company', get('internship_company')],
+                    ['Internship Duration', selectedText('internship_duration')]
                 ] : [])
             ]],
             ['Technical Background', [
-                ['Skills', skills.length ? skills.join(', ') : 'None selected'],
-                ['Other Skills', document.getElementById('skills_other').value.trim() || 'None'],
-                ['Primary Language', document.getElementById('language').value.trim()],
-                ['Proficiency Level', selectText(document.getElementById('language_level'))],
-                ['Engineering Software', sw.length ? sw.join(', ') : 'None selected']
+                ['Skills', list('skills') || 'None selected'],
+                ['Other Skills', get('skills_other') || 'None'],
+                ['Primary Language', get('language')],
+                ['Proficiency Level', selectedText('language_level')],
+                ['Engineering Software', list('software') || 'None selected']
             ]],
             ['Final Year Project', [
-                ['Project Title', document.getElementById('project_title').value.trim()],
-                ['Project Area', selectText(document.getElementById('project_area'))],
-                ['Project Type', selectText(document.getElementById('project_type'))],
-                ['Description', document.getElementById('description').value.trim()],
-                ['Team Size', document.getElementById('team_size').value],
-                ['Dashboard Color', document.getElementById('project_color').value],
-                ['Meeting Date', document.getElementById('meeting_date').value],
-                ['Meeting Time', document.getElementById('meeting_time').value]
+                ['Project Title', get('project_title')],
+                ['Project Area', selectedText('project_area')],
+                ['Project Type', selectedText('project_type')],
+                ['Description', get('description')],
+                ['Team Size', get('team_size')],
+                ['Dashboard Color', get('project_color')],
+                ['Meeting Date', get('meeting_date')],
+                ['Meeting Time', get('meeting_time')]
             ]],
             ['Confirmation', [
-                ['Information confirmed accurate', document.getElementById('confirmation').checked ? 'Yes' : 'No']
+                ['Information confirmed accurate', data.has('confirmation') ? 'Yes' : 'No']
             ]]
         ];
     }
-
-    // ---------- Review panel (textContent only: no XSS) ----------
+ 
+    // Review panel 
     function renderReview() {
         reviewContent.textContent = '';
-        collectData().forEach(([title, rows]) => {
+        for (const [title, rows] of collectData()) {
             // Same structure as the form: fieldset > legend, then one <p> per field
             const fieldset = document.createElement('fieldset');
             const legend = document.createElement('legend');
             legend.textContent = title;
-            fieldset.appendChild(legend);
-
-            rows.forEach(([label, value]) => {
+            fieldset.append(legend);
+ 
+            for (const [label, value] of rows) {
                 const p = document.createElement('p');
                 const labelEl = document.createElement('strong');
                 labelEl.textContent = label;
@@ -554,56 +547,40 @@ document.addEventListener('DOMContentLoaded', () => {
                 valueEl.textContent = value;
                 if (label === 'Dashboard Color') {
                     const swatch = document.createElement('span');
-                    swatch.style.cssText =
-                        'display:inline-block;width:1em;height:1em;margin-right:.4em;' +
-                        'vertical-align:middle;border:1px solid #888;';
+                    swatch.className = 'swatch';              // look defined in CSS
                     swatch.style.background = value;
                     valueEl.prepend(swatch);
                 }
                 p.append(labelEl, document.createElement('br'), valueEl);
-                fieldset.appendChild(p);
-            });
-            reviewContent.appendChild(fieldset);
-        });
+                fieldset.append(p);
+            }
+            reviewContent.append(fieldset);
+        }
     }
-
+ 
     function openReview() {
         renderReview();
         reviewPanel.hidden = false;
         reviewPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
-
+ 
     function closeReview() {
         reviewPanel.hidden = true;
     }
-
-    // 1. Intercept the submit event and cancel the default (no server request).
-    // 2. Run our custom rules, then ask the browser if the whole form is valid.
-    // 3. Invalid: show the browser warnings and stop. Valid: open the review panel.
+ 
     form.addEventListener('submit', e => {
         e.preventDefault();
-        runCustomChecks();
-        if (!form.checkValidity()) {
-            form.reportValidity();
-            return;
-        }
         openReview();
     });
-
+ 
     closeReviewBtn.addEventListener('click', closeReview);
     document.addEventListener('keydown', e => {
         if (e.key === 'Escape' && !reviewPanel.hidden) closeReview();
     });
-
-    // form.submit() sends the form to the server WITHOUT firing the submit event,
-    // so our interceptor above is not triggered again (no infinite loop).
+ 
     confirmSubmitBtn.addEventListener('click', () => {
-        runCustomChecks();
-        if (form.checkValidity()) {
+        if (form.reportValidity()) {
             form.submit();
-        } else {
-            closeReview();
-            form.reportValidity();
         }
     });
 });

@@ -54,7 +54,7 @@ def home():
         {"week": 2, "title": "History of the Web (AI)", "url": "/web-history-ai"},
         {"week": 3, "title": "Web Research", "url": "/personal-research"},
         {"week": 4, "title": "Engineering Student Profile", "url": "/submit-profile"},
-        {"week": 5, "title": "JavaScript app", "url": "/quiz"},
+        {"week": 5, "title": "Quiz", "url": "/quiz"},
         {"week": 5, "title": "JavaScript Research", "url": "/javascript-research"},
         {"week": 6, "title": "Profile Form (Week 6)", "url": "/profile-form-w6"},
     ]

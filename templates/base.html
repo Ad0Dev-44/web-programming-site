@@ -30,88 +30,35 @@
 
         <nav>
             <ul>
-                <li>
-                    <a href="{{ url_for('home') }}">Home</a>
-                </li>
-
-                <li>
-                    <a href="{{ url_for('internet_history') }}">
-                        History of the Internet
-                    </a>
-                </li>
-
-                <li>
-                    <a href="{{ url_for('internet_history_ai') }}">
-                        History of the Internet(AI)
-                    </a>
-                </li>
-
-
-                <li>
-                    <a href="{{ url_for('web_history') }}">
-                        History of the Web
-                    </a>
-                </li>
-
-                <li>
-                    <a href="{{ url_for('web_history_ai') }}">
-                        History of the Web(AI)
-                    </a>
-                </li>
-
-                <li>
-                    <a href="{{ url_for('personal_research') }}">
-                        Forms, Buttons &amp; CSS Research
-                    </a>
-                </li>
-
-                <li>
-                    <a href="{{ url_for('submit_profile') }}">
-                        Engineering Student Profile Form
-                    </a>
-                </li>
-
-                 <li>
-                    <a href="{{ url_for('quiz') }}">
-                        Quiz
-                    </a>
-                </li>
-
-                <li>
-                    <a href="{{ url_for('javascript_research') }}">
-                        JavaScript Research
-                    </a>
-                </li>
-
-                <li>
-                    <a href="{{ url_for('profile_form_w6') }}">
-                        Profile Form (Week 6)
-                    </a>
-                </li>
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('internet_history') }}">History of the Internet</a></li>
+                <li><a href="{{ url_for('internet_history_ai') }}">History of the Internet(AI)</a></li>
+                <li><a href="{{ url_for('web_history') }}">History of the Web</a></li>
+                <li><a href="{{ url_for('web_history_ai') }}">History of the Web(AI)</a></li>
+                <li><a href="{{ url_for('personal_research') }}">Forms, Buttons &amp; CSS Research</a></li>
+                <li><a href="{{ url_for('submit_profile') }}">Engineering Student Profile Form</a></li>
+                <li><a href="{{ url_for('quiz') }}">Quiz</a></li>
+                <li><a href="{{ url_for('javascript_research') }}">JavaScript Research</a></li>
+                <li><a href="{{ url_for('profile_form_w6') }}">Profile Form (Week 6)</a></li>
             </ul>
         </nav>
 
         {% endblock %}
     </header>
 
-
     <main>
-
         {% block content %}
         {% endblock %}
 
         {% block page_navigation %}
         {% endblock %}
-
     </main>
 
 
     <footer>
         {% block footer %}
 
-        <p>
-            Web Programming — built with Flask and deployed on Render.
-        </p>
+        <p>Web Programming — built with Flask and deployed on Render.</p>
 
         <p>
             This website was created for educational purposes only,
@@ -119,15 +66,11 @@
             School of Engineering, USEK (Fall 2026-2027).
         </p>
 
-        <p>
-            &copy; 2026 Adrian El-Rahi. All rights reserved.
-        </p>
+        <p>&copy; 2026 Adrian El-Rahi. All rights reserved.</p>
 
         {% endblock %}
     </footer>
 
-
-    <!-- Floating scroll controls -->
     <div class="page-scroll-controls" aria-label="Scroll controls">
         <a href="#top" aria-label="Scroll to top">↑</a>
         <a href="#bottom" aria-label="Scroll to bottom">↓</a>

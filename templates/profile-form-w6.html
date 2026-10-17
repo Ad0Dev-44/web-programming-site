@@ -10,11 +10,6 @@ href="{{ url_for('static', filename='form_style.css') }}"/>
 <h2>Engineering Student Profile</h2>
 <p>Complete this form with your academic background, technical skills, internship experience, and Final Year Project (FYP) preferences.</p>
 
-<div class="form-intro">
-    <p><strong>Before you start</strong></p>
-    <p>Have your student ID, GitHub profile link, GIN446 Render website link, and a tentative project idea ready. The form has five short sections, and each one gets a &#10003; in the steps as you complete it. Fields marked with * are required.</p>
-</div>
-
 <form action="{{ url_for('submit_profile') }}" method="post" id="profile-form-w6">
 
     <input type="hidden" name="form_version" value="2026-2027">
@@ -365,13 +360,13 @@ href="{{ url_for('static', filename='form_style.css') }}"/>
             </p>
         </fieldset>
 
-        <!-- Review panel -->
+        <!-- Review -->
         <div id="review-panel" hidden>
             <h2>Review your profile</h2>
-            <div id="review-content"></div>
+            <div id="review"></div>
             <p class="form-actions">
-                <button type="button" id="close-review">Edit</button>
-                <button type="button" id="confirm-submit">Confirm &amp; Submit</button>
+                <button type="button" id="close-to-edit">Edit</button>
+                <button type="button" id="submit">Confirm &amp; Submit</button>
             </p>
         </div>
 
@@ -379,37 +374,50 @@ href="{{ url_for('static', filename='form_style.css') }}"/>
 </form>
 
 <script>
-document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById("profile-form-w6");
+    const reviewPanel = document.getElementById("review-panel");
+    const reviewContent = document.getElementById("review");
+    const editBtn = document.getElementById("close-to-edit");
+    const submitBtn = document.getElementById("submit");
 
-    const form = document.getElementById('profile-form-w6');
-    const reviewPanel = document.getElementById('review-panel');
-    const reviewContent = document.getElementById('review-content');
-    const closeReviewBtn = document.getElementById('close-review');
-    const confirmSubmitBtn = document.getElementById('confirm-submit');
-    const internshipDetails = document.getElementById('internship-details');
+    // Returns the value of the checked radio of a group, or '' if none is checked
+    const getValue = name => form.querySelector(`input[name="${name}"]:checked`)?.value ?? '';
 
-    const getRadio = name => form.querySelector(`input[name="${name}"]:checked`)?.value ?? '';
     const getSkills = () => [...form.querySelectorAll('input[name="skills"]:checked')].map(o => o.value);
-    const getSoftware = () => [...document.getElementById('software').selectedOptions].map(o => o.value);
-    const selectText = sel => (sel.value && sel.selectedIndex >= 0) ? sel.options[sel.selectedIndex].text : '';
+    const getSoftwareValues = () => [...document.getElementById('software').selectedOptions].map(o => o.value);
 
-    // min date not today
-    document.getElementById('meeting_date').min = new Date().toLocaleDateString('en-CA');
+    // Returns the text the user sees in a <select> or "" if none is chosen
+    function selectedText(sel) {
+        if (sel.value === "") {
+            return "";                         
+        }
+        return sel.selectedOptions[0].text;    
+    }
 
-    // Validation HTML cannot express 
-    function runCustomChecks() {
-        const gradMonth = document.getElementById('graduation_month');
-        const meetingDate = document.getElementById('meeting_date');
-        gradMonth.setCustomValidity('');
-        meetingDate.setCustomValidity('');
+    // min date for meeting is today
+    const meetingDate = document.getElementById("meeting_date");
+    meetingDate.min = new Date().toLocaleDateString("en-CA");
 
-        // Graduation month must fit the selected term
-        const semester = getRadio('graduation');
-        if (gradMonth.value && semester) {
-            // "2026-05" --> 5
-            const selectedMonth = Number(gradMonth.value.split('-')[1]);
+    // Invalid meeting date iff it's on a Saturday or Sunday
+    function checkMeetingDate() {
+        meetingDate.setCustomValidity('');          // resetting the custom validity message
+        if (meetingDate.value) {
+            const day = new Date(meetingDate.value).getUTCDay();
+            if (day === 0 || day === 6) {
+                meetingDate.setCustomValidity('Choose a weekday, not a weekend.');
+            }
+        }
+    }
+
+    const graduationMonth = document.getElementById("graduation_month");
+
+    // Graduation month invalid when it doesn't belong to the chosen term
+    function checkGraduation() {
+        graduationMonth.setCustomValidity('');
+        const semester = getValue("graduation");
+        if (graduationMonth.value && semester) {
+            const selectedMonth = Number(graduationMonth.value.split('-')[1]);
             let monthMatchesTerm = true;
-
             if (semester === 'Spring') {
                 monthMatchesTerm = selectedMonth >= 1 && selectedMonth <= 5;
             } else if (semester === 'Summer') {
@@ -417,173 +425,194 @@ document.addEventListener('DOMContentLoaded', () => {
             } else if (semester === 'Fall') {
                 monthMatchesTerm = selectedMonth >= 9 && selectedMonth <= 12;
             }
-
             if (!monthMatchesTerm) {
-                gradMonth.setCustomValidity(`${semester} term doesn't match the selected month.`);
-            }
-        }
-
-        // Internship fields required iff answer === Yes
-        const completed = getRadio('internship_completed') === 'Yes';
-        document.getElementById('internship_company').required = completed;
-        document.getElementById('internship_duration').required = completed;
-
-        // No weekends
-        if (meetingDate.value) {
-            const day = new Date(meetingDate.value).getUTCDay();
-            if (day === 0 || day === 6) {
-                meetingDate.setCustomValidity('Choose a weekday (Monday to Friday).');
+                graduationMonth.setCustomValidity(`${semester} term doesn't match the selected month.`);
             }
         }
     }
 
-    // Internship answer changed: Yes --> open details, No --> clear details
-    const yesRadio = document.getElementById('internship_yes');
-    const noRadio = document.getElementById('internship_no');
+    // Internship details toggle
+    const yesRadio = document.getElementById("internship_yes");
+    const noRadio = document.getElementById("internship_no");
+    const internshipDetails = document.getElementById("internship-details");
+    const company = document.getElementById("internship_company");
+    const duration = document.getElementById("internship_duration");
 
-    // Yes --> open details
-    yesRadio.addEventListener('change', () => {
+    // If yes, open the details and make their fields required
+    yesRadio.addEventListener("change", () => {
         internshipDetails.open = true;
+        company.required = true;
+        duration.required = true;
     });
 
-    // No --> clear details and close them
-    noRadio.addEventListener('change', () => {
-        document.getElementById('internship_company').value = '';
-        document.getElementById('internship_duration').value = '';
+    // If no, clear the details and close them (not required anymore)
+    noRadio.addEventListener("change", () => {
+        company.value = '';
+        duration.value = '';
+        company.required = false;
+        duration.required = false;
         internshipDetails.open = false;
     });
 
-    form.addEventListener('invalid', e => {
-        const d = e.target.closest('details');
-        if (d) d.open = true;
-    }, true);
+    function updateInternshipFields() {
+        const isYes = yesRadio.checked;
+        company.required = isYes;
+        duration.required = isYes;
+        internshipDetails.open = isYes;
+        if (!isYes) {
+            company.value = '';
+            duration.value = '';
+        }
+    }
 
-    // Step indicators
-    function updateSteps() {
-        document.querySelectorAll('.form-steps a').forEach(link => {
-            const section = document.querySelector(link.hash);   
-            link.classList.toggle('step-done', !section.querySelector(':invalid'));
+    // the internship fields are synchronized whenever the answer changes
+    yesRadio.addEventListener("change", updateInternshipFields);
+    noRadio.addEventListener("change", updateInternshipFields);
+    meetingDate.addEventListener("input", checkMeetingDate);
+    graduationMonth.addEventListener("input", checkGraduation);
+    document.querySelectorAll('input[name="graduation"]').forEach(radio => radio.addEventListener("change", checkGraduation));
+ 
+    function Checking() {
+        checkGraduation();
+        updateInternshipFields();
+        checkMeetingDate();
+    }
+
+    //A step is valid when its section has no invalid field
+    function CompletedSteps() {
+        document.querySelectorAll(".form-steps a").forEach(step => {
+            const section = document.querySelector(step.hash);
+            step.classList.toggle("step-done", !section.querySelector(":invalid"));
         });
     }
- 
-    function refresh() {
-        runCustomChecks();
-        updateSteps();
-    }
- 
-    form.addEventListener('input', refresh);
-    form.addEventListener('change', refresh);
-    form.addEventListener('reset', () => setTimeout(() => { refresh(); closeReview(); }, 0));
-    refresh();
- 
-    // Collecting data: reads every named field of the form at once
+
+    form.addEventListener("input", CompletedSteps);
+    form.addEventListener("change", CompletedSteps);
+    updateInternshipFields();   // once on page load
+
+    // Collecting data
     function collectData() {
-        const data = new FormData(form);
-        const get = name => (data.get(name) ?? '').trim();        // one value, or ''
-        const list = name => data.getAll(name).join(', ');        // all values of a repeated name
-        const selectedText = id => selectText(document.getElementById(id));
-        const internship = get('internship_completed');
+        const get = id => document.getElementById(id).value.trim();  
+        const selectedText = id => selectedText(document.getElementById(id)); 
+        const skills = getSkills();
+        const software = getSoftwareValues();
+        const internship = getValue("internship_completed");
  
         return [
             ['Personal Information', [
-                ['Full Name', get('fullname')],
-                ['Student ID', get('student_id')],
-                ['Date of Birth', get('birthdate')],
-                ['USEK Email', get('email')],
-                ['Mobile Number', get('phone')],
-                ['GitHub Profile', get('portfolio')],
-                ['GIN446 Website', get('gin446')]
+                ['Full Name', get("fullname")],
+                ['Student ID', get("student_id")],
+                ['Date of Birth', get("birthdate")],
+                ['USEK Email', get("email")],
+                ['Mobile Number', get("phone")],
+                ['GitHub Profile', get("portfolio")],
+                ['GIN446 Website', get("gin446")]
             ]],
             ['Academic Information', [
-                ['Engineering Major', selectedText('major')],
-                ['Current GPA (out of 100)', Number(get('gpa')).toFixed(2)],
-                ['Credits Completed', get('credits')],
-                ['Graduation Term', get('graduation')],
-                ['Graduation Month & Year', get('graduation_month')],
+                ['Engineering Major', selectedText("major")],
+                ['Current GPA (out of 100)', Number(get("gpa"))],
+                ['Credits Completed', get("credits")],
+                ['Graduation Term', getValue("graduation")],,
+                ['Graduation Month & Year', get("graduation_month")],
                 ['Internship Completed', internship],
-                ...(internship === 'Yes' ? [
-                    ['Internship Company', get('internship_company')],
-                    ['Internship Duration', selectedText('internship_duration')]
+                ...(internship === "Yes" ? [
+                    ['Internship Company', get("internship_company")],
+                    ['Internship Duration', selectedText("internship_duration")]
                 ] : [])
             ]],
             ['Technical Background', [
-                ['Skills', list('skills') || 'None selected'],
-                ['Other Skills', get('skills_other') || 'None'],
-                ['Primary Language', get('language')],
-                ['Proficiency Level', selectedText('language_level')],
-                ['Engineering Software', list('software') || 'None selected']
+                ['Skills', skills.length ? skills.join(", ") : "None selected"],
+                ['Other Skills', get("skills_other") || "None"],
+                ['Primary Language', get("language")],
+                ['Proficiency Level', selectedText("language_level")],
+                ['Engineering Software', software.length ? software.join(", ") : "None selected"]
             ]],
             ['Final Year Project', [
-                ['Project Title', get('project_title')],
-                ['Project Area', selectedText('project_area')],
-                ['Project Type', selectedText('project_type')],
-                ['Description', get('description')],
-                ['Team Size', get('team_size')],
-                ['Dashboard Color', get('project_color')],
-                ['Meeting Date', get('meeting_date')],
-                ['Meeting Time', get('meeting_time')]
+                ['Project Title', get("project_title")],
+                ['Project Area', selectedText("project_area")],
+                ['Project Type', selectedText("project_type")],
+                ['Description', get("description")],
+                ['Team Size', get("team_size")],
+                ['Dashboard Color', get("project_color")],
+                ['Meeting Date', get("meeting_date")],
+                ['Meeting Time', get("meeting_time")]
             ]],
             ['Confirmation', [
-                ['Information confirmed accurate', data.has('confirmation') ? 'Yes' : 'No']
+                ['Information confirmed accurate', document.getElementById("confirmation").checked ? "Yes" : "No"]
             ]]
         ];
     }
- 
-    // Review panel 
+
+    // Rendering Review  
     function renderReview() {
-        reviewContent.textContent = '';
-        for (const [title, rows] of collectData()) {
-            // Same structure as the form: fieldset > legend, then one <p> per field
-            const fieldset = document.createElement('fieldset');
-            const legend = document.createElement('legend');
-            legend.textContent = title;
-            fieldset.append(legend);
- 
-            for (const [label, value] of rows) {
-                const p = document.createElement('p');
-                const labelEl = document.createElement('strong');
-                labelEl.textContent = label;
-                const valueEl = document.createElement('span');
-                valueEl.textContent = value;
-                if (label === 'Dashboard Color') {
-                    const swatch = document.createElement('span');
-                    swatch.className = 'swatch';              // look defined in CSS
-                    swatch.style.background = value;
-                    valueEl.prepend(swatch);
-                }
-                p.append(labelEl, document.createElement('br'), valueEl);
-                fieldset.append(p);
+        reviewContent.textContent = "";    // to clear previous review
+
+        const sections = collectData();
+        for (let i = 0; i < sections.length; i++) {
+            // one box per section
+            const fieldset = document.createElement("fieldset");
+
+            const legend = document.createElement("legend");
+            legend.textContent = sections[i][0];         
+            fieldset.appendChild(legend);
+
+            const rows = sections[i][1];
+            for (let j = 0; j < rows.length; j++) {
+                const label = document.createElement("strong");
+                label.textContent = rows[j][0];          // example:"Full Name"
+
+                const p = document.createElement("p");
+                p.appendChild(label);
+                p.appendChild(document.createElement("br"));
+                p.appendChild(document.createTextNode(rows[j][1]));   // example:"Adrian"
+                fieldset.appendChild(p);
             }
-            reviewContent.append(fieldset);
+
+            reviewContent.appendChild(fieldset);
         }
     }
- 
+
+    //showing the review panel
     function openReview() {
         renderReview();
         reviewPanel.hidden = false;
-        reviewPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        reviewPanel.scrollIntoView({ behavior: "smooth", block: "start" });
     }
- 
+
+    // hiding the review panel
     function closeReview() {
         reviewPanel.hidden = true;
     }
  
-    form.addEventListener('submit', e => {
-        e.preventDefault();
-        openReview();
+    // Submit: cancel the default, validate, and open the review iff the form is valid
+    form.addEventListener("submit", e => {
+      e.preventDefault();
+      Checking();
+      if (!form.checkValidity()) {
+          form.reportValidity();
+          return;
+      }
+      openReview(); 
     });
  
-    closeReviewBtn.addEventListener('click', closeReview);
-    document.addEventListener('keydown', e => {
-        if (e.key === 'Escape' && !reviewPanel.hidden) closeReview();
+    // if edit is clicked, close the review and return to the form
+    editBtn.addEventListener("click", closeReview);
+
+    // Escape key: also closes the panel
+    document.addEventListener("keydown", e => {
+        if (e.key === "Escape" && !reviewPanel.hidden) {
+            closeReview();
+        }
     });
  
-    confirmSubmitBtn.addEventListener('click', () => {
+    // Confirm & Submit is clicked -> validate again and submit the form if valid
+    submitBtn.addEventListener("click", () => {
+        Checking();
         if (form.reportValidity()) {
             form.submit();
         }
     });
-});
+
 </script>
 
 {% endblock %}

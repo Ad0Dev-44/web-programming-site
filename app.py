@@ -57,6 +57,7 @@ def home():
         {"week": 5, "title": "Quiz", "url": "/quiz"},
         {"week": 5, "title": "JavaScript Research", "url": "/javascript-research"},
         {"week": 6, "title": "Profile Form (Week 6)", "url": "/profile-form-w6"},
+        {"week": 7, "title": "Live Quiz with Fetch", "url": "/live-quiz"}
     ]
     return render_template("index.html", weekly_work=weekly_work)
 

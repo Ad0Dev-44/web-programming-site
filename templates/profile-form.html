@@ -10,11 +10,6 @@ href="{{ url_for('static', filename='form_style.css') }}"/>
 <h2>Engineering Student Profile</h2>
 <p>Complete this form with your academic background, technical skills, internship experience, and Final Year Project (FYP) preferences.</p>
 
-<div class="form-intro">
-    <p><strong>Before you start</strong></p>
-    <p>Have your student ID, GitHub profile link, GIN446 Render website link, and a tentative project idea ready. The form has five short sections, and each one gets a &#10003; in the steps as you complete it. Fields marked with * are required.</p>
-</div>
-
 <form action="{{ url_for('submit_profile') }}" method="post">
 
     <input type="hidden" name="form_version" value="2026-2027">

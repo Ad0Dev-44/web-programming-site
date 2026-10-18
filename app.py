@@ -93,6 +93,10 @@ def original_html():
 def profile_form_w6():
     return render_template("profile-form-w6.html")
 
+@app.route("/live-quiz")
+def live_quiz():
+    return render_template("live-quiz.html")
+
 @app.route("/submit-profile", methods=["GET", "POST"])
 def submit_profile():
     """

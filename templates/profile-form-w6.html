@@ -366,7 +366,7 @@ href="{{ url_for('static', filename='form_style.css') }}"/>
             <div id="review"></div>
             <p class="form-actions">
                 <button type="button" id="close-to-edit">Edit</button>
-                <button type="button" id="submit">Confirm &amp; Submit</button>
+                <button type="button" id="confirm-submit">Confirm &amp; Submit</button>
             </p>
         </div>
 
@@ -378,7 +378,7 @@ href="{{ url_for('static', filename='form_style.css') }}"/>
     const reviewPanel = document.getElementById("review-panel");
     const reviewContent = document.getElementById("review");
     const editBtn = document.getElementById("close-to-edit");
-    const submitBtn = document.getElementById("submit");
+    const submitBtn = document.getElementById("confirm-submit");
 
     // Returns the value of the checked radio of a group, or '' if none is checked
     const getValue = name => form.querySelector(`input[name="${name}"]:checked`)?.value ?? '';
@@ -386,12 +386,13 @@ href="{{ url_for('static', filename='form_style.css') }}"/>
     const getSkills = () => [...form.querySelectorAll('input[name="skills"]:checked')].map(o => o.value);
     const getSoftwareValues = () => [...document.getElementById('software').selectedOptions].map(o => o.value);
 
-    // Returns the text the user sees in a <select> or "" if none is chosen
-    function selectedText(sel) {
+    // Returns the text the user sees in a select element by its id or "" if none is chosen
+    function selectedTextById(id) {
+        const sel = document.getElementById(id);
         if (sel.value === "") {
-            return "";                         
+            return "";
         }
-        return sel.selectedOptions[0].text;    
+        return sel.selectedOptions[0].text;
     }
 
     // min date for meeting is today
@@ -438,14 +439,14 @@ href="{{ url_for('static', filename='form_style.css') }}"/>
     const company = document.getElementById("internship_company");
     const duration = document.getElementById("internship_duration");
 
-    // If yes, open the details and make their fields required
+    // If yes -> open the details and make their fields required
     yesRadio.addEventListener("change", () => {
         internshipDetails.open = true;
         company.required = true;
         duration.required = true;
     });
 
-    // If no, clear the details and close them (not required anymore)
+    // If no -> clear the details and close them (not required anymore)
     noRadio.addEventListener("change", () => {
         company.value = '';
         duration.value = '';
@@ -470,7 +471,7 @@ href="{{ url_for('static', filename='form_style.css') }}"/>
     noRadio.addEventListener("change", updateInternshipFields);
     meetingDate.addEventListener("input", checkMeetingDate);
     graduationMonth.addEventListener("input", checkGraduation);
-    document.querySelectorAll('input[name="graduation"]').forEach(radio => radio.addEventListener("change", checkGraduation));
+    form.addEventListener("change", checkGraduation);
  
     function Checking() {
         checkGraduation();
@@ -492,50 +493,49 @@ href="{{ url_for('static', filename='form_style.css') }}"/>
 
     // Collecting data
     function collectData() {
-        const get = id => document.getElementById(id).value.trim();  
-        const selectedText = id => selectedText(document.getElementById(id)); 
+        const getById = id => document.getElementById(id).value.trim();  
         const skills = getSkills();
         const software = getSoftwareValues();
         const internship = getValue("internship_completed");
  
         return [
             ['Personal Information', [
-                ['Full Name', get("fullname")],
-                ['Student ID', get("student_id")],
-                ['Date of Birth', get("birthdate")],
-                ['USEK Email', get("email")],
-                ['Mobile Number', get("phone")],
-                ['GitHub Profile', get("portfolio")],
-                ['GIN446 Website', get("gin446")]
+                ['Full Name', getById("fullname")],
+                ['Student ID', getById("student_id")],
+                ['Date of Birth', getById("birthdate")],
+                ['USEK Email', getById("email")],
+                ['Mobile Number', getById("phone")],
+                ['GitHub Profile', getById("portfolio")],
+                ['GIN446 Website', getById("gin446")]
             ]],
             ['Academic Information', [
-                ['Engineering Major', selectedText("major")],
-                ['Current GPA (out of 100)', Number(get("gpa"))],
-                ['Credits Completed', get("credits")],
-                ['Graduation Term', getValue("graduation")],,
-                ['Graduation Month & Year', get("graduation_month")],
+                ['Engineering Major', selectedTextById("major")],
+                ['Current GPA (out of 100)', Number(getById("gpa"))],
+                ['Credits Completed', getById("credits")],
+                ['Graduation Term', getValue("graduation")],
+                ['Graduation Month & Year', getById("graduation_month")],
                 ['Internship Completed', internship],
                 ...(internship === "Yes" ? [
-                    ['Internship Company', get("internship_company")],
-                    ['Internship Duration', selectedText("internship_duration")]
+                    ['Internship Company', getById("internship_company")],
+                    ['Internship Duration', selectedTextById("internship_duration")]
                 ] : [])
             ]],
             ['Technical Background', [
                 ['Skills', skills.length ? skills.join(", ") : "None selected"],
-                ['Other Skills', get("skills_other") || "None"],
-                ['Primary Language', get("language")],
-                ['Proficiency Level', selectedText("language_level")],
+                ['Other Skills', getById("skills_other") || "None"],
+                ['Primary Language', getById("language")],
+                ['Proficiency Level', selectedTextById("language_level")],
                 ['Engineering Software', software.length ? software.join(", ") : "None selected"]
             ]],
             ['Final Year Project', [
-                ['Project Title', get("project_title")],
-                ['Project Area', selectedText("project_area")],
-                ['Project Type', selectedText("project_type")],
-                ['Description', get("description")],
-                ['Team Size', get("team_size")],
-                ['Dashboard Color', get("project_color")],
-                ['Meeting Date', get("meeting_date")],
-                ['Meeting Time', get("meeting_time")]
+                ['Project Title', getById("project_title")],
+                ['Project Area', selectedTextById("project_area")],
+                ['Project Type', selectedTextById("project_type")],
+                ['Description', getById("description")],
+                ['Team Size', getById("team_size")],
+                ['Dashboard Color', getById("project_color") || "N/A"],
+                ['Meeting Date', getById("meeting_date") || "N/A"],
+                ['Meeting Time', getById("meeting_time") || "N/A"]
             ]],
             ['Confirmation', [
                 ['Information confirmed accurate', document.getElementById("confirmation").checked ? "Yes" : "No"]
@@ -559,12 +559,12 @@ href="{{ url_for('static', filename='form_style.css') }}"/>
             const rows = sections[i][1];
             for (let j = 0; j < rows.length; j++) {
                 const label = document.createElement("strong");
-                label.textContent = rows[j][0];          // example:"Full Name"
+                label.textContent = rows[j][0];          // example:"Joe Smith"
 
                 const p = document.createElement("p");
                 p.appendChild(label);
                 p.appendChild(document.createElement("br"));
-                p.appendChild(document.createTextNode(rows[j][1]));   // example:"Adrian"
+                p.appendChild(document.createTextNode(rows[j][1]) || "N/A");   // example:"Joe"
                 fieldset.appendChild(p);
             }
 
@@ -574,9 +574,10 @@ href="{{ url_for('static', filename='form_style.css') }}"/>
 
     //showing the review panel
     function openReview() {
+        if (!form.reportValidity()) return;
         renderReview();
         reviewPanel.hidden = false;
-        reviewPanel.scrollIntoView({ behavior: "smooth", block: "start" });
+        reviewPanel.scrollIntoView({ behavior: "smooth"});
     }
 
     // hiding the review panel
@@ -597,13 +598,6 @@ href="{{ url_for('static', filename='form_style.css') }}"/>
  
     // if edit is clicked, close the review and return to the form
     editBtn.addEventListener("click", closeReview);
-
-    // Escape key: also closes the panel
-    document.addEventListener("keydown", e => {
-        if (e.key === "Escape" && !reviewPanel.hidden) {
-            closeReview();
-        }
-    });
  
     // Confirm & Submit is clicked -> validate again and submit the form if valid
     submitBtn.addEventListener("click", () => {

@@ -1,82 +1,4 @@
-// ======================================================
-// QUESTIONS
-// ======================================================
-
-// Difficulty ramp: q1-q3 warm-up (easy-medium), q4-q7 medium, q8-q10 challenging (but fair)
-
-const q1 = {
-    question: "What is the output of the following code snippet?\n\nconsole.log(null == undefined, null === undefined);",
-    choices: ["true, true", "true, false", "false, true", "false, false"],
-    answer: 1,
-    explanation: "Loose equality (==) treats null and undefined as equal, but strict equality (===) also compares types, and null and undefined are different types."
-};
-
-const q2 = {
-    question: 'Which of the following is an incorrect way to retrieve the age property of this object?\n\nconst person = {firstName: "John", lastName: "Doe", age: 50};',
-    choices: ['let age = person.age;', 'let age = person["age"];', 'let age = person."age";', 'let { age } = person;'],
-    answer: 2,
-    explanation: 'Dot notation requires an identifier (person.age), not a quoted string. person."age" is a syntax error. Use person.age, person["age"], or destructuring ({ age } = person) instead.'
-};
-
-const q3 = {
-    question: "What is the output of the following code snippet?\n\nconsole.log(x);\nlet x = 5;",
-    choices: ["undefined", "5", "ReferenceError", "null"],
-    answer: 2,
-    explanation: "let declarations are hoisted but not initialized. Accessing x before its declaration falls in the temporal dead zone and throws a ReferenceError (unlike var, which would give undefined)."
-};
-
-const q4 = {
-    question: "What happens if you try to reassign a new array to a variable declared with const (e.g., const cars = [...]; cars = [...];)?",
-    choices: ["It throws an error", "The array elements are updated successfully", "It creates undefined holes", "It clears the array contents"],
-    answer: 0,
-    explanation: "The keyword const defines a constant reference to an array, meaning elements can be modified, but constant arrays cannot be reassigned and will throw an error."
-};
-
-const q5 = {
-    question: "In JavaScript conditional statements, how is an empty array ([]) evaluated?",
-    choices: ["As falsy", "As truthy", "As undefined", "As null"],
-    answer: 1,
-    explanation: "An empty array [] is truthy because every object, including an empty array, is truthy."
-};
-
-const q6 = {
-    question: "What is the output of the following code snippet?\n\nconsole.log(typeof NaN);",
-    choices: ["number", "NaN", "undefined", "object"],
-    answer: 0,
-    explanation: "In JavaScript, NaN (Not-a-Number) is considered a number type, so typeof NaN returns 'number'."
-};
-
-const q7 = {
-    question: "Which statement is true regarding arrow functions in JavaScript?",
-    choices: ["They are automatically hoisted", "They have their own this keyword", "They cannot be used as object methods if you need to access object properties using this", "They must use the function keyword"],
-    answer: 2,
-    explanation: "Arrow functions are not hoisted and do not have their own this, meaning they should not be used for object methods or event listeners where this is required."
-};
-
-const q8 = {
-    question: "What is the output of the following code snippet?\n\nconsole.log(0.1 + 0.2 === 0.3);",
-    choices: ["true", "false", "undefined", "NaN"],
-    answer: 1,
-    explanation: "Due to floating-point precision issues in JavaScript, 0.1 + 0.2 does not exactly equal 0.3, so the expression evaluates to false."
-};
-
-const q9 = {
-    question: "What is the output of the following code snippet?\n\nfor (var i = 0; i < 3; i++) {\n  setTimeout(() => console.log(i), 0);\n}",
-    choices: ["0 1 2", "3 3 3", "2 2 2", "undefined undefined undefined"],
-    answer: 1,
-    explanation: "var is function-scoped, so all three callbacks share the same i. The callbacks run after the loop finishes, when i is 3. Using let instead would print 0 1 2."
-};
-
-const q10 = {
-    question: "What is the output of the following code snippet?\n\nconsole.log([] == false);",
-    choices: ["true", "false", "undefined", "NaN"],
-    answer: 0,
-    explanation: "With ==, when one operand is a boolean it is converted to a number (false becomes 0). The array is then converted to a primitive (\"\"), which becomes 0. Since 0 == 0, the result is true, even though [] on its own is truthy."
-};
-const questions = [q1, q2, q3, q4, q5, q6, q7, q8, q9, q10]; 
-
-let total = 0;  // how many questions (from the server)
-let count = 0;  // how many questions have been fetched so far 
+let total = 0;  
 const cache = {}; // cache[i] = a fetched question object
 
 
@@ -88,17 +10,17 @@ async function getQuestion(index) {
   if (cache[index]) {
     return cache[index];
   }
-    const response = await fetch(`/api/question/${index}`); 
   try {
+    const response = await fetch(`/api/question/${index}`); 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
-    }}catch (error) {
-      console.error('Error fetching question:', error);
     }
-    finally{
       const data = await response.json();
-      cache[index] = JSON.stringify(data);
+      cache[index] = data;
       return data;
+    }catch (error) {
+      console.error('Error fetching question:', error);
+      throw error;
     }
 }
 
@@ -226,10 +148,12 @@ async function submitQuiz() {
 
 
 async function renderQuestion() {
-  const question = await getQuestion(currentQuestion);
-  const loading = document.getElementById("loading");
-  loading.style.display = "block";
+    const loading = document.getElementById("loading");
+    const error = document.getElementById("error");
+    loading.hidden = "false";
+    error.hidden = "true";
   try{
+      const question = await getQuestion(currentQuestion);
     fetch(`/api/question/${currentQuestion}`)
   .then(response => {
     if (!response.ok) {
@@ -241,13 +165,15 @@ async function renderQuestion() {
     // Handle the retrieved question data
   })
   .catch(error => {
-     const errorring = document.getElementById("error");
+    const errorring = document.getElementById("error");
     errorring.style.display = "block";
     errorring.innerHTML = `Error fetching question ${currentQuestion + 1}. Please try again later.`;
   });
   } catch (error) {
     console.error(error);
-   
+  }
+  finally{
+    loading.hidden = "true";
   }
 }
 
@@ -319,4 +245,22 @@ function showResults(score, percentage, message, correction) {
 // ======================================================
 // START APPLICATION
 // ======================================================
-renderQuestion();
+async function init() { 
+  // 1. Fetch the question count from "/api/questions/count" 
+  // 2. Check response.ok; if the request failed, throw an error 
+  // 3. Read the JSON and set total to the count 
+  // 4. await renderQuestion() to show the first question 
+  try{
+      const response = await fetch("/api/questions/count");
+      if (!response.ok){
+        throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+    total = data.count;
+    await renderQuestion();
+    }catch (error) {
+      console.error('Error fetching count:', error);
+    }
+  } init();
+
+ 

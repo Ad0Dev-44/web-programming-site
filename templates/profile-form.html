@@ -59,9 +59,9 @@ href="{{ url_for('static', filename='form_style.css') }}"/>
                 <p>
                     <label for="email">USEK Email *</label><br>
                     <input type="email" id="email" name="email"
-                           pattern="[A-Za-z0-9._%+\-]+@(net\.)?usek\.edu\.lb"
-                           autocomplete="email" placeholder="student@net.usek.edu.lb"
-                           title="A USEK address ending in @net.usek.edu.lb or @usek.edu.lb" required>
+                           pattern="[A-Za-z0-9._%+\-]+@usek\.edu\.lb"
+                           autocomplete="email" placeholder="student@.usek.edu.lb"
+                           title="A USEK address ending in @usek.edu.lb" required>
                 </p>
                 <p>
                     <label for="phone">Mobile Number *</label><br>
@@ -124,11 +124,11 @@ href="{{ url_for('static', filename='form_style.css') }}"/>
             <div class="field-row">
                 <fieldset class="radio-group">
                     <legend>Expected Graduation Term *</legend>
-                    <input type="radio" id="spring" name="graduation" value="Spring" required>
+                    <input type="radio" id="spring" name="graduation" value="spring" required>
                     <label for="spring">Spring</label>
-                    <input type="radio" id="summer" name="graduation" value="Summer">
+                    <input type="radio" id="summer" name="graduation" value="summer">
                     <label for="summer">Summer</label>
-                    <input type="radio" id="fall" name="graduation" value="Fall">
+                    <input type="radio" id="fall" name="graduation" value="fall">
                     <label for="fall">Fall</label>
                 </fieldset>
                 <p>
@@ -140,9 +140,9 @@ href="{{ url_for('static', filename='form_style.css') }}"/>
 
             <fieldset class="radio-group">
                 <legend>Have you completed an engineering internship? *</legend>
-                <input type="radio" id="internship_yes" name="internship_completed" value="Yes" required>
+                <input type="radio" id="internship_yes" name="internship_completed" value="yes" required>
                 <label for="internship_yes">Yes</label>
-                <input type="radio" id="internship_no" name="internship_completed" value="No">
+                <input type="radio" id="internship_no" name="internship_completed" value="no">
                 <label for="internship_no">No</label>
             </fieldset>
 
@@ -340,7 +340,7 @@ href="{{ url_for('static', filename='form_style.css') }}"/>
                 <p>
                     <label for="meeting_time">Preferred Meeting Time (08:00 to 17:00) *</label><br>
                     <input type="time" id="meeting_time" name="meeting_time"
-                           min="08:00" max="17:00" step="900" required>
+                           min="08:00" max="17:00" required>
                 </p>
             </div>
         </fieldset>

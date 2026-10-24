@@ -148,11 +148,13 @@ function calculatePercentage(score) {
 function getPerformanceMessage(percentage) {
   //   Return a performance message based on the percentage score.
   if (percentage >= 80) {
-    return "Well done! You have a great understanding of javascript.";
-  } else if (percentage >= 60) {
-    return "Good job! You have a solid understanding of javascript.";
-  } else {
-    return "Not enough practice! Keep studying! You need to improve your understanding of javascript.";
+    return "Excellent";
+  } else if (percentage >= 60 && percentage <= 79 ) {
+    return "Good";
+  } else if ( percentage >= 50 && percentage <= 59){
+    return "Pass";
+  }else {
+    return "Needs improvement";
   }
 }
 

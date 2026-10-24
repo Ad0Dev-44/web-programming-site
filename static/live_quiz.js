@@ -29,7 +29,7 @@ async function getQuestion(index) {
 // APPLICATION STATE
 // ======================================================
 let currentQuestion = 0;
-const userAnswers = []; // the length isn't known until you fetch the count
+const userAnswers = []; 
 
 // ======================================================
 // SAVE AN ANSWER
@@ -99,11 +99,13 @@ function calculatePercentage(score) {
 function getPerformanceMessage(percentage) {
   //   Return a performance message based on the percentage score.
   if (percentage >= 80) {
-    return "Well done! You have a great understanding of javascript.";
-  } else if (percentage >= 60) {
-    return "Good job! You have a solid understanding of javascript.";
-  } else {
-    return "Not enough practice! Keep studying! You need to improve your understanding of javascript.";
+    return "Excellent";
+  } else if (percentage >= 60 && percentage <= 79 ) {
+    return "Good";
+  } else if ( percentage >= 50 && percentage <= 59){
+    return "Pass";
+  }else {
+    return "Needs improvement";
   }
 }
 
@@ -148,34 +150,12 @@ async function submitQuiz() {
 
 
 async function renderQuestion() {
-    const loading = document.getElementById("loading");
-    const error = document.getElementById("error");
-    loading.hidden = "false";
-    error.hidden = "true";
-  try{
-      const question = await getQuestion(currentQuestion);
-    fetch(`/api/question/${currentQuestion}`)
-  .then(response => {
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    return response.json();
-  })
-  .then(data => {
-    // Handle the retrieved question data
-  })
-  .catch(error => {
-    const errorring = document.getElementById("error");
-    errorring.style.display = "block";
-    errorring.innerHTML = `Error fetching question ${currentQuestion + 1}. Please try again later.`;
-  });
-  } catch (error) {
-    console.error(error);
-  }
-  finally{
-    loading.hidden = "true";
-  }
-}
+  const loading = document.getElementById("loading");
+  const errorBox = document.getElementById("error");
+  loading.hidden = false;
+  errorBox.hidden = true;
+  try {
+    const question = await getQuestion(currentQuestion);
 
   // --------------------------------------------------
   // QUESTION NUMBER
@@ -225,6 +205,16 @@ async function renderQuestion() {
   document.getElementById("lastBtn").disabled =
     currentQuestion === total - 1;
 
+  } catch (err) {
+    console.error(err);
+    errorBox.textContent =
+      `Error fetching question ${currentQuestion + 1}. Please try again later.`;
+    errorBox.hidden = false;
+  } finally {
+    loading.hidden = true;
+  }
+}
+
 
 // ======================================================
 // DISPLAY RESULTS
@@ -260,7 +250,9 @@ async function init() {
     await renderQuestion();
     }catch (error) {
       console.error('Error fetching count:', error);
+      const errorBox = document.getElementById("error");
+      errorBox.textContent = "Could not load the quiz. Please try again later.";
+      errorBox.hidden = false;
     }
   } init();
-
  

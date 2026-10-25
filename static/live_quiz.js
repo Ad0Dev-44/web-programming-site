@@ -151,68 +151,46 @@ async function submitQuiz() {
 
 async function renderQuestion() {
   const loading = document.getElementById("loading");
-  const errorBox = document.getElementById("error");
+  const error = document.getElementById("error");
   loading.hidden = false;
-  errorBox.hidden = true;
+  error.hidden = true;
   try {
     const question = await getQuestion(currentQuestion);
-
-  // --------------------------------------------------
-  // QUESTION NUMBER
-  // --------------------------------------------------
-  document.getElementById("progress").textContent =
-    `Question ${currentQuestion + 1} of ${total}`;
-
-  // --------------------------------------------------
-  // QUESTION
-  // --------------------------------------------------
-  document.getElementById("questionText").textContent = question.question;
-
-  // --------------------------------------------------
-  // CHOICES
-  // --------------------------------------------------
-  const choicesContainer = document.getElementById("choices");
-  choicesContainer.innerHTML = "";
-  for (let i = 0; i < question.choices.length; i++) {
-    const label = document.createElement("label");
-    label.className = "choice";
-    const radio = document.createElement("input");
-    radio.type = "radio";
-    radio.name = "answer";
-    radio.value = i;
-    // Restore an answer previously selected
-    // by the user.
-    if (userAnswers[currentQuestion] === i) {
-      radio.checked = true;
+    document.getElementById("progress").textContent = `Question ${currentQuestion + 1} of ${total}`;
+    document.getElementById("questionText").textContent = question.question;
+    const choicesContainer = document.getElementById("choices");
+    choicesContainer.innerHTML = "";
+    for (let i = 0; i < question.choices.length; i++) {
+      const label = document.createElement("label");
+      label.className = "choice";
+      const radio = document.createElement("input");
+      radio.type = "radio";
+      radio.name = "answer";
+      radio.value = i;
+      if (userAnswers[currentQuestion] === i) {
+        radio.checked = true;
+      }
+      radio.onclick = function () {
+        saveAnswer(i);
+      };
+      label.appendChild(radio);
+      label.appendChild(document.createTextNode(" " + question.choices[i]));
+      choicesContainer.appendChild(label);
     }
-    // When the user selects this answer,
-    // save its index.
-    radio.onclick = function () {
-      saveAnswer(i);
-    };
-    label.appendChild(radio);
-    label.appendChild(document.createTextNode(" " + question.choices[i]));
-    choicesContainer.appendChild(label);
-  }
-
-  // --------------------------------------------------
-  // NAVIGATION BUTTONS
-  // --------------------------------------------------
-  document.getElementById("firstBtn").disabled = currentQuestion === 0;
-  document.getElementById("previousBtn").disabled = currentQuestion === 0;
-  document.getElementById("nextBtn").disabled =
-    currentQuestion === total - 1;
-  document.getElementById("lastBtn").disabled =
-    currentQuestion === total - 1;
-
-  } catch (err) {
-    console.error(err);
-    errorBox.textContent =
-      `Error fetching question ${currentQuestion + 1}. Please try again later.`;
-    errorBox.hidden = false;
-  } finally {
-    loading.hidden = true;
-  }
+    document.getElementById("firstBtn").disabled = currentQuestion === 0;
+    document.getElementById("previousBtn").disabled = currentQuestion === 0;
+    document.getElementById("nextBtn").disabled =
+      currentQuestion === total - 1;
+    document.getElementById("lastBtn").disabled =
+      currentQuestion === total - 1;
+    } catch (err) {
+      console.error(err);
+      error.textContent =
+        `Error fetching question ${currentQuestion + 1}. Please try again later.`;
+      error.hidden = false;
+    } finally {
+      loading.hidden = true;
+    }
 }
 
 
@@ -248,11 +226,11 @@ async function init() {
     const data = await response.json();
     total = data.count;
     await renderQuestion();
-    }catch (error) {
-      console.error('Error fetching count:', error);
-      const errorBox = document.getElementById("error");
-      errorBox.textContent = "Could not load the quiz. Please try again later.";
-      errorBox.hidden = false;
+    }catch (err) {
+      console.error('Error fetching count:', err);
+      const error = document.getElementById("error");
+      error.textContent = "Could not load the quiz. Please try again later.";
+      error.hidden = false;
     }
   } init();
  

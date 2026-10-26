@@ -15,10 +15,8 @@ href="{{ url_for('static', filename='form_style.css') }}"/>
 <span class="error">{{ errors[f] }}</span>
 {% endif %}
 {% endmacro %}
-
-<form method="post"
-action="{{ url_for('profile_validated') }}"
-novalidate>
+ 
+<form method="post" action="{{ url_for('profile_validated') }}" novalidate>
 
     <input type="hidden" name="form_version" value="2026-2027">
 

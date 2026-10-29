@@ -3,775 +3,425 @@
 
 {% block content %}
 
-    <section>
-        <h2>JavaScript Research Page</h2>
-        <p>
-            This page covers some practical topics from the course and will be expanded as much as javascript research requires.
-        </p>
-    </section>
+<section>
+    <h2>JavaScript Research Page</h2>
+</section>
 
-    <nav aria-label="Page sections">
-        <a href="#jscript">JScript</a>
-        <a href="#ecmascript">ECMAScript Features</a>
-        <a href="#iife">IIFE (Immediately Invoked Function Expression)</a>
-        <a href="#variadic">Variadic Functions and Rest Parameter Functions</a>
-        <a href="#nodelist-collection">NodeList vs HTMLCollection</a>
-        <a href="#js-map">Map in JavaScript</a>
-        
-    </nav>
+<nav aria-label="Page sections">
+    <a href="#jscript">JScript</a>
+    <a href="#ecmascript">ECMAScript Features</a>
+    <a href="#iife">IIFE (Immediately Invoked Function Expression)</a>
+    <a href="#variadic">Variadic Functions and Rest Parameter Functions</a>
+    <a href="#nodelist-collection">NodeList vs HTMLCollection</a>
+    <a href="#js-map">Map in JavaScript</a>
+    <a href="#localstorage">localStorage</a>
+</nav>
 
 
-    <section id="jscript">
-    <h3>JScript</h3>
+<!-- ============================================================ -->
+<section id="jscript">
+  <h3>JScript</h3>
+  <p>
+    JScript was Microsoft's implementation of a scripting language for web pages. It was introduced in
+    <strong>1996</strong> with Internet Explorer 3.0 and was largely compatible with Netscape's JavaScript.
+    Because the two were separate implementations, the same script could behave differently depending on
+    the browser.
+  </p>
 
-<p>
-    JScript was Microsoft's implementation of a scripting language for
-    web pages. It was introduced in <strong>1996</strong> with
-    Internet Explorer 3.0 and was largely compatible with
-    Netscape's JavaScript. Microsoft developed JScript partly because
-    "JavaScript" was a trademark associated with Netscape.
-</p>
-
-<p>
-    Although JScript and JavaScript were closely related, they were
-    separate implementations. This meant that a script could behave
-    differently depending on which browser was being used. This was
-    particularly significant during the early development of the Web,
-    when browsers did not always implement scripting features in the
-    same way.
-</p>
-
-<h4>JScript and JavaScript</h4>
-
-<table>
-
-    <thead>
+  <h4>JScript and JavaScript</h4>
+  <div class="scroll">
+    <table>
+      <thead>
         <tr>
-            <th>JScript</th>
-            <th>JavaScript</th>
+          <th></th>
+          <th>JScript</th>
+          <th>JavaScript</th>
         </tr>
-    </thead>
-
-    <tbody>
+      </thead>
+      <tbody>
         <tr>
-            <td>Developed by Microsoft</td>
-            <td>Originally developed by Netscape</td>
+          <th>Developed by</th>
+          <td>Microsoft</td>
+          <td>Netscape</td>
         </tr>
-
         <tr>
-            <td>Primarily associated with Internet Explorer</td>
-            <td>Used across many browsers</td>
+          <th>Introduced</th>
+          <td>1996</td>
+          <td>1995</td>
         </tr>
-
         <tr>
-            <td>Introduced in 1996</td>
-            <td>Introduced in 1995</td>
+          <th>Used in</th>
+          <td>Mainly Internet Explorer</td>
+          <td>Many browsers</td>
         </tr>
-
         <tr>
-            <td>Microsoft-specific implementation</td>
-            <td>Eventually standardized through ECMAScript</td>
+          <th>Standard</th>
+          <td>Microsoft-specific implementation</td>
+          <td>Standardized as ECMAScript</td>
         </tr>
-    </tbody>
-</table>
+      </tbody>
+    </table>
+  </div>
 
-<h4>Example of JScript</h4>
+  <h4>The decline of JScript</h4>
+  <p>
+    As browsers moved toward the ECMAScript standard, JScript became tied to legacy versions of Internet
+    Explorer. Microsoft Edge uses modern web standards, so JScript is now considered a legacy technology.
+  </p>
 
-<p>
-    JScript used syntax that was very similar to JavaScript. For
-    example, a simple script could display a message in the browser:
-</p>
-
-<pre><code>&lt;script&gt;
-var message = "Hello from JScript!";
-alert(message);
-
-</script></code></pre>
-
-
-<p>
-    The similarity between JScript and JavaScript meant that many
-    simple scripts could work in both environments. However, differences
-    between browser implementations could cause compatibility problems.
-</p>
-
-<h4>The Decline of JScript</h4>
-
-<p>
-    As web standards became increasingly important, browser developers
-    moved toward implementing standardized ECMAScript features rather
-    than maintaining proprietary scripting dialects. JScript therefore
-    became associated with legacy versions of Internet Explorer.
-</p>
-
-<p>
-    Microsoft eventually replaced Internet Explorer with
-    <strong>Microsoft Edge</strong>, which uses modern web standards
-    and does not use the traditional JScript engine for normal web
-    development. JScript is therefore considered a legacy technology
-    rather than a language used for modern web development.
-</p>
-
-<aside>
+  <aside>
     <strong>Historical significance:</strong>
-    JScript is an example of how competing browser implementations
-    contributed to compatibility problems during the early history of
-    the Web. The development and adoption of standards such as
-    ECMAScript helped reduce these differences.
-</aside>
+    JScript shows how competing browser implementations caused compatibility problems, which standards
+    such as ECMAScript later reduced.
+  </aside>
 
-<h4>Sources</h4>
-
-<ul>
+  <h4>Sources</h4>
+  <ul>
     <li>
-        <a href="https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-es3/7d5c1a1a-0c0f-4b1e-8b9a-1b5f5c7c3e4d"
-           target="_blank"
-           rel="noopener">
-            Microsoft — JScript Documentation
-        </a>
+      <a href="https://en.wikipedia.org/wiki/JScript"
+         target="_blank"
+         rel="noopener">
+        Wikipedia — JScript
+      </a>
     </li>
-
     <li>
-        <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript"
-           target="_blank"
-           rel="noopener">
-            MDN Web Docs — JavaScript
-        </a>
+      <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript"
+         target="_blank"
+         rel="noopener">
+        MDN Web Docs — JavaScript
+      </a>
     </li>
-</ul>
-
+  </ul>
 </section>
 
 
-    <!-- ============================================================ -->
-    <section id="ecmascript">
-    <h3>ECMAScript Features</h3>
+<!-- ============================================================ -->
+<section id="ecmascript">
+  <h3>ECMAScript Features</h3>
+  <p>
+    ECMAScript is the standard that defines the core features of JavaScript. It is maintained by
+    <strong>TC39</strong>, a committee of Ecma International, and browsers follow it. A major milestone was
+    <strong>ECMAScript 2015 (ES6)</strong>, and new editions have been released yearly since ES2016.
+  </p>
 
-<p>
-    ECMAScript is the standardized specification that defines the core
-    features of JavaScript. It is developed and maintained by
-    <strong>TC39</strong>, a technical committee of Ecma International.
-    JavaScript implementations, such as those found in web browsers,
-    follow the ECMAScript standard.
-</p>
-
-<p>
-    ECMAScript has evolved significantly over the years. One of its most
-    important milestones was <strong>ECMAScript 2015 (ES6)</strong>,
-    which introduced many features that are now commonly used in modern
-    JavaScript development. Since ES2016, new editions have generally
-    been released on a yearly basis.
-</p>
-
-<h4>Evolution of ECMAScript</h4>
-
-<p>
-    The following table presents some important ECMAScript editions and
-    examples of the features they introduced:
-</p>
-
-<table>
-
-    <thead>
+  <h4>Evolution of ECMAScript</h4>
+  <div class="scroll">
+    <table>
+      <thead>
         <tr>
-            <th>Version</th>
-            <th>Year</th>
-            <th>Notable Features</th>
+          <th>Version</th>
+          <th>Year</th>
+          <th>Notable features</th>
         </tr>
-    </thead>
-
-    <tbody>
+      </thead>
+      <tbody>
         <tr>
-            <td>ES5</td>
-            <td>2009</td>
-            <td>Strict mode, JSON support, array methods</td>
+          <td>ES5</td>
+          <td>2009</td>
+          <td>Strict mode, JSON support, array methods</td>
         </tr>
-
         <tr>
-            <td>ES2015 (ES6)</td>
-            <td>2015</td>
-            <td>
-                <code>let</code>, <code>const</code>, arrow functions,
-                classes, modules, promises, destructuring
-            </td>
+          <td>ES2015 (ES6)</td>
+          <td>2015</td>
+          <td><code>let</code>, <code>const</code>, arrow functions, classes, modules, promises, destructuring</td>
         </tr>
-
         <tr>
-            <td>ES2017</td>
-            <td>2017</td>
-            <td>
-                <code>async</code>/<code>await</code> and
-                <code>Object.values()</code>
-            </td>
+          <td>ES2017</td>
+          <td>2017</td>
+          <td><code>async</code>/<code>await</code>, <code>Object.values()</code></td>
         </tr>
-
         <tr>
-            <td>ES2020</td>
-            <td>2020</td>
-            <td>
-                Optional chaining, nullish coalescing and
-                <code>BigInt</code>
-            </td>
+          <td>ES2020</td>
+          <td>2020</td>
+          <td>Optional chaining, nullish coalescing, <code>BigInt</code></td>
         </tr>
-
         <tr>
-            <td>ES2022</td>
-            <td>2022</td>
-            <td>
-                Private class fields, top-level <code>await</code>
-                and <code>Object.hasOwn()</code>
-            </td>
+          <td>ES2022</td>
+          <td>2022</td>
+          <td>Private class fields, top-level <code>await</code>, <code>Object.hasOwn()</code></td>
         </tr>
-
         <tr>
-            <td>ES2025</td>
-            <td>2025</td>
-            <td>
-                Iterator helpers, <code>RegExp.escape()</code> and
-                <code>Promise.try()</code>
-            </td>
+          <td>ES2025</td>
+          <td>2025</td>
+          <td>Iterator helpers, <code>RegExp.escape()</code>, <code>Promise.try()</code></td>
         </tr>
-    </tbody>
-</table>
+      </tbody>
+    </table>
+  </div>
 
-<p class="source-note">
-    Source:
-    <a href="https://tc39.es/ecma262/2025/multipage/"
-       target="_blank"
-       rel="noopener">
-        ECMAScript Language Specification
-    </a>
-</p>
+  <h4>Important features</h4>
+  <p>
+    <code>let</code> and <code>const</code> are block-scoped alternatives to <code>var</code>. Arrow functions
+    give a shorter function syntax, destructuring extracts values from objects or arrays, and
+    <code>async</code>/<code>await</code> makes Promise-based code easier to read.
+  </p>
 
+<pre>let score = 80;                              // can be reassigned
+const name = "John";                         // cannot be reassigned
 
-<h4>Important Features</h4>
+const doubled = [1, 2, 3].map(n =&gt; n * 2);   // arrow function
 
-<h5>Let and Const</h5>
+const { major } = { major: "Computer Engineering" };   // destructuring
 
-<p>
-    ECMAScript 2015 introduced <code>let</code> and <code>const</code>
-    as block-scoped alternatives to <code>var</code>. A
-    <code>let</code> variable can be reassigned, while a
-    <code>const</code> variable cannot be reassigned after it has been
-    initialized.
-</p>
+async function getData() {
+  const response = await fetch("/data");     // async / await
+  return response.json();
+}</pre>
 
-<pre><code>let score = 80;
-score = 90;
-
-const name = "John";</code></pre>
-
-<h5>Arrow Functions</h5>
-
-<p>
-    Arrow functions provide a shorter syntax for writing functions.
-    They are frequently used with array methods and callback functions.
-</p>
-
-<pre><code>const numbers = [1, 2, 3];
-
-const doubled = numbers.map(
-number => number * 2
-);</code></pre>
-
-
-<h5>Destructuring</h5>
-
-<p>
-    Destructuring makes it possible to extract values from arrays or
-    objects and assign them directly to variables. This can make code
-    shorter and easier to read.
-</p>
-
-<pre><code>const student = {
-name: "Maria",
-major: "Computer Engineering"
-};
-
-const { name, major } = student;</code></pre>
-
-<h5>Async and Await</h5>
-
-<p>
-    ECMAScript 2017 introduced <code>async</code> and
-    <code>await</code>, which provide a clearer way to work with
-    asynchronous operations based on Promises. They are commonly used
-    when retrieving data from servers or APIs.
-</p>
-
-<pre><code>async function getData() {
-const response = await fetch("/data");
-return response.json();
-}</code></pre>
-
-<h4>Why ECMAScript Matters</h4>
-
-<p>
-    The development of ECMAScript has helped JavaScript evolve from a
-    relatively simple scripting language into a language used to build
-    complex web applications and other software. Standardization also
-    provides a common specification that different JavaScript
-    implementations can follow.
-</p>
-
-<aside>
+  <aside>
     <strong>Did you know?</strong>
-    ECMAScript and JavaScript are closely related, but they are not
-    exactly the same thing. ECMAScript defines the language standard,
-    while JavaScript implementations follow that standard and may also
-    provide additional features such as browser Web APIs.
-</aside>
+    ECMAScript is the language standard, while JavaScript implementations follow it and may add extras
+    such as browser Web APIs.
+  </aside>
 
-
-<h4>Sources</h4>
-
-<ul>
+  <h4>Sources</h4>
+  <ul>
     <li>
-        <a href="https://tc39.es/ecma262/"
-           target="_blank"
-           rel="noopener">
-            Ecma International — ECMAScript Language Specification
-        </a>
+      <a href="https://tc39.es/ecma262/"
+         target="_blank"
+         rel="noopener">
+        Ecma International — ECMAScript Language Specification
+      </a>
     </li>
-
     <li>
-        <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Language_overview"
-           target="_blank"
-           rel="noopener">
-            MDN Web Docs — JavaScript Language Overview
-        </a>
+      <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Language_overview"
+         target="_blank"
+         rel="noopener">
+        MDN Web Docs — JavaScript Language Overview
+      </a>
     </li>
-</ul>
-
-
+  </ul>
 </section>
 
-    <!-- ============================================================ -->
-    <section id="iife">
-    <h3>IIFE (Immediately Invoked Function Expression)</h3>
 
-<p>
-    An <strong>Immediately Invoked Function Expression (IIFE)</strong>
-    is a JavaScript function that is defined and executed immediately.
-    Unlike a normal function, an IIFE does not need to be called
-    separately after it has been created.
-</p>
+<!-- ============================================================ -->
+<section id="iife">
+  <h3>IIFE (Immediately Invoked Function Expression)</h3>
+  <p>
+    An <strong>IIFE</strong> is a function that is defined and executed immediately, without a separate
+    call. It was commonly used in older code to create a private scope, so variables would not leak into the
+    global scope before <code>let</code>, <code>const</code> and modules existed.
+  </p>
 
-<p>
-    IIFEs were commonly used in older JavaScript applications to create
-    a private scope for variables. Before modern features such as
-    <code>let</code>, <code>const</code>, and JavaScript modules became
-    widely available, IIFEs provided a way to prevent variables from
-    unnecessarily becoming accessible outside a particular section of
-    code.
-</p>
+  <h4>Syntax</h4>
+  <p>
+    The function is wrapped in parentheses, which makes it an expression, and is then called with a second
+    pair of parentheses. It can also receive arguments.
+  </p>
 
-<h4>Basic Syntax</h4>
+<pre>(function (name) {
+  const message = "Hello, " + name;   // private: not visible outside
+  console.log(message);
+})("Hady");</pre>
 
-<p>
-    An IIFE is usually written by placing a function expression inside
-    parentheses and immediately invoking it with another pair of
-    parentheses:
-</p>
+  <h4>IIFEs today</h4>
+  <p>
+    IIFEs are still valid JavaScript, but block scope (<code>let</code> and <code>const</code>) and ES
+    modules now handle most of what they were used for.
+  </p>
 
-<pre><code>(function () {
-console.log("This function runs immediately!");
-
-})();</code></pre>
-
-<p>
-    The final <code>()</code> calls the function as soon as it has been
-    created. The surrounding parentheses make the function an
-    expression rather than a normal function declaration.
-</p>
-
-<h4>Using a Private Variable</h4>
-
-<p>
-    One important use of IIFEs was creating variables that could only be
-    accessed from inside the function. This helped prevent accidental
-    conflicts with variables in other parts of a program.
-</p>
-
-<pre><code>(function () {
-const message = "Private information";
-
-console.log(message);
-
-})();</code></pre>
-
-<p>
-    In this example, <code>message</code> exists only inside the IIFE.
-    Code outside the function cannot directly access it.
-</p>
-
-<h4>Passing Arguments</h4>
-
-<p>
-    An IIFE can also receive arguments just like a regular function.
-    This allows data to be passed into its private scope.
-</p>
-
-<pre><code>(function (name) {
-console.log("Hello, " + name);
-
-})("Hady");</code></pre>
-
-<h4>Why Were IIFEs Important?</h4>
-
-<p>
-    IIFEs became particularly useful before JavaScript had modern
-    module systems and block-scoped declarations. They allowed
-    developers to isolate variables and create a form of private
-    scope, which reduced the possibility of naming conflicts in
-    larger scripts.
-</p>
-
-<h4>Summary of IIFE Characteristics</h4>
-<table>
-
-    <thead>
-        <tr>
-            <th>Characteristic</th>
-            <th>Description</th>
-        </tr>
-    </thead>
-
-    <tbody>
-        <tr>
-            <td>Execution</td>
-            <td>The function runs immediately after it is created.</td>
-        </tr>
-
-        <tr>
-            <td>Scope</td>
-            <td>Variables can be kept inside the function's scope.</td>
-        </tr>
-
-        <tr>
-            <td>Arguments</td>
-            <td>An IIFE can receive arguments like a normal function.</td>
-        </tr>
-
-        <tr>
-            <td>Common use</td>
-            <td>Older scripts, initialization code, and avoiding global variables.</td>
-        </tr>
-    </tbody>
-</table>
-
-<h4>IIFEs in Modern JavaScript</h4>
-
-<p>
-    IIFEs are still valid JavaScript, but they are less necessary in
-    modern applications. Features such as <code>let</code> and
-    <code>const</code>, as well as ES modules, provide cleaner ways to
-    control scope and organize code.
-</p>
-
-<aside>
+  <aside>
     <strong>Key idea:</strong>
-    An IIFE combines two actions: creating a function expression and
-    immediately calling that function. Its main historical advantage
-    was providing an isolated scope for variables.
-</aside>
+    An IIFE creates a function expression and calls it at once, giving its variables an isolated scope.
+  </aside>
 
-<h4>Source</h4>
-
-<ul>
+  <h4>Source</h4>
+  <ul>
     <li>
-        <a href="https://developer.mozilla.org/en-US/docs/Glossary/IIFE"
-           target="_blank"
-           rel="noopener">
-            MDN Web Docs — IIFE
-        </a>
+      <a href="https://developer.mozilla.org/en-US/docs/Glossary/IIFE"
+         target="_blank"
+         rel="noopener">
+        MDN Web Docs — IIFE
+      </a>
     </li>
-</ul>
-
+  </ul>
 </section>
 
-<!-- variadic functions -->
+
+<!-- ============================================================ -->
 <section id="variadic">
-    <h3>Variadic Functions and Rest Parameter Functions</h3>
+  <h3>Variadic Functions and Rest Parameter Functions</h3>
+  <p>
+    A <strong>variadic function</strong> accepts a variable number of arguments. JavaScript traditionally did
+    this with the <code>arguments</code> object, and ECMAScript 2015 added the <strong>rest parameter</strong>
+    (<code>...</code>), which collects the arguments into a real array.
+  </p>
 
-<p>
-    A <strong>variadic function</strong> is a function that can accept
-    a variable number of arguments. Instead of requiring a fixed number
-    of parameters, the function can process as many arguments as are
-    provided when it is called.
-</p>
+  <h4>arguments vs rest parameter</h4>
+  <p>
+    The <code>arguments</code> object is array-like but not a real array. A rest parameter is a true array and
+    can follow regular parameters, collecting only the remaining arguments.
+  </p>
 
-<p>
-    JavaScript has traditionally supported functions with a variable
-    number of arguments through the special <code>arguments</code>
-    object. ECMAScript 2015 introduced the <strong>rest parameter</strong>,
-    which provides a clearer and more convenient way to collect multiple
-    arguments into an array.
-</p>
-
-<h4>Traditional Approach</h4>
-
-<p>
-    Before rest parameters, developers could use the
-    <code>arguments</code> object to access all arguments passed to a
-    function.
-</p>
-
-<pre><code>function sum() {
-let total = 0;
-
-for (let i = 0; i &lt; arguments.length; i++) {
-    total += arguments[i];
+<pre>function sumOld() {                    // traditional
+  let total = 0;
+  for (let i = 0; i &lt; arguments.length; i++) total += arguments[i];
+  return total;
 }
 
-return total;
-
+function sum(...numbers) {             // rest parameter
+  return numbers.reduce((total, n) =&gt; total + n, 0);
 }
 
-console.log(sum(2, 4, 6));</code></pre>
-
-<p>
-    In this example, the function does not define any parameters, but
-    it can still receive and process three arguments. The
-    <code>arguments</code> object contains the values passed to the
-    function.
-</p>
-
-<h4>Rest Parameters</h4>
-
-<p>
-    ECMAScript 2015 introduced the rest parameter syntax
-    <code>...</code>. It collects all remaining arguments into a real
-    array, making them easier to work with.
-</p>
-
-<pre><code>function sum(...numbers) {
-return numbers.reduce(
-    (total, number) => total + number,
-    0
-);
-
+function introduce(name, ...skills) {  // fixed + variable parameters
+  console.log(name, skills);
 }
 
-console.log(sum(2, 4, 6, 8));</code></pre>
+sum(2, 4, 6, 8);                       // 20
+introduce("Pascal", "Python", "SQL");  // Pascal ["Python", "SQL"]</pre>
 
-<p>
-    Here, <code>numbers</code> becomes an array containing all the
-    arguments passed to the function. The same function can therefore
-    accept two, four, or many more numbers without changing its
-    definition.
-</p>
-
-<h4>Fixed and Variable Parameters</h4>
-
-<p>
-    A rest parameter can also be combined with regular parameters.
-    This is useful when a function requires some information but can
-    accept additional values.
-</p>
-
-<pre><code>function introduce(name, ...skills) {
-console.log(name);
-console.log(skills);
-
-}
-
-introduce(
-"Pascal",
-"Python",
-"JavaScript",
-"SQL"
-);</code></pre>
-
-<p>
-    In this example, <code>name</code> receives the first argument,
-    while all remaining arguments are collected inside the
-    <code>skills</code> array.
-</p>
-
-<h4>Key Differences</h4>
-
-<table>
-    <caption>Arguments Object vs. Rest Parameters</caption>
-
-    <thead>
+  <h4>Key differences</h4>
+  <div class="scroll">
+    <table>
+      <thead>
         <tr>
-            <th>Feature</th>
-            <th><code>arguments</code></th>
-            <th>Rest Parameter</th>
+          <th></th>
+          <th><code>arguments</code></th>
+          <th>Rest parameter</th>
         </tr>
-    </thead>
-
-    <tbody>
+      </thead>
+      <tbody>
         <tr>
-            <td>Introduced</td>
-            <td>Early JavaScript</td>
-            <td>ECMAScript 2015</td>
+          <th>Introduced</th>
+          <td>Early JavaScript</td>
+          <td>ECMAScript 2015</td>
         </tr>
-
         <tr>
-            <td>Syntax</td>
-            <td><code>arguments</code></td>
-            <td><code>...parameters</code></td>
+          <th>Data type</th>
+          <td>Array-like object</td>
+          <td>Real array</td>
         </tr>
-
         <tr>
-            <td>Data type</td>
-            <td>Array-like object</td>
-            <td>Actual Array</td>
+          <th>Common use</th>
+          <td>Legacy code</td>
+          <td>Modern code</td>
         </tr>
+      </tbody>
+    </table>
+  </div>
 
-        <tr>
-            <td>Readability</td>
-            <td>More verbose</td>
-            <td>More concise and explicit</td>
-        </tr>
-
-        <tr>
-            <td>Common use</td>
-            <td>Legacy JavaScript code</td>
-            <td>Modern JavaScript</td>
-        </tr>
-    </tbody>
-</table>
-
-<h4>Why Are Rest Parameters Useful?</h4>
-
-<p>
-    Rest parameters make variadic functions easier to write and
-    understand. They are especially useful for functions that need to
-    process an unknown number of values, such as mathematical
-    calculations, combining lists, or handling optional arguments.
-</p>
-
-<aside>
+  <aside>
     <strong>Key idea:</strong>
-    The rest parameter <code>...</code> collects multiple arguments
-    into an array. It is called "rest" because it represents the
-    remaining arguments after any regular parameters.
-</aside>
+    The rest parameter is called "rest" because it holds the remaining arguments after any regular
+    parameters.
+  </aside>
 
-<h4>Source</h4>
-
-<ul>
+  <h4>Sources</h4>
+  <ul>
     <li>
-        <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/rest"
-           target="_blank"
-           rel="noopener">
-            MDN Web Docs — Rest Parameters
-        </a>
+      <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/rest_parameters"
+         target="_blank"
+         rel="noopener">
+        MDN Web Docs — Rest parameters
+      </a>
     </li>
-
     <li>
-        <a href="https://tc39.es/ecma262/"
-           target="_blank"
-           rel="noopener">
-            Ecma International — ECMAScript Language Specification
-        </a>
+      <a href="https://tc39.es/ecma262/"
+         target="_blank"
+         rel="noopener">
+        Ecma International — ECMAScript Language Specification
+      </a>
     </li>
-</ul>
-
+  </ul>
 </section>
 
-<!-- Nodelist and Collection -->
+
+<!-- ============================================================ -->
 <section id="nodelist-collection">
-    <h3>NodeList vs HTMLCollection</h3>
+  <h3>NodeList vs HTMLCollection</h3>
   <p>Both are array-like objects that hold DOM nodes. You can read <code>.length</code> and use an index, but neither is a real array. They differ in what they contain, how they update, and which methods they offer.</p>
- 
+
   <h4>HTMLCollection</h4>
   <p>Contains <strong>elements only</strong> and is <strong>always live</strong>: when the DOM changes, the collection updates itself. It has no <code>forEach</code>, so convert it with <code>Array.from()</code> to loop.</p>
 
 <pre>const items = document.getElementsByClassName("item"); // HTMLCollection
 const kids  = document.body.children;                   // HTMLCollection
 items.namedItem("first");                               // lookup by id or name</pre>
- 
+
   <h4>NodeList</h4>
   <p>Can contain <strong>any node type</strong> (elements, text, comments). It is <strong>static</strong> when returned by <code>querySelectorAll()</code> and <strong>live</strong> when returned by <code>childNodes</code>. It supports <code>forEach</code>, <code>entries</code>, <code>keys</code> and <code>values</code>.</p>
 
 <pre>const list  = document.querySelectorAll(".item"); // static NodeList
 const nodes = document.body.childNodes;           // live NodeList
 list.forEach(el =&gt; console.log(el.textContent));</pre>
- 
+
   <h4>Side by side</h4>
   <div class="scroll">
-  <table>
-    <thead>
-      <tr>
-        <th></th>
-        <th>HTMLCollection</th>
-        <th>NodeList</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <th>Contains</th>
-        <td>Elements only</td>
-        <td>Any node (elements, text, comments)</td>
-      </tr>
-      <tr>
-        <th>Live?</th>
-        <td>Always</td>
-        <td>Static for <code>querySelectorAll</code>, live for <code>childNodes</code></td>
-      </tr>
-      <tr>
-        <th>Returned by</th>
-        <td><code>getElementsByClassName</code>, <code>getElementsByTagName</code>, <code>.children</code>, <code>document.forms</code></td>
-        <td><code>querySelectorAll</code>, <code>childNodes</code>, <code>getElementsByName</code></td>
-      </tr>
-      <tr>
-        <th><code>forEach</code></th>
-        <td>No</td>
-        <td>Yes</td>
-      </tr>
-      <tr>
-        <th>Lookup by id or name</th>
-        <td><code>namedItem()</code></td>
-        <td>Not available</td>
-      </tr>
-    </tbody>
-  </table>
-
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th>HTMLCollection</th>
+          <th>NodeList</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>Contains</th>
+          <td>Elements only</td>
+          <td>Any node (elements, text, comments)</td>
+        </tr>
+        <tr>
+          <th>Live?</th>
+          <td>Always</td>
+          <td>Static for <code>querySelectorAll</code>, live for <code>childNodes</code></td>
+        </tr>
+        <tr>
+          <th>Returned by</th>
+          <td><code>getElementsByClassName</code>, <code>getElementsByTagName</code>, <code>.children</code>, <code>document.forms</code></td>
+          <td><code>querySelectorAll</code>, <code>childNodes</code>, <code>getElementsByName</code></td>
+        </tr>
+        <tr>
+          <th><code>forEach</code></th>
+          <td>No</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <th>Lookup by id or name</th>
+          <td><code>namedItem()</code></td>
+          <td>Not available</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
- 
 </section>
 
 
+<!-- ============================================================ -->
 <section id="js-map">
   <h3>Map in JavaScript</h3>
   <p>A <code>Map</code> stores key-value pairs and remembers the order in which keys were inserted. Unlike a plain object, its keys can be <strong>any value</strong>: strings, numbers, objects, even functions.</p>
- 
+
   <h4>Creating and using a Map</h4>
-    <pre>const scores = new Map();
-    scores.set("ana", 90);
-    scores.set("omar", 75).set("lina", 82); // set() is chainable
-    
-    scores.get("omar");   // 75
-    scores.has("ana");    // true
-    scores.delete("lina");
-    scores.size;          // 2 (a property, not a method)
-    scores.clear();       // remove everything
-    
-    // or build it from an array of [key, value] pairs
-    const m = new Map([["a", 1], ["b", 2]]);</pre>
- 
+<pre>const scores = new Map();
+scores.set("ana", 90);
+scores.set("omar", 75).set("lina", 82); // set() is chainable
+
+scores.get("omar");   // 75
+scores.has("ana");    // true
+scores.delete("lina");
+scores.size;          // 2 (a property, not a method)
+scores.clear();       // remove everything
+
+// or build it from an array of [key, value] pairs
+const m = new Map([["a", 1], ["b", 2]]);</pre>
+
   <h4>Looping</h4>
 <pre>for (const [key, value] of m) console.log(key, value);
-    m.forEach((value, key) =&gt; console.log(key, value));
-    [...m.keys()];     // ["a", "b"]
-    [...m.values()];   // [1, 2]
-    [...m.entries()];  // [["a", 1], ["b", 2]]</pre>
+m.forEach((value, key) =&gt; console.log(key, value));
+[...m.keys()];     // ["a", "b"]
+[...m.values()];   // [1, 2]
+[...m.entries()];  // [["a", 1], ["b", 2]]</pre>
 
   <p>Iteration always follows insertion order.</p>
- 
 
   <h4>Map vs plain object</h4>
   <div class="scroll">
-
     <table>
-        <thead>
+      <thead>
         <tr><th></th><th>Map</th><th>Object</th></tr>
-        </thead>
-        <tbody>
+      </thead>
+      <tbody>
         <tr><th>Key types</th><td>Any value</td><td>Strings and symbols (other keys are converted to strings)</td></tr>
         <tr><th>Size</th><td><code>map.size</code></td><td>Count manually, e.g. <code>Object.keys(obj).length</code></td></tr>
         <tr><th>Order</th><td>Insertion order</td><td>Insertion order for strings, but integer-like keys are sorted first</td></tr>
@@ -779,15 +429,122 @@ list.forEach(el =&gt; console.log(el.textContent));</pre>
         <tr><th>Inherited keys</th><td>None</td><td>Has prototype properties such as <code>toString</code></td></tr>
         <tr><th>Frequent add/remove</th><td>Designed for it</td><td>Not optimized for it</td></tr>
         <tr><th>JSON</th><td>Not supported directly</td><td><code>JSON.stringify</code> works</td></tr>
-        </tbody>
+      </tbody>
     </table>
+  </div>
+</section>
 
+
+<!-- ============================================================ -->
+<section id="localstorage">
+  <h3>localStorage in JavaScript</h3>
+  <p>
+    <code>localStorage</code> is part of the <strong>Web Storage API</strong>. It lets a page save data
+    in the browser as key-value pairs. The data has no expiry date, so it is still there after the tab or
+    the browser is closed. Each origin (protocol, domain and port) gets its own storage of about 5 MB.
+  </p>
+
+  <h4>Basic methods</h4>
+  <p>
+    Use <code>setItem()</code> to save a value and <code>getItem()</code> to read it back. If a key does
+    not exist, <code>getItem()</code> returns <code>null</code>.
+  </p>
+
+<pre>localStorage.setItem("theme", "dark");
+localStorage.getItem("theme");      // "dark"
+localStorage.getItem("missing");    // null
+localStorage.removeItem("theme");   // delete one key
+localStorage.length;                // number of stored keys
+localStorage.clear();               // delete everything</pre>
+
+  <h4>Storing objects and arrays</h4>
+  <p>
+    <code>localStorage</code> can only store <strong>strings</strong>. A number such as <code>5</code>
+    is saved as <code>"5"</code>. To store an object or an array, convert it with
+    <code>JSON.stringify()</code> and convert it back with <code>JSON.parse()</code>.
+  </p>
+
+<pre>const student = { name: "Maria", year: 4 };
+localStorage.setItem("student", JSON.stringify(student));
+
+const saved = JSON.parse(localStorage.getItem("student"));
+console.log(saved.name);            // "Maria"</pre>
+
+  <h4>localStorage vs sessionStorage vs cookies</h4>
+  <div class="scroll">
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th>localStorage</th>
+          <th>sessionStorage</th>
+          <th>Cookies</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>Lifetime</th>
+          <td>Until deleted</td>
+          <td>Until the tab is closed</td>
+          <td>Until the expiry date</td>
+        </tr>
+        <tr>
+          <th>Capacity</th>
+          <td>About 5 MB</td>
+          <td>About 5 MB</td>
+          <td>About 4 KB</td>
+        </tr>
+        <tr>
+          <th>Sent to the server</th>
+          <td>No</td>
+          <td>No</td>
+          <td>Yes, with every request</td>
+        </tr>
+        <tr>
+          <th>Shared between tabs</th>
+          <td>Yes (same origin)</td>
+          <td>No (one tab only)</td>
+          <td>Yes (same site)</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 
+  <h4>Limitations</h4>
+  <p>
+    Any JavaScript running on the page can read <code>localStorage</code>, so it should never hold
+    passwords or login tokens. It is also <strong>synchronous</strong>, so saving large amounts of data
+    can slow the page down, and it may be unavailable if the user blocks storage in their browser.
+  </p>
+
+  <aside>
+    <strong>Key idea:</strong>
+    <code>localStorage</code> is a simple way to remember small, non-sensitive data such as a theme
+    choice or a draft, and it works without a server. It always stores strings.
+  </aside>
+
+  <h4>Sources</h4>
+  <ul>
+    <li>
+      <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage"
+         target="_blank"
+         rel="noopener">
+        MDN Web Docs — Window: localStorage property
+      </a>
+    </li>
+    <li>
+      <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API"
+         target="_blank"
+         rel="noopener">
+        MDN Web Docs — Web Storage API
+      </a>
+    </li>
+  </ul>
 </section>
+
 {% endblock %}
 
-    {% block page_navigation %}
+{% block page_navigation %}
 <div class="page-navigation">
     <a href="{{ url_for('quiz') }}" class="nav-button">
         ← Previous Page

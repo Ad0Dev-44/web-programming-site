@@ -7,9 +7,15 @@
         <p>A live site that grows one page or feature every week.</p>
         <!-- Each week you add a link here to that week's page or feature. -->
         <p>
-            <strong>GitHub:</strong>
-            <a href="https://github.com/Ad0Dev-44/web-programming-site" target="_blank">View Repository</a>
-        </p>
+    <strong>GitHub:</strong>
+    <a href="https://github.com/Ad0Dev-44/web-programming-site" target="_blank">View Repository</a>
+</p>
+
+<p>
+    <a href="https://team-adr-project.onrender.com/" class="nav-button" target="_blank">
+        Visit My Team Project
+    </a>
+</p>
         <ul>
             {% for item in weekly_work %}
                 <li><a href="{{ item.url }}">Week {{ item.week }} — {{ item.title }}</a></li>

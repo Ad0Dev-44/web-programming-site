@@ -19,8 +19,8 @@ from flask import Flask
 from quiz_api import db, Question, database_uri
 
 
-#Internal Database URL: DATABASE_URL = "postgresql://jsquiz_user:vWadOMu9NJAhmYo6jZcGUaS6GoDnUph2@dpg-db71h1cs728c73d4ll4g-a/jsquiz"
-#External Database URL: DATABASE_URL = "postgresql://jsquiz_user:vWadOMu9NJAhmYo6jZcGUaS6GoDnUph2@dpg-db71h1cs728c73d4ll4g-a.frankfurt-postgres.render.com/jsquiz"
+#Internal Database URL: DATABASE_URL = "postgresql://jsquiz_6vo3_user:XJBNmcniZlePk4DGIFtjjhQNVR5kJWKK@dpg-dbr0g6u7bikc73c3a230-a/jsquiz_6vo3"
+#External Database URL: DATABASE_URL = "postgresql://jsquiz_6vo3_user:XJBNmcniZlePk4DGIFtjjhQNVR5kJWKK@dpg-dbr0g6u7bikc73c3a230-a.frankfurt-postgres.render.com/jsquiz_6vo3"
 QUESTIONS = [
     {
         "question": "What is the output of the following code snippet?\n\nconsole.log(null == undefined, null === undefined);",

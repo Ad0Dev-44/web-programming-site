@@ -379,6 +379,39 @@ href="{{ url_for('static', filename='form_style.css') }}"/>
     </div>
 </form>
 
+<script>
+    const sectionFields = {
+        "sec-personal": ["fullname", "student_id", "birthdate", "email", "phone", "portfolio", "gin446"],
+        "sec-academic": ["major", "gpa", "credits", "graduation", "graduation_month", "internship_completed"],
+        "sec-technical": ["language", "language_level"],
+        "sec-project": ["project_title", "project_area", "project_type", "description", "team_size", "meeting_date", "meeting_time"],
+        "sec-confirm": ["confirmation"]
+    };
+
+    function updateSectionChecks() {
+        for (const [sectionId, fieldNames] of Object.entries(sectionFields)) {
+            const section = document.getElementById(sectionId);
+            const complete = fieldNames.every((name) => {
+                const field = document.getElementById(name) || document.querySelector(`[name="${name}"]`);
+                if (!field) return false;
+                if (field.type === "checkbox") return field.checked;
+                if (field.type === "radio") {
+                    return document.querySelector(`[name="${name}"]:checked`) !== null;
+                }
+                return field.value.trim() !== "" && field.validity.valid;
+            });
+
+            section.classList.toggle("is-complete", complete);
+            const step = document.querySelector(`.form-steps a[href="#${sectionId}"]`);
+            step.classList.toggle("is-complete", complete);
+        }
+    }
+
+    document.querySelector(".form-sections").addEventListener("input", updateSectionChecks);
+    document.querySelector(".form-sections").addEventListener("change", updateSectionChecks);
+    updateSectionChecks();
+</script>
+
 {% endblock %}
 
 {% block page_navigation %}

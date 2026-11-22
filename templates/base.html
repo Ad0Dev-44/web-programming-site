@@ -19,30 +19,29 @@
 
         <h1>
             <a href="{{ url_for('home') }}">
-                Web Programming Portfolio —<br>
-                Adrian El-Rahi
+                Adrian's Web Portfolio 
             </a>
         </h1>
 
-        <img src="{{ url_for('static', filename='images/WebDesign.jpg') }}"
-             alt="People working on web design via computers"
-             width="150">
-
-        <nav>
-            <ul>
-                <li><a href="{{ url_for('home') }}">Home</a></li>
-                <li><a href="{{ url_for('internet_history') }}">History of the Internet</a></li>
-                <li><a href="{{ url_for('internet_history_ai') }}">History of the Internet(AI)</a></li>
-                <li><a href="{{ url_for('web_history') }}">History of the Web</a></li>
-                <li><a href="{{ url_for('web_history_ai') }}">History of the Web(AI)</a></li>
-                <li><a href="{{ url_for('personal_research') }}">Forms, Buttons &amp; CSS Research</a></li>
-                <li><a href="{{ url_for('submit_profile') }}">Engineering Student Profile Form</a></li>
-                <li><a href="{{ url_for('quiz') }}">Quiz</a></li>
-                <li><a href="{{ url_for('javascript_research') }}">JavaScript Research</a></li>
-                <li><a href="{{ url_for('profile_form_w6') }}">Profile Form (Week 6)</a></li>
-                <li><a href="{{ url_for('live_quiz') }}">Live Quiz with Fetch</a></li>
-                <li><a href="{{ url_for('profile_validated') }}">Profile Form Validated</a></li>
-            </ul>
+        <nav aria-label="Main navigation">
+            <div class="site-navigation">
+                <button class="nav-arrow" id="nav-left" type="button" aria-label="Scroll navigation left" hidden>‹</button>
+                <ul class="site-nav-links">
+                    <li><a href="{{ url_for('home') }}">Home</a></li>
+                    <li><a href="{{ url_for('internet_history') }}">History of the Internet</a></li>
+                    <li><a href="{{ url_for('web_history') }}">History of the Web</a></li>
+                    <li><a href="{{ url_for('internet_history_ai') }}">History of the Internet (AI)</a></li>
+                    <li><a href="{{ url_for('web_history_ai') }}">History of the Web (AI)</a></li>
+                    <li><a href="{{ url_for('personal_research') }}">Forms, Buttons &amp; CSS Research</a></li>
+                    <li><a href="{{ url_for('submit_profile') }}">Engineering Student Profile Form</a></li>
+                    <li><a href="{{ url_for('quiz') }}">Quiz</a></li>
+                    <li><a href="{{ url_for('javascript_research') }}">JavaScript Research</a></li>
+                    <li><a href="{{ url_for('profile_form_w6') }}">Profile Form (Week 6)</a></li>
+                    <li><a href="{{ url_for('live_quiz') }}">Live Quiz with Fetch</a></li>
+                    <li><a href="{{ url_for('profile_validated') }}">Profile Form Validated</a></li>
+                </ul>
+                <button class="nav-arrow" id="nav-right" type="button" aria-label="Scroll navigation right">›</button>
+            </div>
         </nav>
 
         {% endblock %}
@@ -74,11 +73,43 @@
     </footer>
 
     <div class="page-scroll-controls" aria-label="Scroll controls">
-        <a href="#top" aria-label="Scroll to top">↑</a>
-        <a href="#bottom" aria-label="Scroll to bottom">↓</a>
+        <a id="scroll-to-top" href="#top" aria-label="Scroll to top" hidden>↑</a>
+        <a id="scroll-to-bottom" href="#bottom" aria-label="Scroll to bottom">↓</a>
     </div>
 
     <div id="bottom"></div>
 
+    <script>
+        const navLinks = document.querySelector(".site-nav-links");
+        const leftArrow = document.getElementById("nav-left");
+        const rightArrow = document.getElementById("nav-right");
+
+        function updateNavArrows() {
+            const canScroll = navLinks.scrollWidth > navLinks.clientWidth + 5;
+            leftArrow.hidden = !canScroll;
+            rightArrow.hidden = !canScroll;
+            leftArrow.disabled = navLinks.scrollLeft < 5;
+            rightArrow.disabled = navLinks.scrollLeft + navLinks.clientWidth >= navLinks.scrollWidth - 5;
+        }
+
+        leftArrow.addEventListener("click", () => navLinks.scrollBy({ left: -260, behavior: "smooth" }));
+        rightArrow.addEventListener("click", () => navLinks.scrollBy({ left: 260, behavior: "smooth" }));
+        navLinks.addEventListener("scroll", updateNavArrows);
+        window.addEventListener("resize", updateNavArrows);
+        updateNavArrows();
+
+        const topButton = document.getElementById("scroll-to-top");
+        const bottomButton = document.getElementById("scroll-to-bottom");
+
+        function updateScrollButtons() {
+            const nearBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 20;
+            topButton.hidden = window.scrollY < 100;
+            bottomButton.hidden = nearBottom;
+        }
+
+        window.addEventListener("scroll", updateScrollButtons);
+        window.addEventListener("resize", updateScrollButtons);
+        updateScrollButtons();
+    </script>
 </body>
 </html>

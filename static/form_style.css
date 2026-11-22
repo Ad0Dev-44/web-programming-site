@@ -18,7 +18,7 @@
     --form-field-bg: var(--color-background);
 
     /* Height of the site's sticky header */
-    --site-header-height: 180px;
+    --site-header-height: 110px;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -145,7 +145,7 @@ legend::before {
     vertical-align: middle;
 }
 
-fieldset:not(:has(:invalid)) > legend::before {
+fieldset.is-complete > legend::before {
     content: "\2713";
 
     background-color: var(--color-accent);
@@ -784,19 +784,12 @@ button[type="reset"]:hover {
 }
 
 
-/* Completed sections */
-
-form:not(:has(#sec-personal :invalid)) .form-steps a[href="#sec-personal"]::before,
-form:not(:has(#sec-academic :invalid)) .form-steps a[href="#sec-academic"]::before,
-form:not(:has(#sec-technical :invalid)) .form-steps a[href="#sec-technical"]::before,
-form:not(:has(#sec-project :invalid)) .form-steps a[href="#sec-project"]::before,
-form:not(:has(#sec-confirm :invalid)) .form-steps a[href="#sec-confirm"]::before {
+/* A check appears after the required fields in that section are filled. */
+.form-steps a.is-complete::before {
     content: "\2713";
 
     background-color: var(--color-accent);
-
     border-color: var(--color-accent);
-
     color: var(--form-on-primary);
 }
 
@@ -853,7 +846,7 @@ form:has(#sec-confirm:target) .form-steps a[href="#sec-confirm"]::before {
 
     .form-steps {
         position: sticky;
-        top: calc(var(--site-header-height) + var(--space-md));
+        top: calc(var(--site-header-height) + var(--space-sm));
 
         grid-column: 1;
         grid-row: 1;

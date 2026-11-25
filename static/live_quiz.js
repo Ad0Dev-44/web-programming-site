@@ -1,9 +1,8 @@
-let total = 0;  
+
+let total = 0;
 const cache = {}; // cache[i] = a fetched question object
 
-
-const TIMEOUT=8000; //in milliseconds. 1000 ms is too short: a normal slow request would be cut off after one second.
-
+const TIMEOUT = 8000; //in milliseconds. 1000 ms is too short: a normal slow request would be cut off after one second.
 
 async function fetchJSON(url) {
   const controller = new AbortController();
@@ -19,54 +18,52 @@ async function fetchJSON(url) {
   }
 }
 
-
 async function getQuestion(index) {
   // 1. If this question is already in cache, return the cached copy
-// 2. Otherwise fetch it from `/api/question/${index}` (relative URL)
-// 3. Check response.ok; if the request failed, throw an error
-// 4. Read the JSON, store it in cache[index], and return it
+  // 2. Otherwise fetch it from `/api/question/${index}` (relative URL)
+  // 3. Check response.ok; if the request failed, throw an error
+  // 4. Read the JSON, store it in cache[index], and return it
   if (cache[index]) {
     return cache[index];
   }
   try {
     const data = await fetchJSON(`/api/question/${index}`);
-     cache[index] = data;
-      return data;
-    }catch (error) {
-      console.error('Error fetching question:', error);
-      throw error;
-    }
+    cache[index] = data;
+    return data;
+  } catch (error) {
+    console.error('Error fetching question:', error);
+    throw error;
+  }
 }
-
 
 // ======================================================
 // APPLICATION STATE
 // ======================================================
 let currentQuestion = 0;
-const userAnswers = []; 
+const userAnswers = [];
 
 // ======================================================
 // SAVE AN ANSWER
 // ======================================================
 function saveAnswer(choiceIndex) {
-  //   Save the user's answer for the current question.
+  // Save the user's answer for the current question.
   userAnswers[currentQuestion] = choiceIndex;
-  console.log(`Saved answer ${choiceIndex} for question ${currentQuestion+1}`);
+  console.log(`Saved answer ${choiceIndex} for question ${currentQuestion + 1}`);
 }
 
 // ======================================================
 // NAVIGATION
 // ======================================================
 function goNext() {
-  //   Move to the next question if not at the last question.
-  if (currentQuestion < total-1) {
+  // Move to the next question if not at the last question.
+  if (currentQuestion < total - 1) {
     currentQuestion++;
     renderQuestion();
   }
 }
 
 function goPrevious() {
-  //   Move to the previous question if not at the first question.
+  // Move to the previous question if not at the first question.
   if (currentQuestion > 0) {
     currentQuestion--;
     renderQuestion();
@@ -74,13 +71,14 @@ function goPrevious() {
 }
 
 function goFirst() {
-  //   Move to the first question.
+  // Move to the first question.
   currentQuestion = 0;
   renderQuestion();
 }
+
 function goLast() {
-  //   Move to the last question.
-  currentQuestion = total-1;
+  // Move to the last question.
+  currentQuestion = total - 1;
   renderQuestion();
 }
 
@@ -88,7 +86,7 @@ function goLast() {
 // CALCULATE SCORE
 // ======================================================
 async function calculateScore() {
-  //   Calculate the user's score based on their answers.
+  // Calculate the user's score based on their answers.
   let score = 0;
   for (let i = 0; i < total; i++) {
     const question = await getQuestion(i);
@@ -103,7 +101,7 @@ async function calculateScore() {
 // CALCULATE PERCENTAGE
 // ======================================================
 function calculatePercentage(score) {
-  //   Calculate the percentage score based on the total number of questions.
+  // Calculate the percentage score based on the total number of questions.
   return Math.round((score / total) * 100);
 }
 
@@ -111,14 +109,14 @@ function calculatePercentage(score) {
 // PERFORMANCE MESSAGE
 // ======================================================
 function getPerformanceMessage(percentage) {
-  //   Return a performance message based on the percentage score.
+  // Return a performance message based on the percentage score.
   if (percentage >= 80) {
     return "Excellent";
-  } else if (percentage >= 60 && percentage <= 79 ) {
+  } else if (percentage >= 60 && percentage <= 79) {
     return "Good";
-  } else if ( percentage >= 50 && percentage <= 59){
+  } else if (percentage >= 50 && percentage <= 59) {
     return "Pass";
-  }else {
+  } else {
     return "Needs improvement";
   }
 }
@@ -129,8 +127,8 @@ function getPerformanceMessage(percentage) {
 async function buildCorrection() {
   let correction = "";
 
-  //   Build a correction string that includes the question, the user's answer,
-  //   the correct answer, and an explanation for each question.
+  // Build a correction string that includes the question, the user's answer,
+  // the correct answer, and an explanation for each question.
   for (let i = 0; i < total; i++) {
     const question = await getQuestion(i);
     const userAnswer = userAnswers[i] !== undefined ? question.choices[userAnswers[i]] : "Not answered";
@@ -177,12 +175,14 @@ async function submitQuiz() {
     error.hidden = false;
     retry.hidden = false;
     retry.onclick = submitQuiz;
+
+    // Move focus to the retry button after a submission failure.
+    retry.focus();
   } finally {
     btn.disabled = false;
     btn.textContent = label;
   }
 }
-
 
 async function renderQuestion() {
   const loading = document.getElementById("loading");
@@ -191,17 +191,20 @@ async function renderQuestion() {
   error.hidden = true;
   const retry = document.getElementById("retryBtn");
   retry.hidden = true;
-  // the navigation buttons are updated, so they are right even if loading fails
+
+  // The navigation buttons are updated, so they are right even if loading fails.
   document.getElementById("firstBtn").disabled = currentQuestion === 0;
   document.getElementById("previousBtn").disabled = currentQuestion === 0;
   document.getElementById("nextBtn").disabled = currentQuestion === total - 1;
   document.getElementById("lastBtn").disabled = currentQuestion === total - 1;
+
   try {
     const question = await getQuestion(currentQuestion);
     document.getElementById("progress").textContent = `Question ${currentQuestion + 1} of ${total}`;
     document.getElementById("questionText").textContent = question.question;
     const choicesContainer = document.getElementById("choices");
     choicesContainer.innerHTML = "";
+
     for (let i = 0; i < question.choices.length; i++) {
       const label = document.createElement("label");
       label.className = "choice";
@@ -209,30 +212,32 @@ async function renderQuestion() {
       radio.type = "radio";
       radio.name = "answer";
       radio.value = i;
+
       if (userAnswers[currentQuestion] === i) {
         radio.checked = true;
       }
+
       radio.onclick = function () {
         saveAnswer(i);
       };
+
       label.appendChild(radio);
       label.appendChild(document.createTextNode(" " + question.choices[i]));
       choicesContainer.appendChild(label);
     }
-    } catch (err) {
-      console.error(err);
-      error.textContent =
-        `Error fetching question ${currentQuestion + 1}. Please try again later.`;
-      error.hidden = false;
-      document.getElementById("questionText").textContent = "";
-      document.getElementById("choices").innerHTML = "";
-      retry.hidden = false;
-      retry.onclick = renderQuestion;
-    } finally {
-      loading.hidden = true;
-    }
+  } catch (err) {
+    console.error(err);
+    error.textContent =
+      `Error fetching question ${currentQuestion + 1}. Please try again later.`;
+    error.hidden = false;
+    document.getElementById("questionText").textContent = "";
+    document.getElementById("choices").innerHTML = "";
+    retry.hidden = false;
+    retry.onclick = renderQuestion;
+  } finally {
+    loading.hidden = true;
+  }
 }
-
 
 // ======================================================
 // DISPLAY RESULTS
@@ -240,15 +245,15 @@ async function renderQuestion() {
 function showResults(score, percentage, message, correction) {
   document.getElementById("quizPanel").style.display = "none";
   document.getElementById("resultsPanel").style.display = "block";
+
   document.getElementById("scoreText").textContent =
     `Score: ${score} / ${total}`;
   document.getElementById("percentageText").textContent =
     `Percentage: ${percentage}%`;
   document.getElementById("performanceText").textContent = message;
   document.getElementById("correction").innerHTML = correction;
+  document.getElementById("resultsHeading").focus();
 }
-
-
 
 // ======================================================
 // START APPLICATION
@@ -257,26 +262,30 @@ async function init() {
   const loading = document.getElementById("loading");
   const error = document.getElementById("error");
   const retry = document.getElementById("retryBtn");
+
   document.getElementById("quizPanel").hidden = false;
   loading.hidden = false;
   error.hidden = true;
   retry.hidden = true;
+
   try {
-      const data = await fetchJSON("/api/questions/count");
-      total = data.count;
-       if (!Number.isInteger(total) || total < 1) {
+    const data = await fetchJSON("/api/questions/count");
+    total = data.count;
+
+    if (!Number.isInteger(total) || total < 1) {
       throw new Error("No questions available");
     }
+
     await renderQuestion();
-    }
-    catch (err) {
-      console.error('Error fetching count:', err);
-      document.getElementById("quizPanel").hidden = true;
-      loading.hidden = true;
-      error.textContent = "Could not load the quiz. Please try again later.";
-      error.hidden = false;
-      retry.hidden = false;
-      retry.onclick = init;
-    }
-  } init();
- 
+  } catch (err) {
+    console.error('Error fetching count:', err);
+    document.getElementById("quizPanel").hidden = true;
+    loading.hidden = true;
+    error.textContent = "Could not load the quiz. Please try again later.";
+    error.hidden = false;
+    retry.hidden = false;
+    retry.onclick = init;
+  }
+}
+
+init();

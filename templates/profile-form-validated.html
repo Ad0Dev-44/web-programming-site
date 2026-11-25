@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% block description %}Profile form for engineering students to fill up.{% endblock %}
 {% block title %}Engineering Student Profile{% endblock %}
 
 {% block head %}
@@ -12,7 +13,7 @@ href="{{ url_for('static', filename='form_style.css') }}"/>
 
 {% macro err(f) %}
 {% if errors.get(f) %}
-<span class="error">{{ errors[f] }}</span>
+<span class="error" role="alert" aria-atomic="true">{{ errors[f] }}</span>
 {% endif %}
 {% endmacro %}
  

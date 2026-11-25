@@ -260,20 +260,19 @@ textarea::placeholder {
     opacity: 0.75;
 }
 
-input:not([type="checkbox"]):not([type="radio"]):not([type="color"]):hover,
-select:hover,
-textarea:hover {
+input:not([type="checkbox"]):not([type="radio"]):not([type="color"]):hover:not(:disabled),
+select:hover:not(:disabled),
+textarea:hover:not(:disabled) {
     border-color: var(--color-primary);
 }
 
-input:focus,
-select:focus,
-textarea:focus {
-    outline: 2px solid transparent;
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: 3px solid var(--color-accent);
+    outline-offset: 2px;
     border-color: var(--color-primary);
-    box-shadow: 0 0 0 3px var(--form-focus-ring);
 }
-
 
 /* Validation */
 
@@ -338,6 +337,21 @@ select[multiple] option {
 }
 
 
+/* Disabled
+   Placed after the select rules so the not-allowed cursor wins,
+   and after validation so the grey border wins. */
+
+input:not([type="checkbox"]):not([type="radio"]):not([type="color"]):disabled,
+select:disabled,
+textarea:disabled {
+    background-color: var(--color-surface-alt);
+    color: var(--color-text-muted);
+    border-color: var(--color-border);
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+
 /* Color picker */
 
 input[type="color"] {
@@ -356,13 +370,20 @@ input[type="color"] {
     cursor: pointer;
 }
 
-input[type="color"]:hover {
+input[type="color"]:hover:not(:disabled) {
     border-color: var(--color-primary);
 }
 
 input[type="color"]:focus-visible {
     outline: 3px solid var(--color-accent);
     outline-offset: 3px;
+}
+
+input[type="color"]:disabled {
+    background-color: var(--color-surface-alt);
+    border-color: var(--color-border);
+    opacity: 0.5;
+    cursor: not-allowed;
 }
 
 
@@ -407,8 +428,9 @@ input:is([name="skills"], [name="software"]) + label {
         color var(--transition-fast);
 }
 
-input[type="radio"] + label:hover,
-input:is([name="skills"], [name="software"]) + label:hover {
+/* :where() keeps the specificity low, so :checked still wins over hover */
+input[type="radio"]:where(:not(:disabled)) + label:hover,
+input:is([name="skills"], [name="software"]):where(:not(:disabled)) + label:hover {
     border-color: var(--color-primary);
     color: var(--color-primary);
 }
@@ -428,6 +450,16 @@ input[type="radio"]:focus-visible + label,
 input:is([name="skills"], [name="software"]):focus-visible + label {
     outline: 3px solid var(--color-accent);
     outline-offset: 2px;
+}
+
+/* Disabled: after :checked so a checked + disabled pill looks greyed out */
+input[type="radio"]:disabled + label,
+input:is([name="skills"], [name="software"]):disabled + label {
+    background-color: var(--color-surface-alt);
+    border-color: var(--color-border);
+    color: var(--color-text-muted);
+    opacity: 0.6;
+    cursor: not-allowed;
 }
 
 fieldset > label:last-child {
@@ -543,6 +575,7 @@ summary:hover {
 summary:focus-visible {
     outline: 3px solid var(--color-accent);
     outline-offset: 3px;
+    border-radius: var(--radius-sm);
 }
 
 details[open] summary {
@@ -579,7 +612,8 @@ details p:last-child {
         border-color var(--transition-fast);
 }
 
-.confirm-row:hover {
+/* :where() keeps the specificity low, so the red invalid border still wins */
+.confirm-row:hover:where(:not(:has(#confirmation:disabled))) {
     border-color: var(--color-accent);
 }
 
@@ -617,6 +651,22 @@ details p:last-child {
 
     font-weight: 600;
     cursor: pointer;
+}
+
+/* Disabled: last, so it wins over the checked look */
+.confirm-row:has(#confirmation:disabled) {
+    background-color: var(--color-surface-alt);
+    border-color: var(--color-border);
+    opacity: 0.6;
+}
+
+#confirmation:disabled,
+#confirmation:disabled + label {
+    cursor: not-allowed;
+}
+
+#confirmation:disabled + label {
+    color: var(--color-text-muted);
 }
 
 
@@ -666,7 +716,7 @@ button[type="submit"] {
     color: var(--form-on-primary);
 }
 
-button[type="submit"]:hover {
+button[type="submit"]:hover:not(:disabled) {
     background-color: var(--color-primary-dark);
     box-shadow: var(--shadow-md);
     transform: translateY(-1px);
@@ -679,9 +729,20 @@ button[type="reset"] {
     border-color: var(--color-border);
 }
 
-button[type="reset"]:hover {
+button[type="reset"]:hover:not(:disabled) {
     border-color: var(--color-primary);
     color: var(--color-primary);
+}
+
+/* Disabled: last, and skips the nav arrows from my_style.css */
+button:disabled:not(.nav-arrow) {
+    background-color: var(--color-surface-alt);
+    color: var(--color-text-muted);
+    border-color: var(--color-border);
+    box-shadow: none;
+    transform: none;
+    opacity: 0.7;
+    cursor: not-allowed;
 }
 
 
@@ -758,6 +819,13 @@ button[type="reset"]:hover {
 }
 
 .form-steps a:hover {
+    background-color: var(--color-primary-light);
+    color: var(--color-primary);
+}
+
+.form-steps a:focus-visible {
+    outline: 3px solid var(--color-accent);
+    outline-offset: 2px;
     background-color: var(--color-primary-light);
     color: var(--color-primary);
 }
@@ -839,7 +907,7 @@ form:has(#sec-confirm:target) .form-steps a[href="#sec-confirm"]::before {
     /* Two columns: steps | sections */
     form {
         display: grid;
-        grid-template-columns: 200px minmax(0, 1fr);
+        grid-template-columns: minmax(12rem, 15rem) minmax(0, 1fr);
         gap: var(--space-lg);
         align-items: start;
     }
@@ -880,41 +948,5 @@ form:has(#sec-confirm:target) .form-steps a[href="#sec-confirm"]::before {
     .form-sections > fieldset {
         scroll-margin-top:
             calc(var(--site-header-height) + var(--space-md));
-    }
-}
-
-
-/* =========================================================
-   12. MOBILE PAGE NAVIGATION
-   ========================================================= */
-
-@media (max-width: 500px) {
-
-    .page-navigation {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    .nav-button {
-        width: 100%;
-        text-align: center;
-    }
-}
-
-
-/* =========================================================
-   13. REDUCED MOTION
-   ========================================================= */
-
-@media (prefers-reduced-motion: reduce) {
-
-    html {
-        scroll-behavior: auto;
-    }
-
-    *,
-    *::before,
-    *::after {
-        transition: none !important;
     }
 }

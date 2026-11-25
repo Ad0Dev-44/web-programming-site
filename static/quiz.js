@@ -189,14 +189,27 @@ function buildCorrection() {
 // ======================================================
 // SUBMIT QUIZ
 // ======================================================
-function submitQuiz() {
-  const score = calculateScore();
-  const percentage = calculatePercentage(score);
-  const message = getPerformanceMessage(percentage);
-  const correction = buildCorrection();
-  showResults(score, percentage, message, correction);
+async function submitQuiz() {
+  const btn = document.querySelector(".submit");
+  const error = document.getElementById("error");
+  btn.disabled = true;
+  btn.textContent = "Submitting…";
+  error.hidden = true;
+  try {
+    const score = await calculateScore();
+    const percentage = calculatePercentage(score);
+    const message = getPerformanceMessage(percentage);
+    const correction = await buildCorrection();
+    showResults(score, percentage, message, correction);
+  } catch (err) {
+    console.error(err);
+    error.textContent = "Could not submit your quiz. Please try again.";
+    error.hidden = false;
+  } finally {
+    btn.disabled = false;
+    btn.textContent = "Submit";
+  }
 }
-
 function renderQuestion() {
   const question = questions[currentQuestion];
 

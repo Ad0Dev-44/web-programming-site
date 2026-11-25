@@ -2,6 +2,24 @@ let total = 0;
 const cache = {}; // cache[i] = a fetched question object
 
 
+const TIMEOUT=8000; //in milliseconds. 1000 ms is too short: a normal slow request would be cut off after one second.
+
+
+async function fetchJSON(url) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), TIMEOUT);
+  try {
+    const response = await fetch(url, { signal: controller.signal });
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return await response.json();
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+
 async function getQuestion(index) {
   // 1. If this question is already in cache, return the cached copy
 // 2. Otherwise fetch it from `/api/question/${index}` (relative URL)
@@ -11,12 +29,8 @@ async function getQuestion(index) {
     return cache[index];
   }
   try {
-    const response = await fetch(`/api/question/${index}`); 
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-      const data = await response.json();
-      cache[index] = data;
+    const data = await fetchJSON(`/api/question/${index}`);
+     cache[index] = data;
       return data;
     }catch (error) {
       console.error('Error fetching question:', error);
@@ -141,11 +155,32 @@ async function buildCorrection() {
 // SUBMIT QUIZ
 // ======================================================
 async function submitQuiz() {
-  const score = await calculateScore();
-  const percentage = calculatePercentage(score);
-  const message = getPerformanceMessage(percentage);
-  const correction = await buildCorrection();
-  showResults(score, percentage, message, correction);
+  const btn = document.querySelector(".submit");
+  const error = document.getElementById("error");
+  const retry = document.getElementById("retryBtn");
+  const label = btn.textContent;
+
+  try {
+    btn.disabled = true;
+    btn.textContent = "Submitting…";
+    error.hidden = true;
+    retry.hidden = true;
+
+    const score = await calculateScore();
+    const percentage = calculatePercentage(score);
+    const message = getPerformanceMessage(percentage);
+    const correction = await buildCorrection();
+    showResults(score, percentage, message, correction);
+  } catch (err) {
+    console.error(err);
+    error.textContent = "Could not submit your quiz. Please try again.";
+    error.hidden = false;
+    retry.hidden = false;
+    retry.onclick = submitQuiz;
+  } finally {
+    btn.disabled = false;
+    btn.textContent = label;
+  }
 }
 
 
@@ -154,6 +189,13 @@ async function renderQuestion() {
   const error = document.getElementById("error");
   loading.hidden = false;
   error.hidden = true;
+  const retry = document.getElementById("retryBtn");
+  retry.hidden = true;
+  // the navigation buttons are updated, so they are right even if loading fails
+  document.getElementById("firstBtn").disabled = currentQuestion === 0;
+  document.getElementById("previousBtn").disabled = currentQuestion === 0;
+  document.getElementById("nextBtn").disabled = currentQuestion === total - 1;
+  document.getElementById("lastBtn").disabled = currentQuestion === total - 1;
   try {
     const question = await getQuestion(currentQuestion);
     document.getElementById("progress").textContent = `Question ${currentQuestion + 1} of ${total}`;
@@ -177,17 +219,15 @@ async function renderQuestion() {
       label.appendChild(document.createTextNode(" " + question.choices[i]));
       choicesContainer.appendChild(label);
     }
-    document.getElementById("firstBtn").disabled = currentQuestion === 0;
-    document.getElementById("previousBtn").disabled = currentQuestion === 0;
-    document.getElementById("nextBtn").disabled =
-      currentQuestion === total - 1;
-    document.getElementById("lastBtn").disabled =
-      currentQuestion === total - 1;
     } catch (err) {
       console.error(err);
       error.textContent =
         `Error fetching question ${currentQuestion + 1}. Please try again later.`;
       error.hidden = false;
+      document.getElementById("questionText").textContent = "";
+      document.getElementById("choices").innerHTML = "";
+      retry.hidden = false;
+      retry.onclick = renderQuestion;
     } finally {
       loading.hidden = true;
     }
@@ -213,24 +253,30 @@ function showResults(score, percentage, message, correction) {
 // ======================================================
 // START APPLICATION
 // ======================================================
-async function init() { 
-  // 1. Fetch the question count from "/api/questions/count" 
-  // 2. Check response.ok; if the request failed, throw an error 
-  // 3. Read the JSON and set total to the count 
-  // 4. await renderQuestion() to show the first question 
-  try{
-      const response = await fetch("/api/questions/count");
-      if (!response.ok){
-        throw new Error(`HTTP error! status: ${response.status}`);
+async function init() {
+  const loading = document.getElementById("loading");
+  const error = document.getElementById("error");
+  const retry = document.getElementById("retryBtn");
+  document.getElementById("quizPanel").hidden = false;
+  loading.hidden = false;
+  error.hidden = true;
+  retry.hidden = true;
+  try {
+      const data = await fetchJSON("/api/questions/count");
+      total = data.count;
+       if (!Number.isInteger(total) || total < 1) {
+      throw new Error("No questions available");
     }
-    const data = await response.json();
-    total = data.count;
     await renderQuestion();
-    }catch (err) {
+    }
+    catch (err) {
       console.error('Error fetching count:', err);
-      const error = document.getElementById("error");
+      document.getElementById("quizPanel").hidden = true;
+      loading.hidden = true;
       error.textContent = "Could not load the quiz. Please try again later.";
       error.hidden = false;
+      retry.hidden = false;
+      retry.onclick = init;
     }
   } init();
  

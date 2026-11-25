@@ -14,8 +14,12 @@
     --color-surface: #ffffff;
     --color-surface-alt: #eef5f7;
 
-    --color-text: #172033;
-    --color-text-muted: #64748b;
+    --color-text: #172033;  /* headings */
+     --color-text-body: #334155;   /* paragraphs */
+    --color-text-muted: #5b6b80;  /* meta, hints; improved contrast on surface-alt */
+
+    --color-on-primary: #ffffff;
+    --color-border-strong: #8a99a8;
 
     --color-primary: #155e75;
     --color-primary-dark: #0f3f4d;
@@ -33,8 +37,8 @@
     --font-heading: Georgia, "Times New Roman", serif;
     --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
 
-    --content-width: 68.75rem; /* 1100px, scales with text size */
-    --header-width: 75rem;  /*1200px*/
+    --content-width: 64rem;   /* about 1024px */
+    --header-width: 68rem;
 
     --space-xs: 0.4rem;
     --space-sm: 0.75rem;
@@ -53,6 +57,8 @@
     --border-thin: 1px solid var(--color-border);
 
     --transition-fast: 0.18s ease;
+
+    --measure: 62rem;
 }
 
 
@@ -66,7 +72,9 @@
 
 html {
     scroll-behavior: smooth;
+    scroll-padding-top: 8rem; 
 }
+
 
 body {
     margin: 0;
@@ -74,11 +82,11 @@ body {
     min-height: 100dvh;
 
     background-color: var(--color-background);
-    color: var(--color-text);
+    color: var(--color-text-body);
 
     font-family: var(--font-body);
-    font-size: 17px;
-    line-height: 1.75;
+    font-size: 1.0625rem;
+    line-height: 1.65;
 }
 
 img {
@@ -105,17 +113,36 @@ a:focus-visible {
     outline-offset: 3px;
 }
 
+/* Skip link: hidden until keyboard focus */
+.skip-link {
+    position: absolute;
+    top: -100px;
+    left: 0.5rem;
+    z-index: 2000;
+
+    padding: 0.4rem 0.7rem;
+
+    background-color: var(--color-primary);
+    color: var(--color-on-primary);
+
+    border-radius: var(--radius-sm);
+
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.skip-link:focus {
+    top: 0.5rem;
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+}
+
 
 /* =========================================================
    3. TYPOGRAPHY
    ========================================================= */
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+h1, h2, h3, h4, h5, h6 {
     margin-top: 0;
     margin-bottom: var(--space-md);
 
@@ -124,6 +151,8 @@ h6 {
     line-height: 1.25;
 }
 
+strong { color: var(--color-text); }
+
 h1,
 h2,
 h3 {
@@ -131,28 +160,34 @@ h3 {
 }
 
 h1 {
-    font-size: 1.8rem;
+    font-size: clamp(2rem, 1.4rem + 2.5vw, 3rem);    
+    line-height: 1.15; 
 }
 
 h2 {
-    font-size: 2.15rem;
+    font-size: clamp(1.6rem, 1.3rem + 1.5vw, 2.25rem); 
 }
 
 h3 {
-    font-size: 1.5rem;
+    font-size: clamp(1.25rem, 1.1rem + 0.7vw, 1.5rem);
 }
 
 h4 {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
+}
+
+main h3 { margin: var(--space-lg) 0 var(--space-sm); }
+main h4 { margin: var(--space-md) 0 var(--space-sm); }
+main :is(h2, h3, h4):first-child { margin-top: 0; }
+
+main > section > * {
+    max-width: var(--measure);
+    margin-inline: auto;
 }
 
 p {
     margin-top: 0;
     margin-bottom: var(--space-md);
-}
-
-strong {
-    color: var(--color-text);
 }
 
 
@@ -188,7 +223,7 @@ header > img {
 
 header h1 {
     margin: 0;
-    font-size: clamp(1.2rem, 3vw, 2rem);
+    font-size: clamp(1.1rem, 2.5vw, 1.4rem);
     line-height: 1.2;
 }
 
@@ -285,10 +320,9 @@ main {
 }
 
 main > section {
-    margin-bottom: var(--space-xl);
-    padding-bottom: var(--space-xl);
-
-    border-bottom: var(--border-thin);
+    margin-bottom: var(--space-lg);
+    padding-bottom: var(--space-md);
+    border-bottom: var(--border-thin); 
 }
 
 main > section:last-child {
@@ -438,6 +472,7 @@ main section ul li:hover {
     box-shadow: var(--shadow-md);
 }
 
+.card, .timeline-item, fieldset { padding: var(--space-md); }
 
 /* =========================================================
    11. RESEARCH / HISTORY
@@ -446,7 +481,7 @@ main section ul li:hover {
 .timeline {
     position: relative;
 
-    margin: var(--space-xl) 0;
+    margin: var(--space-lg) 0; 
     padding-left: 1.75rem;
 }
 
@@ -468,7 +503,7 @@ main section ul li:hover {
     position: relative;
 
     margin-bottom: var(--space-lg);
-    padding: var(--space-lg);
+    padding: var(--space-md);
 
     background-color: var(--color-surface);
 
@@ -541,6 +576,16 @@ main section ul li:hover {
     content: "\26A0\00a0";
     color: var(--color-warning);
 }
+
+
+main > section > :is(pre, table, iframe, .timeline, ul, .card-grid, .card, nav, .scroll) {
+    max-width: none;
+}
+
+td code {
+    overflow-wrap: anywhere;
+}
+
 /* =========================================================
    12. IN-PAGE SECTION NAVIGATION
    ========================================================= */
@@ -579,6 +624,7 @@ nav[aria-label="Page sections"] a:hover {
 }
 
 
+
 /* =========================================================
    13. EMBEDDED CONTENT
    ========================================================= */
@@ -603,11 +649,27 @@ main section iframe {
 /* =========================================================
    14. TABLES
    ========================================================= */
+.scroll {
+    max-width: 100%;
+    margin: var(--space-lg) 0;
+    overflow-x: auto;
+
+    background-color: var(--color-surface);
+    border: var(--border-thin);
+    border-radius: var(--radius-md);
+}
+
+.scroll > table {
+    min-width: 32rem;   /* below this width the wrapper scrolls */
+    margin: 0;
+    border: none;
+    border-radius: 0;
+}
 
 table {
     width: 100%;
 
-    margin: var(--space-xl) 0;
+    margin: var(--space-lg) 0;
 
     border-collapse: collapse;
 
@@ -633,7 +695,7 @@ th {
     font-weight: 700;
 }
 
-tr:last-child td {
+tbody tr:last-child :is(th, td) {
     border-bottom: none;
 }
 
@@ -657,7 +719,7 @@ code {
 }
 
 pre {
-    margin: var(--space-xl) 0;
+    margin: var(--space-lg) 0;
     padding: var(--space-lg);
 
     overflow-x: auto;
@@ -678,6 +740,7 @@ pre code {
 
     color: inherit;
 }
+
 
 
 /* =========================================================
@@ -704,7 +767,7 @@ pre code {
     padding: 0.7rem 1.2rem;
 
     background-color: var(--color-primary);
-    color: #ffffff;
+    color: var(--color-on-primary);
 
     border: 1px solid var(--color-primary);
     border-radius: var(--radius-md);
@@ -723,7 +786,7 @@ pre code {
 .nav-button:hover {
     background-color: var(--color-accent);
     border-color: var(--color-accent);
-    color: #ffffff;
+    color: var(--color-on-primary);
     transform: translateY(-2px);
     box-shadow: var(--shadow-md);
 }
@@ -790,7 +853,7 @@ pre code {
 
 .page-scroll-controls a:hover {
     background-color: var(--color-primary);
-    color: #ffffff;
+    color: var(--color-on-primary);
 
     transform: translateY(-2px);
 }
@@ -840,6 +903,7 @@ footer p:last-child {
         --color-surface-alt: #172033;
 
         --color-text: #e5edf5;
+        --color-text-body: #c3cfdd;
         --color-text-muted: #9aa9bb;
 
         --color-primary: #38a3b8;
@@ -850,13 +914,18 @@ footer p:last-child {
         --color-accent-light: #103b38;
 
         --color-border: #263449;
+        --color-border-strong: #5d7088;
+        --color-on-primary: #0b1120;
 
         --color-warning: #f87171;
         --color-warning-light: #3b1a1a;
 
         --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.25);
         --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.3);
+
     }
+
+    
 }
 
 
@@ -875,13 +944,6 @@ footer p:last-child {
         padding: var(--space-2xl) 0;
     }
 
-    main section h2 {
-        font-size: clamp(2.35rem, 4vw, 3rem);
-    }
-
-    main section h3 {
-        font-size: 1.65rem;
-    }
 
     main > section:first-child > img {
         max-width: 850px;
@@ -892,6 +954,13 @@ footer p:last-child {
         height: 500px;
     }
 
+     main > section { 
+        margin-bottom: var(--space-xl); 
+        padding-bottom: var(--space-xl); 
+    }
+
+    .card, .timeline-item, fieldset { padding: var(--space-lg); }
+
     footer {
         padding: var(--space-xl) 1.5rem;
     }
@@ -901,7 +970,7 @@ footer p:last-child {
 /* =========================================================
    20b. DESKTOP (min-width: 1025px)
    Builds on the tablet styles. Header and footer padding align
-   to the centered content column, lists go to three columns,
+   to the centered content column,
    and the floating scroll controls move into the side gutter.
    ========================================================= */
 
@@ -910,15 +979,6 @@ footer p:last-child {
     main {
         padding: var(--space-2xl) 0 calc(var(--space-2xl) + var(--space-md));
     }
-
-    main section h2 {
-        font-size: 3rem;
-    }
-
-    main section h3 {
-        font-size: 1.8rem;
-    }
-
 
     main > section:first-child > img {
         max-width: 900px;
